@@ -1,6 +1,7 @@
 using System;
 using System.Data.Entity;
 using System.IO;
+using System.Linq;
 
 namespace SQLiteEfCodeFirstDbCreator
 {
@@ -10,10 +11,19 @@ namespace SQLiteEfCodeFirstDbCreator
         private readonly bool dbExists;
         private readonly DbModelBuilder modelBuilder;
 
-        public SqliteContextInitializer(string dbPath, DbModelBuilder modelBuilder)
+        public SqliteContextInitializer(string connectionString, DbModelBuilder modelBuilder)
         {
-            dbExists = File.Exists(dbPath);
+            string path = GetPathFromConnectionString(connectionString);
+            dbExists = File.Exists(path);
             this.modelBuilder = modelBuilder;
+        }
+
+        private string GetPathFromConnectionString(string connectionString)
+        {
+            string[] keyValuePairs = connectionString.Split(';');
+            string dataSourceKeyValuePair = keyValuePairs.Single(s => s.ToLower().StartsWith("data source"));
+            string dataSourceValue = dataSourceKeyValuePair.Split('=')[1];
+            return dataSourceValue;
         }
 
         public void InitializeDatabase(T context)
