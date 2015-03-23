@@ -1,4 +1,4 @@
-# SQLiteEfCodeFirstDbCreator
+# SQLite CodeFirst
 Creates a [SQLite Database](https://sqlite.org/) from Code, using [Entity Framework](https://msdn.microsoft.com/en-us/data/ef.aspx) CodeFirst.
 
 This Project ships a `SqliteContextInitializer` which creates a new SQLite Database, based on your model/code.
