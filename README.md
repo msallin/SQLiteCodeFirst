@@ -2,7 +2,7 @@
 Creates a [SQLite Database](https://sqlite.org/) from Code, using [Entity Framework](https://msdn.microsoft.com/en-us/data/ef.aspx) CodeFirst.
 
 This Project ships a `SqliteContextInitializer` which creates a new SQLite Database, based on your model/code.
-I started with the code from flaub: https://gist.github.com/flaub/1968486e1b3f2b9fddaf
+I started with the [code](https://gist.github.com/flaub/1968486e1b3f2b9fddaf) from [flaub](https://gist.github.com/flaub). 
 
 Currently the following is supported:
 - Tables from classes
