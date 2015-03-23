@@ -1,35 +1,28 @@
 using System;
 using System.Data.Entity;
 using System.IO;
-using System.Linq;
 
 namespace SQLiteEfCodeFirstDbCreator
 {
-    public class SqliteContextInitializer<T> : IDatabaseInitializer<T>
-        where T : DbContext
+    public class SqliteContextInitializer<TDbContext> : IDatabaseInitializer<TDbContext>
+        where TDbContext : DbContext
     {
-        private readonly bool dbExists;
-        private readonly DbModelBuilder modelBuilder;
+        protected readonly bool dbExists;
+        protected readonly DbModelBuilder modelBuilder;
 
         public SqliteContextInitializer(string connectionString, DbModelBuilder modelBuilder)
         {
-            string path = GetPathFromConnectionString(connectionString);
+            string path = SqliteConnectionStringParser.GetDataSource(connectionString);
             dbExists = File.Exists(path);
             this.modelBuilder = modelBuilder;
         }
 
-        private string GetPathFromConnectionString(string connectionString)
-        {
-            string[] keyValuePairs = connectionString.Split(';');
-            string dataSourceKeyValuePair = keyValuePairs.Single(s => s.ToLower().StartsWith("data source"));
-            string dataSourceValue = dataSourceKeyValuePair.Split('=')[1];
-            return dataSourceValue;
-        }
-
-        public void InitializeDatabase(T context)
+        public virtual void InitializeDatabase(TDbContext context)
         {
             if (dbExists)
+            {
                 return;
+            }
 
             var model = modelBuilder.Build(context.Database.Connection);
 
@@ -47,6 +40,22 @@ namespace SQLiteEfCodeFirstDbCreator
                     throw;
                 }
             }
+
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    Seed(context);
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
         }
+
+        protected virtual void Seed(TDbContext context) { }
     }
 }
