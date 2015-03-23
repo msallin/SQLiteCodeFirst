@@ -1,7 +1,7 @@
 # SQLiteEfCodeFirstDbCreator
 Creates a [SQLite Database](https://sqlite.org/) from Code, using [Entity Framework](https://msdn.microsoft.com/en-us/data/ef.aspx) CodeFirst.
 
-This Project ships a "SqliteContextInitializer" which creates a new SQLite Database, based on your model/code.
+This Project ships a `SqliteContextInitializer` which creates a new SQLite Database, based on your model/code.
 I started with the code from flaub: https://gist.github.com/flaub/1968486e1b3f2b9fddaf
 
 Currently the following is supported:
@@ -34,7 +34,8 @@ public class MyDbContext : DbContext
 ```
 
 In a more advanced szenario you may want to populate some core- or test-data after the database was created.
-To do this, inherit from `SqliteContextInitializer<>`
+To do this, inherit from `SqliteContextInitializer<>` and override the `Seed(TestDbContext context)` function.
+This function will be called, in a own transaction, right after the database was created. This function is only executed if a new database was successfully created.
 ```csharp
 public class TestDbContextInitializer : SqliteContextInitializer<TestDbContext>
 {
