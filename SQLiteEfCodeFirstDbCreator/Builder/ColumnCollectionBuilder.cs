@@ -39,11 +39,15 @@ namespace SQLiteEfCodeFirstDbCreator.Builder
                     }
                 };
 
-                if (!property.Nullable)
+                if (!property.Nullable && property.StoreGeneratedPattern != StoreGeneratedPattern.Identity) // Only mark it as NotNull if it should not be generated.
                     columnStatement.ColumnConstraints.ColumnConstraints.Add(new NotNullConstraint());
 
-                if(property.StoreGeneratedPattern == StoreGeneratedPattern.Identity)
+                if (property.StoreGeneratedPattern == StoreGeneratedPattern.Identity)
+                {
                     columnStatement.ColumnConstraints.ColumnConstraints.Add(new PrimaryKeyConstraint());
+                    // Must be INTEGER else SQLite will not generate the Ids
+                    columnStatement.TypeName = columnStatement.TypeName.ToLower() == "int" ? "INTEGER" : columnStatement.TypeName; 
+                }
 
                 yield return columnStatement;
             }
