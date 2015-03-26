@@ -1,4 +1,5 @@
-﻿namespace SQLite.CodeFirst.Console.Entity
+﻿
+namespace SQLite.CodeFirst.Console.Entity
 {
     public class Player : IEntity
     {

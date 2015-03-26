@@ -27,9 +27,20 @@ namespace SQLite.CodeFirst.Builder
 
             return new CreateTableStatement
             {
-                TableName = entityType.Name,
+                TableName = GetTableName(),
                 ColumnCollection = columnCollection
             };
+        }
+
+        private string GetTableName()
+        {
+            MetadataProperty metadataProperty;
+            if (entityType.MetadataProperties.TryGetValue("TableName", false, out metadataProperty))
+            {
+                return metadataProperty.Value.ToString();
+            }
+
+            return entityType.Name;
         }
     }
 }
