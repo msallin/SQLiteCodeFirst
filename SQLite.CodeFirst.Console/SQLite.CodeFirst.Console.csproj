@@ -7,8 +7,8 @@
     <ProjectGuid>{DEDABD86-6EA0-4673-A858-A4F71958F51D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SQLite.CodeFirst</RootNamespace>
-    <AssemblyName>SQLite.CodeFirst</AssemblyName>
+    <RootNamespace>SQLite.CodeFirst.Console</RootNamespace>
+    <AssemblyName>SQLite.CodeFirst.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
