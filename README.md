@@ -5,7 +5,7 @@ This Project ships a `SqliteContextInitializer` which creates a new SQLite Datab
 I started with the [code](https://gist.github.com/flaub/1968486e1b3f2b9fddaf) from [flaub](https://github.com/flaub). 
 
 Currently the following is supported:
-- Tables from classes
+- Tables from classes (with table annotation)
 - Columns from properties
 - ForeignKey constraint (1-n relationships)
 - Cascade on delete
