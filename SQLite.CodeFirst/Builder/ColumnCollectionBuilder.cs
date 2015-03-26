@@ -39,18 +39,28 @@ namespace SQLite.CodeFirst.Builder
                     }
                 };
 
-                if (!property.Nullable && property.StoreGeneratedPattern != StoreGeneratedPattern.Identity) // Only mark it as NotNull if it should not be generated.
-                    columnStatement.ColumnConstraints.ColumnConstraints.Add(new NotNullConstraint());
-
-                if (property.StoreGeneratedPattern == StoreGeneratedPattern.Identity)
-                {
-                    columnStatement.ColumnConstraints.ColumnConstraints.Add(new PrimaryKeyConstraint());
-                    // Must be INTEGER else SQLite will not generate the Ids
-                    columnStatement.TypeName = columnStatement.TypeName.ToLower() == "int" ? "INTEGER" : columnStatement.TypeName; 
-                }
+                AddNullConstraintIfNecessary(property, columnStatement);
+                AddPrimaryKeyIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
             }
+        }
+
+        private static void AddPrimaryKeyIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        {
+            if (property.StoreGeneratedPattern == StoreGeneratedPattern.Identity)
+            {
+                columnStatement.ColumnConstraints.ColumnConstraints.Add(new PrimaryKeyConstraint());
+                // Must be INTEGER else SQLite will not generate the Ids
+                columnStatement.TypeName = columnStatement.TypeName.ToLower() == "int" ? "INTEGER" : columnStatement.TypeName;
+            }
+        }
+
+        private static void AddNullConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        {
+            if (!property.Nullable && property.StoreGeneratedPattern != StoreGeneratedPattern.Identity)
+                // Only mark it as NotNull if it should not be generated.
+                columnStatement.ColumnConstraints.ColumnConstraints.Add(new NotNullConstraint());
         }
     }
 }
