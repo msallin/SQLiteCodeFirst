@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using SQLite.CodeFirst.Entity;
+using SQLite.CodeFirst.Console.Entity;
 
-namespace SQLite.CodeFirst
+namespace SQLite.CodeFirst.Console
 {
     public static class Program
     {

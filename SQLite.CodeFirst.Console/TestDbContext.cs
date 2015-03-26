@@ -1,8 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using SQLite.CodeFirst.Entity;
+using SQLite.CodeFirst.Console.Entity;
 
-namespace SQLite.CodeFirst
+namespace SQLite.CodeFirst.Console
 {
     public class TestDbContext : DbContext
     {

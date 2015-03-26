@@ -1,4 +1,4 @@
-﻿namespace SQLite.CodeFirst.Entity
+﻿namespace SQLite.CodeFirst.Console.Entity
 {
     interface IEntity
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SQLite.CodeFirst.Entity
+namespace SQLite.CodeFirst.Console.Entity
 {
     public class Team : IEntity
     {
