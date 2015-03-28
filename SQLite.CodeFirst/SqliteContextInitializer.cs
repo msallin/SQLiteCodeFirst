@@ -46,6 +46,7 @@ namespace SQLite.CodeFirst
                 try
                 {
                     Seed(context);
+                    context.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception)

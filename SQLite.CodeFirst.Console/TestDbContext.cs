@@ -16,7 +16,7 @@ namespace SQLite.CodeFirst.Console
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            var sqliteConnectionInitializer = new SqliteContextInitializer<TestDbContext>(
+            var sqliteConnectionInitializer = new TestDbContextInitializer(
                 Database.Connection.ConnectionString, modelBuilder);
             Database.SetInitializer(sqliteConnectionInitializer);
         }
@@ -46,7 +46,7 @@ namespace SQLite.CodeFirst.Console
 
         protected override void Seed(TestDbContext context)
         {
-            context.Set<Player>().Add(new Player());
+            context.Set<Team>().Add(new Team());
         }
     }
 }
