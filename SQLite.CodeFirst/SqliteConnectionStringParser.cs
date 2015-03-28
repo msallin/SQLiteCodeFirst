@@ -1,9 +1,11 @@
+﻿using System;
 ﻿using System.Collections.Generic;
 
 namespace SQLite.CodeFirst
 {
     internal static class SqliteConnectionStringParser
     {
+        private const string DataDirectoryVariable = "|DataDirectory|";
         private const char KeyValuePairSeperator = ';';
         private const char KeyValueSeperator = '=';
         private const int KeyPosition = 0;
@@ -26,6 +28,11 @@ namespace SQLite.CodeFirst
 
         public static string GetDataSource(string connectionString)
         {
+            if (connectionString.ToLower().Contains(DataDirectoryVariable.ToLower()))
+            {
+                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory + @"\";
+                connectionString = connectionString.ToLower().Replace(DataDirectoryVariable.ToLower(), baseDirectory).Replace(@"\\", @"\");
+            }
             return ParseSqliteConnectionString(connectionString)["data source"];
         }
     }
