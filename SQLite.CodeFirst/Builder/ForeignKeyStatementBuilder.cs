@@ -5,22 +5,18 @@ using SQLite.CodeFirst.Statement;
 
 namespace SQLite.CodeFirst.Builder
 {
-    internal class ForeignKeyCollectionBuilder : IStatementBuilder<ColumnCollection>
+    internal class ForeignKeyStatementBuilder : IStatementBuilder<ColumnStatementCollection>
     {
         private readonly IEnumerable<AssociationType> associationTypes;
 
-        public ForeignKeyCollectionBuilder(IEnumerable<AssociationType> associationTypes)
+        public ForeignKeyStatementBuilder(IEnumerable<AssociationType> associationTypes)
         {
             this.associationTypes = associationTypes;
         }
 
-        public ColumnCollection BuildStatement()
+        public ColumnStatementCollection BuildStatement()
         {
-            var columnDefStatement = new ColumnCollection
-            {
-                ColumnStatements = GetForeignKeyStatements().ToList()
-            };
-
+            var columnDefStatement = new ColumnStatementCollection(GetForeignKeyStatements().ToList());
             return columnDefStatement;
         }
 

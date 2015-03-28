@@ -6,15 +6,16 @@ I started with the [code](https://gist.github.com/flaub/1968486e1b3f2b9fddaf) fr
 
 Currently the following is supported:
 - Tables from classes (with table annotation)
-- Columns from properties
-- ForeignKey constraint (1-n relationships)
-- Cascade on delete
-- PrimaryKey constraint (An int PrimaryKey will automatically be incremented)
+- Columns from properties (with key annotation)
+- Auto increment (An int PrimaryKey will automatically be incremented)
+- ForeignKey constraint (1-n relationships, support for 'Cascade on delete')
 - Not Null constraint
 
 I tried to write the code in a extensible way.
 The logic is devided into two main parts. Builder and Statement.
-The Builder-Part knows how to translate the EdmModel into statements where a statement class creates the SQLite-SQL-Code. The structure of the statements is influenced by the [SQLite Language Specification](https://www.sqlite.org/lang.html).
+The Builder knows how to translate the EdmModel into statements where a statement class creates the SQLite-DDL-Code. 
+The structure of the statements is influenced by the [SQLite Language Specification](https://www.sqlite.org/lang.html).
+You will find an extensive usage of the composite pattern.
 
 ## How to use
 If you want to let the Entity Framework create the database, if it does not exist, just set `SqliteContextInitializer<>` as your `IDbInitializer`.

@@ -18,17 +18,19 @@ namespace SQLite.CodeFirst.Builder
 
         public CreateTableStatement BuildStatement()
         {
-            var simpleColumnCollection = new ColumnCollectionBuilder(entityType.Properties).BuildStatement();
-            var foreignKeyCollection = new ForeignKeyCollectionBuilder(associationTypes).BuildStatement();
-            var columnCollection = new ColumnCollection
-            {
-                ColumnStatements = simpleColumnCollection.ColumnStatements.Concat(foreignKeyCollection.ColumnStatements)
-            };
+            var simpleColumnCollection = new ColumnStatementCollectionBuilder(entityType.Properties).BuildStatement();
+            var primaryKeyStatement = new PrimaryKeyStatementBuilder(entityType.KeyMembers).BuildStatement();
+            var foreignKeyCollection = new ForeignKeyStatementBuilder(associationTypes).BuildStatement();
+
+            List<IStatement> columnStatements = new List<IStatement>();
+            columnStatements.AddRange(simpleColumnCollection);
+            columnStatements.Add(primaryKeyStatement);
+            columnStatements.AddRange(foreignKeyCollection);
 
             return new CreateTableStatement
             {
                 TableName = GetTableName(),
-                ColumnCollection = columnCollection
+                ColumnStatementCollection = new ColumnStatementCollection(columnStatements)
             };
         }
 

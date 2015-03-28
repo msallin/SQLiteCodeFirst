@@ -1,18 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SQLite.CodeFirst.Statement.ColumnConstraint
 {
-    internal class ColumnConstraintCollection : IColumnConstraint
+    internal class ColumnConstraintCollection : Collection<IColumnConstraint>, IColumnConstraint
     {
         private const string ConstraintStatementSeperator = " ";
 
-        public ICollection<IColumnConstraint> ColumnConstraints { get; set; }
+        public ColumnConstraintCollection() { }
+
+        public ColumnConstraintCollection(IEnumerable<IColumnConstraint> columnConstraints)
+        {
+            foreach (var columnConstraint in columnConstraints)
+            {
+                Add(columnConstraint);
+            }
+        }
 
         public string CreateStatement()
         {
-            return String.Join(ConstraintStatementSeperator, ColumnConstraints.Select(c => c.CreateStatement()));
+            return String.Join(ConstraintStatementSeperator, this.Select(c => c.CreateStatement()));
         }
     }
 }

@@ -1,18 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SQLite.CodeFirst.Statement
 {
-    internal class CreateDatabaseStatement : IStatement
+    internal class CreateDatabaseStatement : Collection<CreateTableStatement>, IStatement
     {
         private const string CreateTableStatementSeperator = "\r\n";
 
-        public IEnumerable<CreateTableStatement> CreateTableStatements { get; set; }
+        public CreateDatabaseStatement() { }
+
+        public CreateDatabaseStatement(IEnumerable<CreateTableStatement> createTableStatements)
+        {
+            foreach (var createTableStatement in createTableStatements)
+            {
+                Add(createTableStatement);
+            }
+        }
 
         public string CreateStatement()
         {
-            return String.Join(CreateTableStatementSeperator, CreateTableStatements.Select(c => c.CreateStatement()));
+            return String.Join(CreateTableStatementSeperator, this.Select(c => c.CreateStatement()));
         }
     }
 }

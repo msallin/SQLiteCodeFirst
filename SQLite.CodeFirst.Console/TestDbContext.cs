@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Configuration;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using SQLite.CodeFirst.Console.Entity;
 
@@ -32,8 +30,7 @@ namespace SQLite.CodeFirst.Console
         {
             modelBuilder.RegisterEntityType(typeof(Player));
 
-            modelBuilder.Entity<Player>().HasKey(player => player.Id);
-            modelBuilder.Entity<Player>().Property(player => player.Name).HasMaxLength(10);
+            modelBuilder.Entity<Player>().Property(player => player.FirstName).HasMaxLength(10);
 
             modelBuilder.Entity<Player>().ToTable("TeamPlayer");
 

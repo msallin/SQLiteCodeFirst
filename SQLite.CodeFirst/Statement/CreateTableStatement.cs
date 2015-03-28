@@ -7,14 +7,14 @@ namespace SQLite.CodeFirst.Statement
         private const string Template = "CREATE TABLE {table-name} ({column-def});";
 
         public string TableName { get; set; }
-        public ColumnCollection ColumnCollection { get; set; }
+        public ColumnStatementCollection ColumnStatementCollection { get; set; }
 
         public string CreateStatement()
         {
             var sb = new StringBuilder(Template);
 
             sb.Replace("{table-name}", TableName);
-            sb.Replace("{column-def}", ColumnCollection.CreateStatement());
+            sb.Replace("{column-def}", ColumnStatementCollection.CreateStatement());
 
             return sb.ToString();
         }

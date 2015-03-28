@@ -16,11 +16,7 @@ namespace SQLite.CodeFirst.Builder
 
         public CreateDatabaseStatement BuildStatement()
         {
-            var createDatabaseStatement = new CreateDatabaseStatement
-            {
-                CreateTableStatements = GetCreateTableStatements()
-            };
-
+            var createDatabaseStatement = new CreateDatabaseStatement(GetCreateTableStatements());
             return createDatabaseStatement;
         }
 

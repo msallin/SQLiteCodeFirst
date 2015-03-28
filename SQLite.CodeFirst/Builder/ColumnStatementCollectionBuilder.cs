@@ -6,22 +6,18 @@ using SQLite.CodeFirst.Statement.ColumnConstraint;
 
 namespace SQLite.CodeFirst.Builder
 {
-    internal class ColumnCollectionBuilder : IStatementBuilder<ColumnCollection>
+    internal class ColumnStatementCollectionBuilder : IStatementBuilder<ColumnStatementCollection>
     {
         private readonly IEnumerable<EdmProperty> properties;
 
-        public ColumnCollectionBuilder(IEnumerable<EdmProperty> properties)
+        public ColumnStatementCollectionBuilder(IEnumerable<EdmProperty> properties)
         {
             this.properties = properties;
         }
 
-        public ColumnCollection BuildStatement()
+        public ColumnStatementCollection BuildStatement()
         {
-            var columnDefStatement = new ColumnCollection
-            {
-                ColumnStatements = CreateColumnStatements().ToList()
-            };
-
+            var columnDefStatement = new ColumnStatementCollection(CreateColumnStatements().ToList());
             return columnDefStatement;
         }
 
@@ -33,24 +29,20 @@ namespace SQLite.CodeFirst.Builder
                 {
                     ColumnName = property.Name,
                     TypeName = property.TypeName,
-                    ColumnConstraints = new ColumnConstraintCollection
-                    {
-                        ColumnConstraints = new List<IColumnConstraint>()
-                    }
+                    ColumnConstraints = new ColumnConstraintCollection()
                 };
 
+                AdjustDatatypeForAutogenerationIfNecessary(property, columnStatement);
                 AddNullConstraintIfNecessary(property, columnStatement);
-                AddPrimaryKeyIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
             }
         }
 
-        private static void AddPrimaryKeyIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        private static void AdjustDatatypeForAutogenerationIfNecessary(EdmProperty property, ColumnStatement columnStatement)
         {
             if (property.StoreGeneratedPattern == StoreGeneratedPattern.Identity)
             {
-                columnStatement.ColumnConstraints.ColumnConstraints.Add(new PrimaryKeyConstraint());
                 // Must be INTEGER else SQLite will not generate the Ids
                 columnStatement.TypeName = columnStatement.TypeName.ToLower() == "int" ? "INTEGER" : columnStatement.TypeName;
             }
@@ -59,8 +51,10 @@ namespace SQLite.CodeFirst.Builder
         private static void AddNullConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
         {
             if (!property.Nullable && property.StoreGeneratedPattern != StoreGeneratedPattern.Identity)
+            {
                 // Only mark it as NotNull if it should not be generated.
-                columnStatement.ColumnConstraints.ColumnConstraints.Add(new NotNullConstraint());
+                columnStatement.ColumnConstraints.Add(new NotNullConstraint());
+            }
         }
     }
 }
