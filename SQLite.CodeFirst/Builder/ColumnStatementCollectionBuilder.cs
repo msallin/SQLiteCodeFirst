@@ -32,10 +32,19 @@ namespace SQLite.CodeFirst.Builder
                     ColumnConstraints = new ColumnConstraintCollection()
                 };
 
+                AddMaxLengthConstraintIfNecessary(property, columnStatement);
                 AdjustDatatypeForAutogenerationIfNecessary(property, columnStatement);
                 AddNullConstraintIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
+            }
+        }
+
+        private void AddMaxLengthConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        {
+            if (property.MaxLength.HasValue)
+            {
+                columnStatement.ColumnConstraints.Add(new MaxLengthConstraint(property.MaxLength.Value));
             }
         }
 

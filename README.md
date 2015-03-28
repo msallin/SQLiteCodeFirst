@@ -5,11 +5,12 @@ This Project ships a `SqliteContextInitializer` which creates a new SQLite Datab
 I started with the [code](https://gist.github.com/flaub/1968486e1b3f2b9fddaf) from [flaub](https://github.com/flaub). 
 
 Currently the following is supported:
-- Tables from classes (with table annotation)
-- Columns from properties (with key annotation)
-- Auto increment (An int PrimaryKey will automatically be incremented)
+- Tables from classes (supported annotations: `Table`)
+- Columns from properties (supported annotations: `Column`, `Key`, `MaxLength`, `Required`)
+- PrimaryKey constraint (`Key` annotation, key composites are supported)
 - ForeignKey constraint (1-n relationships, support for 'Cascade on delete')
 - Not Null constraint
+- Auto increment (An int PrimaryKey will automatically be incremented)
 
 I tried to write the code in a extensible way.
 The logic is devided into two main parts. Builder and Statement.

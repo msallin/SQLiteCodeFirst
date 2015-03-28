@@ -30,8 +30,6 @@ namespace SQLite.CodeFirst.Console
         {
             modelBuilder.RegisterEntityType(typeof(Player));
 
-            modelBuilder.Entity<Player>().Property(player => player.FirstName).HasMaxLength(10);
-
             modelBuilder.Entity<Player>().ToTable("TeamPlayer");
 
             modelBuilder.Entity<Player>()
