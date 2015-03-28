@@ -3,18 +3,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SQLite.CodeFirst.Console.Entity
 {
-    public class Player
+    [Table("TeamPlayer")]
+    public class Player : IEntity
     {
-        [Key]
-        [Column(Order = 1)]
+        public int Id { get; set; }
+
+        [MaxLength(50)]
         public string FirstName { get; set; }
-        [Key]
-        [Column(Order = 2)]
+
+        [MaxLength(50)]
         public string LastName { get; set; }
+
         [MaxLength(100)]
         public string Street { get; set; }
+
         [Required]
         public string City { get; set; }
-        public Team Team { get; set; }
+
+        public virtual Team Team { get; set; }
     }
 }

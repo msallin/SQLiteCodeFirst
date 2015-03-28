@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.96.0\lib\net451\System.Data.SQLite.dll</HintPath>
@@ -63,8 +64,9 @@
   <ItemGroup>
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\Player.cs" />
+    <Compile Include="Entity\Stadion.cs" />
     <Compile Include="Entity\Team.cs" />
-    <Compile Include="TestDbContext.cs" />
+    <Compile Include="FootballDbContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

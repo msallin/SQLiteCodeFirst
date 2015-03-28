@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.IO;
 using SQLite.CodeFirst.Console.Entity;
 
 namespace SQLite.CodeFirst.Console
@@ -7,8 +7,72 @@ namespace SQLite.CodeFirst.Console
     {
         static void Main()
         {
-            var context = new TestDbContext();
-            System.Console.WriteLine(context.Set<Player>().Count());
+            System.Console.WriteLine("Starting Demo Application");
+
+            ClearExistingDbFile();
+
+            var context = CreateAndSeedDatabase();
+
+            DisplaySeededData(context);
+
+            PressEnterToExit();
+        }
+
+        private static void ClearExistingDbFile()
+        {
+            System.Console.WriteLine("Check for existing db file.");
+            const string SqliteFilePath = @".\footballDb.sqlite";
+            if (File.Exists(SqliteFilePath))
+            {
+                System.Console.WriteLine("Delete existing db file.");
+                File.Delete(SqliteFilePath);
+            }
+            System.Console.WriteLine();
+        }
+
+        private static FootballDbContext CreateAndSeedDatabase()
+        {
+            System.Console.WriteLine("Create and seed the database.");
+            var context = new FootballDbContext();
+            System.Console.WriteLine("Completed.");
+            System.Console.WriteLine();
+            return context;
+        }
+
+        private static void DisplaySeededData(FootballDbContext context)
+        {
+            System.Console.WriteLine("Display seeded data.");
+
+            foreach (var team in context.Set<Team>())
+            {
+                System.Console.WriteLine("\t Team:");
+                System.Console.WriteLine("\t Id: {0}", team.Id);
+                System.Console.WriteLine("\t Name: {0}", team.Name);
+                System.Console.WriteLine();
+
+                System.Console.WriteLine("\t\t Stadion:");
+                System.Console.WriteLine("\t\t Name: {0}", team.Stadion.Name);
+                System.Console.WriteLine("\t\t Street: {0}", team.Stadion.Street);
+                System.Console.WriteLine("\t\t City: {0}", team.Stadion.City);
+                System.Console.WriteLine();
+
+                foreach (var player in team.Players)
+                {
+                    System.Console.WriteLine("\t\t Player:");
+                    System.Console.WriteLine("\t\t Id: {0}", player.Id);
+                    System.Console.WriteLine("\t\t FirstName: {0}", player.FirstName);
+                    System.Console.WriteLine("\t\t LastName: {0}", player.LastName);
+                    System.Console.WriteLine("\t\t Street: {0}", player.Street);
+                    System.Console.WriteLine("\t\t City: {0}", player.City);
+                    System.Console.WriteLine();
+                }
+            }
+        }
+
+        private static void PressEnterToExit()
+        {
+            System.Console.WriteLine();
+            System.Console.WriteLine("Press 'Enter' to exit.");
             System.Console.ReadLine();
         }
     }
