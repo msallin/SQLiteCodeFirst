@@ -5,7 +5,7 @@ namespace SQLite.CodeFirst
 {
     internal static class SqliteConnectionStringParser
     {
-        private const string DataDirectoryVariable = "|DataDirectory|";
+        private const string DataDirectoryToken= "|DataDirectory|";
         private const char KeyValuePairSeperator = ';';
         private const char KeyValueSeperator = '=';
         private const int KeyPosition = 0;
@@ -28,10 +28,10 @@ namespace SQLite.CodeFirst
 
         public static string GetDataSource(string connectionString)
         {
-            if (connectionString.ToLower().Contains(DataDirectoryVariable.ToLower()))
+            if (connectionString.ToLower().Contains(DataDirectoryToken.ToLower()))
             {
                 var baseDirectory = AppDomain.CurrentDomain.BaseDirectory + @"\";
-                connectionString = connectionString.ToLower().Replace(DataDirectoryVariable.ToLower(), baseDirectory).Replace(@"\\", @"\");
+                connectionString = connectionString.ToLower().Replace(DataDirectoryToken.ToLower(), baseDirectory).Replace(@"\\", @"\");
             }
             return ParseSqliteConnectionString(connectionString)["data source"];
         }
