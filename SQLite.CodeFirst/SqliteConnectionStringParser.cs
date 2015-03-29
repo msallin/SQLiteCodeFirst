@@ -1,11 +1,11 @@
-﻿using System;
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
 namespace SQLite.CodeFirst
 {
     internal static class SqliteConnectionStringParser
     {
-        private const string DataDirectoryToken= "|DataDirectory|";
+        private const string DataDirectoryToken = "|datadirectory|";
         private const char KeyValuePairSeperator = ';';
         private const char KeyValueSeperator = '=';
         private const int KeyPosition = 0;
@@ -28,12 +28,53 @@ namespace SQLite.CodeFirst
 
         public static string GetDataSource(string connectionString)
         {
-            if (connectionString.ToLower().Contains(DataDirectoryToken.ToLower()))
+            var path = ExpandDataDirectory(ParseSqliteConnectionString(connectionString)["data source"]);
+            return path;
+        }
+
+        private static string ExpandDataDirectory(string path)
+        {
+            if (path == null || !path.StartsWith(DataDirectoryToken, StringComparison.OrdinalIgnoreCase))
             {
-                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory + @"\";
-                connectionString = connectionString.ToLower().Replace(DataDirectoryToken.ToLower(), baseDirectory).Replace(@"\\", @"\");
+                return path;
             }
-            return ParseSqliteConnectionString(connectionString)["data source"];
+
+            string fullPath;
+
+            // find the replacement path
+            object rootFolderObject = AppDomain.CurrentDomain.GetData("DataDirectory");
+            string rootFolderPath = (rootFolderObject as string);
+            if (rootFolderObject != null && rootFolderPath == null)
+            {
+                throw new InvalidOperationException("The value stored in the AppDomains 'DataDirectory' variable has to be a string!");
+            }
+            if (string.IsNullOrEmpty(rootFolderPath))
+            {
+                rootFolderPath = AppDomain.CurrentDomain.BaseDirectory;
+            }
+            
+            // We don't know if rootFolderpath ends with '\', and we don't know if the given name starts with onw
+            int fileNamePosition = DataDirectoryToken.Length;    // filename starts right after the '|datadirectory|' keyword
+            bool rootFolderEndsWith = (0 < rootFolderPath.Length) && rootFolderPath[rootFolderPath.Length - 1] == '\\';
+            bool fileNameStartsWith = (fileNamePosition < path.Length) && path[fileNamePosition] == '\\';
+
+            // replace |datadirectory| with root folder path
+            if (!rootFolderEndsWith && !fileNameStartsWith)
+            {
+                // need to insert '\'
+                fullPath = rootFolderPath + '\\' + path.Substring(fileNamePosition);
+            }
+            else if (rootFolderEndsWith && fileNameStartsWith)
+            {
+                // need to strip one out
+                fullPath = rootFolderPath + path.Substring(fileNamePosition + 1);
+            }
+            else
+            {
+                // simply concatenate the strings
+                fullPath = rootFolderPath + path.Substring(fileNamePosition);
+            }
+            return fullPath;
         }
     }
 }
