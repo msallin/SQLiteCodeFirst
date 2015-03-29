@@ -3,10 +3,10 @@ using System.IO;
 
 namespace SQLite.CodeFirst
 {
-    public class SqliteDropCreateDatabaseAlwaysInitializerBase<TContext> : SqliteInitializerBase<TContext>
+    public class SqliteDropCreateDatabaseAlways<TContext> : SqliteInitializerBase<TContext>
         where TContext : DbContext
     {
-        public SqliteDropCreateDatabaseAlwaysInitializerBase(string connectionString, DbModelBuilder modelBuilder)
+        public SqliteDropCreateDatabaseAlways(string connectionString, DbModelBuilder modelBuilder)
             : base(connectionString, modelBuilder) { }
 
         public override void InitializeDatabase(TContext context)
