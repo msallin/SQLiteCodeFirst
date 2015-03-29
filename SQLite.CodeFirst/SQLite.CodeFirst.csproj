@@ -54,6 +54,7 @@
     <Compile Include="Builder\CreateDatabaseStatementBuilder.cs" />
     <Compile Include="Builder\PrimaryKeyStatementBuilder.cs" />
     <Compile Include="Statement\ColumnConstraint\MaxLengthConstraint.cs" />
+    <Compile Include="Statement\CreateIndexStatement.cs" />
     <Compile Include="Statement\PrimaryKeyStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqliteConnectionStringParser.cs" />

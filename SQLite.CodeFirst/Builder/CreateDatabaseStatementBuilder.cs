@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
 using SQLite.CodeFirst.Statement;
 
@@ -26,6 +27,20 @@ namespace SQLite.CodeFirst.Builder
             {
                 ICollection<AssociationType> associationTypes =
                     edmModel.AssociationTypes.Where(a => a.Constraint.ToRole.Name == entityType.Name).ToList();
+
+                var indexAnnotationGroups = edmModel.EntityTypes.GroupBy(e => e.Name, e => e.MetadataProperties.OfType<IndexAnnotation>());
+                foreach (var indexAnnotationGroup in indexAnnotationGroups)
+                {
+                    foreach (var indexAnnotations in indexAnnotationGroup)
+                    {
+                        foreach (var indexAnnotation in indexAnnotations)
+                        {
+                            foreach (var indexAttribute in indexAnnotation.Indexes)
+                            {
+                            }
+                        }
+                    }
+                }
 
                 var tableStatementBuilder = new CreateTableStatementBuilder(entityType, associationTypes);
                 yield return tableStatementBuilder.BuildStatement();
