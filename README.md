@@ -19,7 +19,7 @@ The structure of the statements is influenced by the [SQLite Language Specificat
 You will find an extensive usage of the composite pattern.
 
 ## How to use
-If you want to let the Entity Framework create the database, if it does not exist, just set `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists` as your `IDbInitializer`.
+If you want to let the Entity Framework create the database, if it does not exist, just set `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists<>` as your `IDbInitializer<>`.
 ```csharp
 public class MyDbContext : DbContext
 {
@@ -36,7 +36,7 @@ public class MyDbContext : DbContext
 ```
 
 In a more advanced scenario you may want to populate some core- or test-data after the database was created.
-To do this, inherit from `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists` and override the `Seed(MyDbContext context)` function.
+To do this, inherit from `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists<>` and override the `Seed(MyDbContext context)` function.
 This function will be called, in a own transaction, right after the database was created. This function is only executed if a new database was successfully created.
 ```csharp
 public class MyDbContextContextInitializer : SqliteDropCreateDatabaseAlways<MyDbContext>
