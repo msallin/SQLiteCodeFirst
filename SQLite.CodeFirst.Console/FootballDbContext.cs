@@ -21,9 +21,11 @@ namespace SQLite.CodeFirst.Console
             ConfigurePlayerEntity(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            // Workaround to support the [Timestamp] annotation
+            modelBuilder.Conventions.Remove<TimestampAttributeConvention>();
 
-            var sqliteConnectionInitializer = new TestDbContextInitializer(Database.Connection.ConnectionString, modelBuilder);
-            Database.SetInitializer(sqliteConnectionInitializer);
+            var initializer = new FootballDbInitializer(Database.Connection.ConnectionString, modelBuilder);
+            Database.SetInitializer(initializer);
         }
 
         private static void ConfigureTeamEntity(DbModelBuilder modelBuilder)
@@ -45,9 +47,9 @@ namespace SQLite.CodeFirst.Console
         }
     }
 
-    public class TestDbContextInitializer : SqliteContextInitializer<FootballDbContext>
+    public class FootballDbInitializer : SqliteDropCreateDatabaseAlwaysInitializerBase<FootballDbContext>
     {
-        public TestDbContextInitializer(string connectionString, DbModelBuilder modelBuilder)
+        public FootballDbInitializer(string connectionString, DbModelBuilder modelBuilder)
             : base(connectionString, modelBuilder) { }
 
         protected override void Seed(FootballDbContext context)

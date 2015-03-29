@@ -1,30 +1,23 @@
 using System;
 using System.Data.Entity;
-using System.IO;
 
 namespace SQLite.CodeFirst
 {
-    public class SqliteContextInitializer<TDbContext> : IDatabaseInitializer<TDbContext>
-        where TDbContext : DbContext
+    public abstract class SqliteInitializerBase<TContext> : IDatabaseInitializer<TContext>
+        where TContext : DbContext
     {
-        protected readonly bool dbExists;
-        protected readonly DbModelBuilder modelBuilder;
+        protected readonly DbModelBuilder ModelBuilder;
+        protected readonly string DatabaseFilePath;
 
-        public SqliteContextInitializer(string connectionString, DbModelBuilder modelBuilder)
+        protected SqliteInitializerBase(string connectionString, DbModelBuilder modelBuilder)
         {
-            string path = SqliteConnectionStringParser.GetDataSource(connectionString);
-            dbExists = File.Exists(path);
-            this.modelBuilder = modelBuilder;
+            DatabaseFilePath = SqliteConnectionStringParser.GetDataSource(connectionString);
+            ModelBuilder = modelBuilder;
         }
 
-        public virtual void InitializeDatabase(TDbContext context)
+        public virtual void InitializeDatabase(TContext context)
         {
-            if (dbExists)
-            {
-                return;
-            }
-
-            var model = modelBuilder.Build(context.Database.Connection);
+            var model = ModelBuilder.Build(context.Database.Connection);
 
             using (var transaction = context.Database.BeginTransaction())
             {
@@ -57,6 +50,6 @@ namespace SQLite.CodeFirst
             }
         }
 
-        protected virtual void Seed(TDbContext context) { }
+        protected virtual void Seed(TContext context) { }
     }
 }

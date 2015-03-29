@@ -53,11 +53,13 @@
     <Compile Include="Builder\ForeignKeyStatementBuilder.cs" />
     <Compile Include="Builder\CreateDatabaseStatementBuilder.cs" />
     <Compile Include="Builder\PrimaryKeyStatementBuilder.cs" />
+    <Compile Include="SqliteCreateDatabaseIfNotExists.cs" />
+    <Compile Include="SqliteDropCreateDatabaseAlways.cs" />
     <Compile Include="Statement\ColumnConstraint\MaxLengthConstraint.cs" />
     <Compile Include="Statement\PrimaryKeyStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqliteConnectionStringParser.cs" />
-    <Compile Include="SqliteContextInitializer.cs" />
+    <Compile Include="SqliteInitializerBase.cs" />
     <Compile Include="Builder\IStatementBuilder.cs" />
     <Compile Include="SqliteDatabaseCreator.cs" />
     <Compile Include="Statement\ColumnConstraint\ColumnConstraintCollection.cs" />

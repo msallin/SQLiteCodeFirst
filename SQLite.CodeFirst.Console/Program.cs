@@ -1,5 +1,4 @@
-﻿using System.IO;
-using SQLite.CodeFirst.Console.Entity;
+﻿using SQLite.CodeFirst.Console.Entity;
 
 namespace SQLite.CodeFirst.Console
 {
@@ -9,25 +8,11 @@ namespace SQLite.CodeFirst.Console
         {
             System.Console.WriteLine("Starting Demo Application");
 
-            ClearExistingDbFile();
-
             var context = CreateAndSeedDatabase();
 
             DisplaySeededData(context);
 
             PressEnterToExit();
-        }
-
-        private static void ClearExistingDbFile()
-        {
-            System.Console.WriteLine("Check for existing db file.");
-            const string SqliteFilePath = @".\footballDb.sqlite";
-            if (File.Exists(SqliteFilePath))
-            {
-                System.Console.WriteLine("Delete existing db file.");
-                File.Delete(SqliteFilePath);
-            }
-            System.Console.WriteLine();
         }
 
         private static FootballDbContext CreateAndSeedDatabase()
