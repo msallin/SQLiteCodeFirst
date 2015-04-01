@@ -1,5 +1,6 @@
 using System;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace SQLite.CodeFirst
 {
@@ -13,6 +14,10 @@ namespace SQLite.CodeFirst
         {
             DatabaseFilePath = SqliteConnectionStringParser.GetDataSource(connectionString);
             ModelBuilder = modelBuilder;
+
+            // This convention will crash the SQLite Provider before "InitializeDatabase" gets called.
+            // See https://github.com/msallin/SQLiteCodeFirst/issues/7 for details.
+            modelBuilder.Conventions.Remove<TimestampAttributeConvention>();
         }
 
         public virtual void InitializeDatabase(TContext context)

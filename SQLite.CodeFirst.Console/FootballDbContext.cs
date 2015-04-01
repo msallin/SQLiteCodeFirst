@@ -21,8 +21,6 @@ namespace SQLite.CodeFirst.Console
             ConfigurePlayerEntity(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            // Workaround to support the [Timestamp] annotation
-            modelBuilder.Conventions.Remove<TimestampAttributeConvention>();
 
             var initializer = new FootballDbInitializer(Database.Connection.ConnectionString, modelBuilder);
             Database.SetInitializer(initializer);
