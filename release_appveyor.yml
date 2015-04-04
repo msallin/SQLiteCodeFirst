@@ -1,8 +1,14 @@
+# See http://www.appveyor.com/docs/appveyor-yml for many more options
+
 version: Release_{branch}_0.9.{build}.0
 branches:
   only:
   - master
 skip_tags: true
+# Skip on updates to the readme.
+# We can force this by adding [skip ci] or [ci skip] anywhere in commit message
+skip_commits:
+  message: /Update (README.md|LICENSE|.gitignore|.gitattributes)*/ 
 configuration: Release
 platform: Any CPU
 assembly_info:
