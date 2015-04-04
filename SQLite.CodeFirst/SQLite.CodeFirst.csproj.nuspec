@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SQLite.CodeFirst</id>
+    <version>0.9.0</version>
+    <authors>Marc Sallin</authors>
+    <owners>Marc</owners>
+    <licenseUrl>https://github.com/msallin/SQLiteCodeFirst/blob/CI_Test/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/msallin/SQLiteCodeFirst</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Creates a SQLite Database from Code, using Entity Framework CodeFirst.
+      This Project ships several IDbInitializer which creates a new SQLite Database, based on your model/code.
+    </description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>SQLite EntityFramework EF CodeFirst</tags>
+    <dependencies>
+      <package id="EntityFramework" version="6)" />
+    </dependencies>
+  </metadata>
+</package>
