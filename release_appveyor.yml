@@ -1,0 +1,48 @@
+# See http://www.appveyor.com/docs/appveyor-yml for many more options
+
+version: Release_{branch}_0.9.{build}.0
+branches:
+  only:
+  - master
+skip_tags: true
+# Skip on updates to the readme.
+# We can force this by adding [skip ci] or [ci skip] anywhere in commit message
+skip_commits:
+  message: /Update (README.md|LICENSE|.gitignore|.gitattributes)*/ 
+configuration: Release
+platform: Any CPU
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: 0.9.{build}.0
+  assembly_file_version: 0.9.{build}.0
+  assembly_informational_version: 0.9.{build}.0
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: normal
+artifacts:
+- path: SQLite.CodeFirst\bin\*\SQLite.CodeFirst.dll
+  name: SQLiteCodeFirst
+deploy:
+- provider: NuGet
+  api_key:
+    secure: QmbFnerlfTAFUZpnaPgVDywMH4fF8rVakefmqvhu3qm9SpuDlLGB9S4HwtdE3Nep
+  on:
+    branch: master
+- provider: GitHub
+  tag: v$(appveyor_build_version)
+  release: v$(appveyor_build_version)
+  description: https://www.nuget.org/packages/SQLite.CodeFirst/
+  auth_token:
+    secure: e3cqaFy9PzI9TAdZJBIDy97Bfbwa7j0EXe2yw7Ev9aJXK0Q+3mnULqb1VU4P7BWR
+  artifact: SQLiteCodeFirst
+  draft: true
+  on:
+    branch: master
+notifications:
+- provider: Webhook
+  url: https://zapier.com/hooks/catch/b3cbz0/
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: false
