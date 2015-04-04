@@ -13,6 +13,15 @@ namespace SQLite.CodeFirst
         protected SqliteInitializerBase(string connectionString, DbModelBuilder modelBuilder)
         {
             DatabaseFilePath = SqliteConnectionStringParser.GetDataSource(connectionString);
+
+            var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory") as string;
+            if (!string.IsNullOrWhiteSpace(dataDirectory))
+            {
+              var separator = Path.DirectorySeparatorChar.ToString();
+              if (!dataDirectory.EndsWith(separator)) dataDirectory += separator;
+              DatabaseFilePath = DatabaseFilePath.Replace("|DataDirectory|", dataDirectory);
+            }
+      
             ModelBuilder = modelBuilder;
 
             // This convention will crash the SQLite Provider before "InitializeDatabase" gets called.
