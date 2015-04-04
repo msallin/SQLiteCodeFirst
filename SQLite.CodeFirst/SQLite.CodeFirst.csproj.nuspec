@@ -1,17 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>SQLite.CodeFirst</id>
+    <id>$id$</id>
     <version>$version$</version>
-    <authors>Marc Sallin</authors>
-    <owners>Marc Sallin</owners>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
     <licenseUrl>https://github.com/msallin/SQLiteCodeFirst/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/msallin/SQLiteCodeFirst</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>
-      Creates a SQLite Database from Code, using Entity Framework CodeFirst.
-      This Project ships several IDbInitializer which creates a new SQLite Database, based on your model/code.
-    </description>
+    <description>$description$</description>
     <summary>Creates a SQLite Database from Code, using Entity Framework CodeFirst.</summary>
     <releaseNotes />
     <copyright>Copyright (C) Marc Sallin</copyright>
@@ -26,6 +23,6 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="bin\Release\SQLite.CodeFirst.dll" target="lib\net45\SQLite.CodeFirst.dll" />
+    <file src="bin\$configuration$\$id$.dll" target="lib\net45\SQLite.CodeFirst.dll" />
   </files>
 </package>
