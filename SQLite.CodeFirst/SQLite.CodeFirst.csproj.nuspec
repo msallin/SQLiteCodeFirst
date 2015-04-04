@@ -14,7 +14,7 @@
     </description>
     <summary>Creates a SQLite Database from Code, using Entity Framework CodeFirst.</summary>
     <releaseNotes />
-    <copyright>Copyright 2015</copyright>
+    <copyright>Copyright (C) Marc Sallin</copyright>
     <tags>SQLite EntityFramework EF CodeFirst</tags>
     <dependencies>
       <dependency id="EntityFramework" version="6.1" />
