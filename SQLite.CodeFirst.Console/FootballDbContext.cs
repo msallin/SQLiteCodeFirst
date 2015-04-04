@@ -45,7 +45,7 @@ namespace SQLite.CodeFirst.Console
         }
     }
 
-    public class FootballDbInitializer : SqliteDropCreateDatabaseAlwaysInitializerBase<FootballDbContext>
+    public class FootballDbInitializer : SqliteDropCreateDatabaseAlways<FootballDbContext>
     {
         public FootballDbInitializer(string connectionString, DbModelBuilder modelBuilder)
             : base(connectionString, modelBuilder) { }
