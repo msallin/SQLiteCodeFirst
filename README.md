@@ -23,6 +23,8 @@ The structure of the statements is influenced by the [SQLite Language Specificat
 You will find an extensive usage of the composite pattern.
 
 ## How to use
+Either get the assembly from the latest [release](https://github.com/msallin/SQLiteCodeFirst/releases) or install the NuGet-Package [SQLite.CodeFirst](https://www.nuget.org/packages/SQLite.CodeFirst/).
+
 If you want to let the Entity Framework create the database, if it does not exist, just set `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists<>` as your `IDbInitializer<>`.
 ```csharp
 public class MyDbContext : DbContext
