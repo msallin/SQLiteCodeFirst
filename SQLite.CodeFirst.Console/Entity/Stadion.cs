@@ -7,10 +7,12 @@ namespace SQLite.CodeFirst.Console.Entity
     {
         [Key]
         [Column(Order = 1)]
+        [Index("IX_Main", Order = 2)]
         public string Name { get; set; }
 
         [Key]
         [Column(Order = 2)]
+        [Index("IX_Main", Order = 1)]
         public string Street { get; set; }
 
         [Key]
