@@ -22,8 +22,8 @@ namespace SQLite.CodeFirst.Console
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            var sqliteConnectionInitializer = new TestDbContextInitializer(Database.Connection.ConnectionString, modelBuilder);
-            Database.SetInitializer(sqliteConnectionInitializer);
+            var initializer = new FootballDbInitializer(Database.Connection.ConnectionString, modelBuilder);
+            Database.SetInitializer(initializer);
         }
 
         private static void ConfigureTeamEntity(DbModelBuilder modelBuilder)
@@ -45,9 +45,9 @@ namespace SQLite.CodeFirst.Console
         }
     }
 
-    public class TestDbContextInitializer : SqliteContextInitializer<FootballDbContext>
+    public class FootballDbInitializer : SqliteDropCreateDatabaseAlways<FootballDbContext>
     {
-        public TestDbContextInitializer(string connectionString, DbModelBuilder modelBuilder)
+        public FootballDbInitializer(string connectionString, DbModelBuilder modelBuilder)
             : base(connectionString, modelBuilder) { }
 
         protected override void Seed(FootballDbContext context)
