@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
+using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Statement;
 
 namespace SQLite.CodeFirst.Builder
@@ -22,27 +22,16 @@ namespace SQLite.CodeFirst.Builder
             var primaryKeyStatement = new PrimaryKeyStatementBuilder(entityType.KeyMembers).BuildStatement();
             var foreignKeyCollection = new ForeignKeyStatementBuilder(associationTypes).BuildStatement();
 
-            List<IStatement> columnStatements = new List<IStatement>();
+            var columnStatements = new List<IStatement>();
             columnStatements.AddRange(simpleColumnCollection);
             columnStatements.Add(primaryKeyStatement);
             columnStatements.AddRange(foreignKeyCollection);
 
             return new CreateTableStatement
             {
-                TableName = GetTableName(),
+                TableName = entityType.GetTableName(),
                 ColumnStatementCollection = new ColumnStatementCollection(columnStatements)
             };
-        }
-
-        private string GetTableName()
-        {
-            MetadataProperty metadataProperty;
-            if (entityType.MetadataProperties.TryGetValue("TableName", false, out metadataProperty))
-            {
-                return metadataProperty.Value.ToString();
-            }
-
-            return entityType.Name;
         }
     }
 }
