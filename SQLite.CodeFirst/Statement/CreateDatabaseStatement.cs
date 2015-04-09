@@ -5,23 +5,23 @@ using System.Linq;
 
 namespace SQLite.CodeFirst.Statement
 {
-    internal class CreateDatabaseStatement : Collection<CreateTableStatement>, IStatement
+    internal class CreateDatabaseStatement : Collection<IStatement>, IStatement
     {
-        private const string CreateTableStatementSeperator = "\r\n";
+        private const string StatementSeperator = "\r\n";
 
         public CreateDatabaseStatement() { }
 
-        public CreateDatabaseStatement(IEnumerable<CreateTableStatement> createTableStatements)
+        public CreateDatabaseStatement(IEnumerable<IStatement> statements)
         {
-            foreach (var createTableStatement in createTableStatements)
+            foreach (var statement in statements)
             {
-                Add(createTableStatement);
+                Add(statement);
             }
         }
 
         public string CreateStatement()
         {
-            return String.Join(CreateTableStatementSeperator, this.Select(c => c.CreateStatement()));
+            return String.Join(StatementSeperator, this.Select(c => c.CreateStatement()));
         }
     }
 }

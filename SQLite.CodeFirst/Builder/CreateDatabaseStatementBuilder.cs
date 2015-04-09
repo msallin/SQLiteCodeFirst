@@ -16,7 +16,10 @@ namespace SQLite.CodeFirst.Builder
 
         public CreateDatabaseStatement BuildStatement()
         {
-            var createDatabaseStatement = new CreateDatabaseStatement(GetCreateTableStatements());
+            var createTableStatements = GetCreateTableStatements();
+            var createIndexStatements = GetCreateIndexStatements();
+            var createStatements = createTableStatements.Concat<IStatement>(createIndexStatements);
+            var createDatabaseStatement = new CreateDatabaseStatement(createStatements);
             return createDatabaseStatement;
         }
 
@@ -29,6 +32,15 @@ namespace SQLite.CodeFirst.Builder
 
                 var tableStatementBuilder = new CreateTableStatementBuilder(entityType, associationTypes);
                 yield return tableStatementBuilder.BuildStatement();
+            }
+        }
+
+        private IEnumerable<CreateIndexStatementCollection> GetCreateIndexStatements()
+        {
+            foreach (var entityType in edmModel.EntityTypes)
+            {
+                var indexStatementBuilder = new CreateIndexStatementBuilder(entityType);
+                yield return indexStatementBuilder.BuildStatement();
             }
         }
     }
