@@ -58,5 +58,5 @@ public class MyDbContextContextInitializer : SqliteDropCreateDatabaseAlways<MyDb
 ```
 
 ## Hints
-If you try to reinstall the NuGet-Packages (e.g. if you want to downgrade to .NET 4.0) the app.config will be overwritten and you may gettubg an exception when you try to run the console project.
+If you try to reinstall the NuGet-Packages (e.g. if you want to downgrade to .NET 4.0) the app.config will be overwritten and you may getting an exception when you try to run the console project.
 In this case please check the following issue: https://github.com/msallin/SQLiteCodeFirst/issues/13.
