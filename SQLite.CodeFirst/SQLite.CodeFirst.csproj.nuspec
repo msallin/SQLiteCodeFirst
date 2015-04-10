@@ -23,6 +23,7 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="bin\$configuration$\$id$.dll" target="lib\net45\SQLite.CodeFirst.dll" />
+    <file src="bin\Release-40\$id$.dll" target="lib\net40\SQLite.CodeFirst.dll" />
+    <file src="bin\Release-45\$id$.dll" target="lib\net45\SQLite.CodeFirst.dll" />
   </files>
 </package>
