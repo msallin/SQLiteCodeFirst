@@ -3,7 +3,6 @@ branches:
   only:
   - master
 skip_tags: true
-configuration: Release
 platform: Any CPU
 assembly_info:
   patch: true
@@ -12,12 +11,24 @@ assembly_info:
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
 build:
-  publish_nuget: true
-  publish_nuget_symbols: true
+  project: BuildAllConfigurations.proj
   verbosity: normal
+after_build:
+- ps: >-
+    Write-Host $env:APPVEYOR_BUILD_FOLDER
+
+    cd $env:APPVEYOR_BUILD_FOLDER
+
+    cd '.nuget'
+
+    ./nuget.exe pack '..\SQLite.CodeFirst\SQLite.CodeFirst.csproj' -Properties -Symbols -OutputDirectory '..\SQLite.CodeFirst\bin'
 artifacts:
-- path: SQLite.CodeFirst\bin\*\SQLite.CodeFirst.dll
-  name: SQLiteCodeFirst
+- path: SQLite.CodeFirst\bin\Debug**\SQLite.CodeFirst.*
+  name: Debug
+- path: SQLite.CodeFirst\bin\Release\**\SQLite.CodeFirst.dll
+  name: Release
+- path: SQLite.CodeFirst\bin\*.nupkg
+  name: NuPkg
 deploy:
 - provider: NuGet
   api_key:
@@ -30,7 +41,7 @@ deploy:
   description: https://www.nuget.org/packages/SQLite.CodeFirst/
   auth_token:
     secure: e3cqaFy9PzI9TAdZJBIDy97Bfbwa7j0EXe2yw7Ev9aJXK0Q+3mnULqb1VU4P7BWR
-  artifact: SQLiteCodeFirst
+  artifact: Release
   draft: true
   on:
     branch: master
