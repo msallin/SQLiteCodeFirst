@@ -16,53 +16,46 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <!-- Debug Configuration -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-40|AnyCPU'">
+  <!-- <Debug Configuration> -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-40|AnyCPU' OR '$(Configuration)|$(Platform)' == 'Debug-45|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug-40\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-40|AnyCPU'">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <OutputPath>bin\Debug-40\</OutputPath>
+    <OutputPath>bin\Debug\net40</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-45|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug-45\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-	<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\net45</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <!-- Release Configuration -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-40|AnyCPU'">
-    <OutputPath>bin\Release-40\</OutputPath>
+  <!-- </Debug Configuration> -->
+  <!-- <Release Configuration> -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-40|AnyCPU' OR '$(Configuration)|$(Platform)' == 'Release-45|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-	<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-45|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release-45\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-	<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-40|AnyCPU'">
+    <OutputPath>bin\Release\net40</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-45|AnyCPU' ">
+    <OutputPath>bin\Release\net45</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <!-- </Release Configuration> -->
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <!-- TargetFrameworkVersion depended references -->
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-40|AnyCPU' OR '$(Configuration)|$(Platform)' == 'Release-40|AnyCPU'">
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net40\EntityFramework.dll</HintPath>
@@ -122,11 +115,4 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

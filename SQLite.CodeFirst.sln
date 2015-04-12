@@ -18,8 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{7031BD3C
 	ProjectSection(SolutionItems) = preProject
 		BuildAllConfigurations.proj = BuildAllConfigurations.proj
 		release_appveyor.yml = release_appveyor.yml
-		ReleaseBuild.proj = ReleaseBuild.proj
-		SQLite.CodeFirst.csproj.nuspec = SQLite.CodeFirst.csproj.nuspec
 	EndProjectSection
 EndProject
 Global
