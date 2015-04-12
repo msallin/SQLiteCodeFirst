@@ -23,6 +23,9 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="bin\$configuration$\$id$.dll" target="lib\net45\SQLite.CodeFirst.dll" />
+    <!-- Exclude all debug stuff  -->
+    <file src="bin\Debug\**\$id$.dll" target="lib" exclude="bin\Debug\**" />
+    <!-- Include the release dlls -->
+    <file src="bin\Release\**\$id$.dll" target="lib" />
   </files>
 </package>
