@@ -16,12 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{01B97A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{7031BD3C-AE76-43CD-91B6-B6BCD823968C}"
 	ProjectSection(SolutionItems) = preProject
-		release_appveyor.yml = release_appveyor.yml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C3AEBA35-BAAE-43B6-B698-65CD15EB5C2B}"
-	ProjectSection(SolutionItems) = preProject
 		BuildAllConfigurations.proj = BuildAllConfigurations.proj
+		release_appveyor.yml = release_appveyor.yml
+		ReleaseBuild.proj = ReleaseBuild.proj
+		SQLite.CodeFirst.csproj.nuspec = SQLite.CodeFirst.csproj.nuspec
 	EndProjectSection
 EndProject
 Global
