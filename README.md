@@ -23,9 +23,17 @@ The Builder knows how to translate the EdmModel into statements where a statemen
 The structure of the statements is influenced by the [SQLite Language Specification](https://www.sqlite.org/lang.html).
 You will find an extensive usage of the composite pattern.
 
-## How to use
-Either get the assembly from the latest [release](https://github.com/msallin/SQLiteCodeFirst/releases) or install the NuGet-Package [SQLite.CodeFirst](https://www.nuget.org/packages/SQLite.CodeFirst/).
+## Install
+Either get the assembly from the latest [GitHub Release Page](https://github.com/msallin/SQLiteCodeFirst/releases) or install the NuGet-Package [SQLite.CodeFirst](https://www.nuget.org/packages/SQLite.CodeFirst/) (`PM> Install-Package SQLite.CodeFirst`).
 
+The project is builded for the target frameworks 4.0 and 4.5.
+That means you can use the SQLite CodeFirst in projects with the following target frameworks.
+- .NET 4.0 (use net40)
+- .NET 4.5 (use net45)
+- .NET 4.5.1 (use net45)
+- .NET 4.5.2 (use net45)
+
+## How to use
 If you want to let the Entity Framework create the database, if it does not exist, just set `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists<>` as your `IDbInitializer<>`.
 ```csharp
 public class MyDbContext : DbContext
