@@ -12,7 +12,7 @@ Currently the following is supported:
 - Tables from classes (supported annotations: `Table`)
 - Columns from properties (supported annotations: `Column`, `Key`, `MaxLength`, `Required`, `NotMapped`, `DatabaseGenerated`, `Index`)
 - PrimaryKey constraint (`Key` annotation, key composites are supported)
-- ForeignKey constraint (1-n relationships, support for 'Cascade on delete)'
+- ForeignKey constraint (1-n relationships, support for 'Cascade on delete')
 - Not Null constraint
 - Auto increment (An int PrimaryKey will automatically be incremented)
 - Index (Decorate columns with the `Index` attribute. Indices are automatically created for foreign keys by default. To prevent this you can remove the convetion `ForeignKeyIndexConvention`)
