@@ -6,15 +6,17 @@ namespace SQLite.CodeFirst
     public class SqliteDropCreateDatabaseAlways<TContext> : SqliteInitializerBase<TContext>
         where TContext : DbContext
     {
-        public SqliteDropCreateDatabaseAlways(string connectionString, DbModelBuilder modelBuilder)
-            : base(connectionString, modelBuilder) { }
+        public SqliteDropCreateDatabaseAlways(DbModelBuilder modelBuilder)
+            : base(modelBuilder) { }
 
         public override void InitializeDatabase(TContext context)
         {
-            bool dbExists = File.Exists(DatabaseFilePath);
+            string databseFilePath = GetDatabasePathFromContext(context);
+
+            bool dbExists = File.Exists(databseFilePath);
             if (dbExists)
             {
-                File.Delete(DatabaseFilePath);
+                File.Delete(databseFilePath);
             }
 
             base.InitializeDatabase(context);

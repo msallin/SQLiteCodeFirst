@@ -6,12 +6,14 @@ namespace SQLite.CodeFirst
     public class SqliteCreateDatabaseIfNotExists<TContext> : SqliteInitializerBase<TContext>
         where TContext : DbContext
     {
-        public SqliteCreateDatabaseIfNotExists(string connectionString, DbModelBuilder modelBuilder)
-            : base(connectionString, modelBuilder) { }
+        public SqliteCreateDatabaseIfNotExists(DbModelBuilder modelBuilder)
+            : base(modelBuilder) { }
 
         public override void InitializeDatabase(TContext context)
         {
-            bool dbExists = File.Exists(DatabaseFilePath);
+            string databseFilePath = GetDatabasePathFromContext(context);
+
+            bool dbExists = File.Exists(databseFilePath);
             if (dbExists)
             {
                 return;

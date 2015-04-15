@@ -22,7 +22,7 @@ namespace SQLite.CodeFirst.Console
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            var initializer = new FootballDbInitializer(Database.Connection.ConnectionString, modelBuilder);
+            var initializer = new FootballDbInitializer(modelBuilder);
             Database.SetInitializer(initializer);
         }
 
@@ -47,8 +47,8 @@ namespace SQLite.CodeFirst.Console
 
     public class FootballDbInitializer : SqliteDropCreateDatabaseAlways<FootballDbContext>
     {
-        public FootballDbInitializer(string connectionString, DbModelBuilder modelBuilder)
-            : base(connectionString, modelBuilder) { }
+        public FootballDbInitializer(DbModelBuilder modelBuilder)
+            : base(modelBuilder) { }
 
         protected override void Seed(FootballDbContext context)
         {
