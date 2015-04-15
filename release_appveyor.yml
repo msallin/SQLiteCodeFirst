@@ -15,8 +15,6 @@ build:
   verbosity: normal
 after_build:
 - ps: >-
-    Write-Host $env:APPVEYOR_BUILD_FOLDER
-
     cd $env:APPVEYOR_BUILD_FOLDER
 
     cd '.nuget'
