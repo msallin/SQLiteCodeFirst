@@ -23,10 +23,8 @@ after_build:
 
     ./nuget.exe pack '..\SQLite.CodeFirst\SQLite.CodeFirst.csproj' -Properties -Symbols -OutputDirectory '..\SQLite.CodeFirst\bin'
 artifacts:
-- path: SQLite.CodeFirst\bin\Debug**\SQLite.CodeFirst.*
-  name: Debug
-- path: SQLite.CodeFirst\bin\Release\**\SQLite.CodeFirst.dll
-  name: Release
+- path: SQLite.CodeFirst\bin
+  name: Assemblies
 - path: SQLite.CodeFirst\bin\*.nupkg
   name: NuPkg
 deploy:
