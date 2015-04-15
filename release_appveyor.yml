@@ -39,7 +39,7 @@ deploy:
   description: https://www.nuget.org/packages/SQLite.CodeFirst/
   auth_token:
     secure: e3cqaFy9PzI9TAdZJBIDy97Bfbwa7j0EXe2yw7Ev9aJXK0Q+3mnULqb1VU4P7BWR
-  artifact: Release
+  artifact: Assemblies,NuPkg
   draft: true
   on:
     branch: master
