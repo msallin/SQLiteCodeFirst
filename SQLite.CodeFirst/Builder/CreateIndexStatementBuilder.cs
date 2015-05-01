@@ -31,7 +31,7 @@ namespace SQLite.CodeFirst.Builder
                 foreach (var index in indexAnnotations.SelectMany(ia => ia.Indexes))
                 {
                     CreateIndexStatement createIndexStatement;
-                    string indexName = GetIndexName(index, edmProperty);
+                    string indexName = GetIndexName(entityType, edmProperty, index);
                     if (!createIndexStatments.TryGetValue(indexName, out createIndexStatement))
                     {
                         createIndexStatement = new CreateIndexStatement
@@ -55,9 +55,9 @@ namespace SQLite.CodeFirst.Builder
             return new CreateIndexStatementCollection(createIndexStatments.Values);
         }
 
-        private static string GetIndexName(IndexAttribute index, EdmProperty property)
+        private static string GetIndexName(EntityType entityType, EdmProperty property, IndexAttribute index)
         {
-            return index.Name ?? "IX_" + property.Name;
+            return index.Name ?? string.Format("IX_{0}_{1}", entityType.GetTableName(), property.Name);
         }
     }
 }
