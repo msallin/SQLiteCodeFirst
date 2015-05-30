@@ -20,7 +20,9 @@ namespace SQLite.CodeFirst
             foreach (var keyValuePair in keyValuePairs)
             {
                 string[] keyValue = keyValuePair.Split(KeyValueSeperator);
-                keyValuePairDictionary.Add(keyValue[KeyPosition].ToLower(), keyValue[ValuePosition]);
+                if (keyValue.Length >= 2){
+                    keyValuePairDictionary.Add(keyValue[KeyPosition].ToLower(), keyValue[ValuePosition]);
+                }
             }
 
             return keyValuePairDictionary;
