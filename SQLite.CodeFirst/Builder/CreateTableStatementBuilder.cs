@@ -7,19 +7,19 @@ namespace SQLite.CodeFirst.Builder
 {
     internal class CreateTableStatementBuilder : IStatementBuilder<CreateTableStatement>
     {
-        private readonly EntityType entityType;
+        private readonly EntitySet entitySet;
         private readonly IEnumerable<AssociationType> associationTypes;
 
-        public CreateTableStatementBuilder(EntityType entityType, IEnumerable<AssociationType> associationTypes)
+        public CreateTableStatementBuilder(EntitySet entitySet, IEnumerable<AssociationType> associationTypes)
         {
-            this.entityType = entityType;
+            this.entitySet = entitySet;
             this.associationTypes = associationTypes;
         }
 
         public CreateTableStatement BuildStatement()
         {
-            var simpleColumnCollection = new ColumnStatementCollectionBuilder(entityType.Properties).BuildStatement();
-            var primaryKeyStatement = new PrimaryKeyStatementBuilder(entityType.KeyMembers).BuildStatement();
+            var simpleColumnCollection = new ColumnStatementCollectionBuilder(entitySet.ElementType.Properties).BuildStatement();
+            var primaryKeyStatement = new PrimaryKeyStatementBuilder(entitySet.ElementType.KeyMembers).BuildStatement();
             var foreignKeyCollection = new ForeignKeyStatementBuilder(associationTypes).BuildStatement();
 
             var columnStatements = new List<IStatement>();
@@ -29,7 +29,7 @@ namespace SQLite.CodeFirst.Builder
 
             return new CreateTableStatement
             {
-                TableName = entityType.GetTableName(),
+                TableName = entitySet.Table,
                 ColumnStatementCollection = new ColumnStatementCollection(columnStatements)
             };
         }
