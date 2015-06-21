@@ -15,18 +15,14 @@ build:
   verbosity: normal
 after_build:
 - ps: >-
-    Write-Host $env:APPVEYOR_BUILD_FOLDER
-
     cd $env:APPVEYOR_BUILD_FOLDER
 
     cd '.nuget'
 
     ./nuget.exe pack '..\SQLite.CodeFirst\SQLite.CodeFirst.csproj' -Properties -Symbols -OutputDirectory '..\SQLite.CodeFirst\bin'
 artifacts:
-- path: SQLite.CodeFirst\bin\Debug**\SQLite.CodeFirst.*
-  name: Debug
-- path: SQLite.CodeFirst\bin\Release\**\SQLite.CodeFirst.dll
-  name: Release
+- path: SQLite.CodeFirst\bin
+  name: Assemblies
 - path: SQLite.CodeFirst\bin\*.nupkg
   name: NuPkg
 deploy:
@@ -41,7 +37,7 @@ deploy:
   description: https://www.nuget.org/packages/SQLite.CodeFirst/
   auth_token:
     secure: e3cqaFy9PzI9TAdZJBIDy97Bfbwa7j0EXe2yw7Ev9aJXK0Q+3mnULqb1VU4P7BWR
-  artifact: Release
+  artifact: Assemblies,NuPkg
   draft: true
   on:
     branch: master
