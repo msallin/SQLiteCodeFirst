@@ -8,7 +8,7 @@ namespace SQLite.CodeFirst.Console.Entity
     {
         public int Id { get; set; }
 
-        [Index] // Automatically named 'IX_FirstName'
+        [Index] // Automatically named 'IX_TeamPlayer_FirstName'
         [MaxLength(50)]
         public string FirstName { get; set; }
 
