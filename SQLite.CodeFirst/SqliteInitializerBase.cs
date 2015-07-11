@@ -7,13 +7,11 @@ namespace SQLite.CodeFirst
     public abstract class SqliteInitializerBase<TContext> : IDatabaseInitializer<TContext>
         where TContext : DbContext
     {
-        protected readonly DbModelBuilder ModelBuilder;
-        protected readonly string DatabaseFilePath;
+        private readonly DbModelBuilder modelBuilder;
 
-        protected SqliteInitializerBase(string connectionString, DbModelBuilder modelBuilder)
+        protected SqliteInitializerBase(DbModelBuilder modelBuilder)
         {
-            DatabaseFilePath = SqliteConnectionStringParser.GetDataSource(connectionString);
-            ModelBuilder = modelBuilder;
+            this.modelBuilder = modelBuilder;
 
             // This convention will crash the SQLite Provider before "InitializeDatabase" gets called.
             // See https://github.com/msallin/SQLiteCodeFirst/issues/7 for details.
@@ -22,7 +20,7 @@ namespace SQLite.CodeFirst
 
         public virtual void InitializeDatabase(TContext context)
         {
-            var model = ModelBuilder.Build(context.Database.Connection);
+            var model = modelBuilder.Build(context.Database.Connection);
 
             using (var transaction = context.Database.BeginTransaction())
             {
@@ -56,5 +54,10 @@ namespace SQLite.CodeFirst
         }
 
         protected virtual void Seed(TContext context) { }
+
+        protected string GetDatabasePathFromContext(TContext context)
+        {
+            return SqliteConnectionStringParser.GetDataSource(context.Database.Connection.ConnectionString);
+        }
     }
 }
