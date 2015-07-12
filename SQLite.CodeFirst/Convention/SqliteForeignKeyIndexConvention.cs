@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite.CodeFirst.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Core.Metadata.Edm;
@@ -52,7 +53,7 @@ namespace SQLite.CodeFirst.Convention
                     var foreignKeyIndicies = annotation.Indexes.Where(index => index.Name == "IX_" + edmProperty.Name);
                     foreach (var foreignKeyIndex in foreignKeyIndicies)
                     {
-                        var indexAttribute = new IndexAttribute(string.Format("IX_{0}_{1}", item.Constraint.ToRole.Name, edmProperty.Name));
+                        var indexAttribute = new IndexAttribute(string.Format("IX_{0}_{1}", item.Constraint.ToRole.GetEntityType().GetTableName(), edmProperty.Name));
                         IndexAnnotation foreignKeyIndexAnnotation = new IndexAnnotation(indexAttribute);
                         newIndexAnnotation = (IndexAnnotation)newIndexAnnotation.MergeWith(foreignKeyIndexAnnotation);
                     }

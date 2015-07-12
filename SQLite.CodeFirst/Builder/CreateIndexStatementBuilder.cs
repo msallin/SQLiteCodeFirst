@@ -31,7 +31,7 @@ namespace SQLite.CodeFirst.Builder
                 foreach (var index in indexAnnotations.SelectMany(ia => ia.Indexes))
                 {
                     CreateIndexStatement createIndexStatement;
-                    string indexName = GetIndexName(entityType, edmProperty, index);
+                    string indexName = GetIndexName(index, edmProperty);
                     if (!createIndexStatments.TryGetValue(indexName, out createIndexStatement))
                     {
                         createIndexStatement = new CreateIndexStatement
