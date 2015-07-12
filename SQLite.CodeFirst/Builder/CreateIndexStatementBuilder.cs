@@ -11,18 +11,18 @@ namespace SQLite.CodeFirst.Builder
 {
     internal class CreateIndexStatementBuilder : IStatementBuilder<CreateIndexStatementCollection>
     {
-        private readonly EntityType entityType;
+        private readonly EntitySet entitySet;
 
-        public CreateIndexStatementBuilder(EntityType entityType)
+        public CreateIndexStatementBuilder(EntitySet entitySet)
         {
-            this.entityType = entityType;
+            this.entitySet = entitySet;
         }
 
         public CreateIndexStatementCollection BuildStatement()
         {
             IDictionary<string, CreateIndexStatement> createIndexStatments = new Dictionary<string, CreateIndexStatement>();
 
-            foreach (var edmProperty in entityType.Properties)
+            foreach (var edmProperty in entitySet.ElementType.Properties)
             {
                 var indexAnnotations = edmProperty.MetadataProperties
                     .Select(x => x.Value)
@@ -38,7 +38,7 @@ namespace SQLite.CodeFirst.Builder
                         {
                             IsUnique = index.IsUnique,
                             Name = indexName,
-                            Table = entityType.GetTableName(),
+                            Table = entitySet.Table,
                             Columns = new Collection<CreateIndexStatement.IndexColumn>()
                         };
                         createIndexStatments.Add(indexName, createIndexStatement);
@@ -55,9 +55,9 @@ namespace SQLite.CodeFirst.Builder
             return new CreateIndexStatementCollection(createIndexStatments.Values);
         }
 
-        private static string GetIndexName(EntityType entityType, EdmProperty property, IndexAttribute index)
+        private string GetIndexName(IndexAttribute index, EdmProperty property)
         {
-            return index.Name ?? string.Format("IX_{0}_{1}", entityType.GetTableName(), property.Name);
+            return index.Name ?? string.Format("IX_{0}_{1}", entitySet.ElementType.GetTableName(), property.Name);
         }
     }
 }

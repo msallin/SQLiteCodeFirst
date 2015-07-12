@@ -25,21 +25,21 @@ namespace SQLite.CodeFirst.Builder
 
         private IEnumerable<CreateTableStatement> GetCreateTableStatements()
         {
-            foreach (var entityType in edmModel.EntityTypes)
+            foreach (var entitySet in edmModel.Container.EntitySets)
             {
                 ICollection<AssociationType> associationTypes =
-                    edmModel.AssociationTypes.Where(a => a.Constraint.ToRole.Name == entityType.Name).ToList();
+                    edmModel.AssociationTypes.Where(a => a.Constraint.ToRole.Name == entitySet.Name).ToList();
 
-                var tableStatementBuilder = new CreateTableStatementBuilder(entityType, associationTypes);
+                var tableStatementBuilder = new CreateTableStatementBuilder(entitySet, associationTypes);
                 yield return tableStatementBuilder.BuildStatement();
             }
         }
 
         private IEnumerable<CreateIndexStatementCollection> GetCreateIndexStatements()
         {
-            foreach (var entityType in edmModel.EntityTypes)
+            foreach (var entitySet in edmModel.Container.EntitySets)
             {
-                var indexStatementBuilder = new CreateIndexStatementBuilder(entityType);
+                var indexStatementBuilder = new CreateIndexStatementBuilder(entitySet);
                 yield return indexStatementBuilder.BuildStatement();
             }
         }
