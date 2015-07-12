@@ -29,11 +29,24 @@ namespace SQLite.CodeFirst.Console
         private static void ConfigureTeamEntity(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Team>();
+
+            modelBuilder.Entity<Team>()
+                .HasOptional(p => p.Coach)
+                .WithMany()
+                .WillCascadeOnDelete(false);
         }
 
         private static void ConfigureStadionEntity(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Stadion>();
+        }
+
+        private static void ConfigureCoachEntity(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Coach>()
+                .HasRequired(p => p.Team)
+                .WithMany()
+                .WillCascadeOnDelete(true);
         }
 
         private static void ConfigurePlayerEntity(DbModelBuilder modelBuilder)
@@ -48,13 +61,21 @@ namespace SQLite.CodeFirst.Console
     public class FootballDbInitializer : SqliteDropCreateDatabaseAlways<FootballDbContext>
     {
         public FootballDbInitializer(DbModelBuilder modelBuilder)
-            : base(modelBuilder) { }
+            : base(modelBuilder)
+        { }
 
         protected override void Seed(FootballDbContext context)
         {
             context.Set<Team>().Add(new Team
             {
                 Name = "YB",
+                Coach = new Coach
+                {
+                    City = "Zürich",
+                    FirstName = "Masssaman",
+                    LastName = "Nachn",
+                    Street = "Testingstreet 844"
+                },
                 Players = new List<Player>
                 {
                     new Player
@@ -62,14 +83,16 @@ namespace SQLite.CodeFirst.Console
                         City = "Bern",
                         FirstName = "Marco",
                         LastName = "Bürki",
-                        Street = "Wunderstrasse 43"
+                        Street = "Wunderstrasse 43",
+                        Number = 12
                     },
                     new Player
                     {
                         City = "Berlin",
                         FirstName = "Alain",
                         LastName = "Rochat",
-                        Street = "Wonderstreet 13"
+                        Street = "Wonderstreet 13",
+                        Number = 14
                     }
                 },
                 Stadion = new Stadion
