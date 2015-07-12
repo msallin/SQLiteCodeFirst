@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
+using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Statement;
 
 namespace SQLite.CodeFirst.Builder
@@ -54,9 +55,9 @@ namespace SQLite.CodeFirst.Builder
             return new CreateIndexStatementCollection(createIndexStatments.Values);
         }
 
-        private static string GetIndexName(IndexAttribute index, EdmProperty property)
+        private string GetIndexName(IndexAttribute index, EdmProperty property)
         {
-            return index.Name ?? "IX_" + property.Name;
+            return index.Name ?? string.Format("IX_{0}_{1}", entitySet.ElementType.GetTableName(), property.Name);
         }
     }
 }
