@@ -1,6 +1,7 @@
 using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using SQLite.CodeFirst.Convention;
 
 namespace SQLite.CodeFirst
 {
@@ -16,6 +17,10 @@ namespace SQLite.CodeFirst
             // This convention will crash the SQLite Provider before "InitializeDatabase" gets called.
             // See https://github.com/msallin/SQLiteCodeFirst/issues/7 for details.
             modelBuilder.Conventions.Remove<TimestampAttributeConvention>();
+
+            // Place the own ForeinKeyIndexConvention right after the original.
+            // The own convention will rename the automatically created indicies by using the correct scheme.
+            modelBuilder.Conventions.AddAfter<ForeignKeyIndexConvention>(new SqliteForeignKeyIndexConvention());
         }
 
         public virtual void InitializeDatabase(TContext context)
