@@ -58,7 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Coach.cs" />
     <Compile Include="Entity\IEntity.cs" />
+    <Compile Include="Entity\Person.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Entity\Stadion.cs" />
     <Compile Include="Entity\Team.cs" />

@@ -78,6 +78,7 @@
     <Compile Include="Builder\ForeignKeyStatementBuilder.cs" />
     <Compile Include="Builder\CreateDatabaseStatementBuilder.cs" />
     <Compile Include="Builder\PrimaryKeyStatementBuilder.cs" />
+    <Compile Include="Convention\SqliteForeignKeyIndexConvention.cs" />
     <Compile Include="Extensions\EntityTypeExtension.cs" />
     <Compile Include="SqliteCreateDatabaseIfNotExists.cs" />
     <Compile Include="SqliteDropCreateDatabaseAlways.cs" />

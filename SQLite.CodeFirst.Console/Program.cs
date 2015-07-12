@@ -41,10 +41,19 @@ namespace SQLite.CodeFirst.Console
                 System.Console.WriteLine("\t\t City: {0}", team.Stadion.City);
                 System.Console.WriteLine();
 
+                System.Console.WriteLine("\t\t Coach:");
+                System.Console.WriteLine("\t\t Id: {0}", team.Coach.Id);
+                System.Console.WriteLine("\t\t FirstName: {0}", team.Coach.FirstName);
+                System.Console.WriteLine("\t\t LastName: {0}", team.Coach.LastName);
+                System.Console.WriteLine("\t\t Street: {0}", team.Coach.Street);
+                System.Console.WriteLine("\t\t City: {0}", team.Coach.City);
+                System.Console.WriteLine();
+
                 foreach (var player in team.Players)
                 {
                     System.Console.WriteLine("\t\t Player:");
                     System.Console.WriteLine("\t\t Id: {0}", player.Id);
+                    System.Console.WriteLine("\t\t Number: {0}", player.Number);
                     System.Console.WriteLine("\t\t FirstName: {0}", player.FirstName);
                     System.Console.WriteLine("\t\t LastName: {0}", player.LastName);
                     System.Console.WriteLine("\t\t Street: {0}", player.Street);
