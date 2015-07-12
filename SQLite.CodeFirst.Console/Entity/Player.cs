@@ -12,7 +12,7 @@ namespace SQLite.CodeFirst.Console.Entity
         [MaxLength(50)]
         public string FirstName { get; set; }
 
-        [Index("IX_LN")]
+        [Index("IX_LastName_LN")] // Test for named index
         [MaxLength(50)]
         public string LastName { get; set; }
 
