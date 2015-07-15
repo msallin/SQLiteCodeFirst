@@ -9,7 +9,9 @@ namespace SQLite.CodeFirst.Statement.ColumnConstraint
     {
         private const string ConstraintStatementSeperator = " ";
 
-        public ColumnConstraintCollection() { }
+        public ColumnConstraintCollection()
+            : this(new List<IColumnConstraint>())
+        { }
 
         public ColumnConstraintCollection(IEnumerable<IColumnConstraint> columnConstraints)
         {

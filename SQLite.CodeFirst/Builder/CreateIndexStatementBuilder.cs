@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure.Annotations;
+using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Statement;
@@ -57,7 +59,7 @@ namespace SQLite.CodeFirst.Builder
 
         private string GetIndexName(IndexAttribute index, EdmProperty property)
         {
-            return index.Name ?? string.Format("IX_{0}_{1}", entitySet.ElementType.GetTableName(), property.Name);
+            return index.Name ?? String.Format(CultureInfo.InvariantCulture, "IX_{0}_{1}", entitySet.ElementType.GetTableName(), property.Name);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Statement;
 using SQLite.CodeFirst.Statement.ColumnConstraint;
@@ -40,7 +41,7 @@ namespace SQLite.CodeFirst.Builder
             }
         }
 
-        private void AddMaxLengthConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        private static void AddMaxLengthConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
         {
             if (property.MaxLength.HasValue)
             {
@@ -53,7 +54,7 @@ namespace SQLite.CodeFirst.Builder
             if (property.StoreGeneratedPattern == StoreGeneratedPattern.Identity)
             {
                 // Must be INTEGER else SQLite will not generate the Ids
-                columnStatement.TypeName = columnStatement.TypeName.ToLower() == "int" ? "INTEGER" : columnStatement.TypeName;
+                columnStatement.TypeName = columnStatement.TypeName.ToLower(CultureInfo.InvariantCulture) == "int" ? "INTEGER" : columnStatement.TypeName;
             }
         }
 
