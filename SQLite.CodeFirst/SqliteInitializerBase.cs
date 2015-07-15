@@ -34,9 +34,19 @@ namespace SQLite.CodeFirst
             // See https://github.com/msallin/SQLiteCodeFirst/issues/7 for details.
             modelBuilder.Conventions.Remove<TimestampAttributeConvention>();
 
-            // Place the own ForeinKeyIndexConvention right after the original.
-            // The own convention will rename the automatically created indicies by using the correct scheme.
-            modelBuilder.Conventions.AddAfter<ForeignKeyIndexConvention>(new SqliteForeignKeyIndexConvention());
+            // By default there is a 'ForeignKeyIndexConvention' but it can be removed.
+            // And there is no "Contains" and no way to enumerate the ConventionsCollection.
+            // So a try/catch will do the job.
+            try
+            {
+                // Place the own ForeinKeyIndexConvention right after the original.
+                // The own convention will rename the automatically created indicies by using the correct scheme.
+                modelBuilder.Conventions.AddAfter<ForeignKeyIndexConvention>(new SqliteForeignKeyIndexConvention());
+            }
+            catch (InvalidOperationException exception)
+            {
+                // Ignore it.
+            }
         }
 
         /// <summary>
