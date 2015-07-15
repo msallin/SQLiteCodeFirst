@@ -1,4 +1,4 @@
 ﻿namespace SQLite.CodeFirst.Statement.ColumnConstraint
 {
-    interface IColumnConstraint : IStatement { }
+    internal interface IColumnConstraint : IStatement { }
 }

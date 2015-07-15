@@ -22,7 +22,9 @@ namespace SQLite.CodeFirst.Statement
             sb.Replace("{referenced-id}", string.Join(", ", ForeignPrimaryKey));
 
             if (CascadeDelete)
+            {
                 sb.Append(" " + CascadeDeleteStatement);
+            }
 
             return sb.ToString();
         }
