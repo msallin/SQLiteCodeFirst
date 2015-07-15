@@ -25,7 +25,7 @@ namespace SQLite.CodeFirst
         {
             if (modelBuilder == null)
             {
-                throw new ArgumentNullException(nameof(modelBuilder));
+                throw new ArgumentNullException("modelBuilder");
             }
 
             this.modelBuilder = modelBuilder;
