@@ -43,8 +43,7 @@ public class MyDbContext : DbContext
   
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
-        var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<MyDbContext>(
-            Database.Connection.ConnectionString, modelBuilder);
+        var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<MyDbContext>(modelBuilder);
         Database.SetInitializer(sqliteConnectionInitializer);
     }
 }
@@ -54,10 +53,10 @@ In a more advanced scenario, you may want to populate some core- or test-data af
 To do this, inherit from `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists<>` and override the `Seed(MyDbContext context)` function.
 This function will be called in a transaction once the database was created.  This function is only executed if a new database was successfully created.
 ```csharp
-public class MyDbContextContextInitializer : SqliteDropCreateDatabaseAlways<MyDbContext>
+public class MyDbContextInitializer : SqliteDropCreateDatabaseAlways<MyDbContext>
 {
-    public MyDbContextInitializer(string connectionString, DbModelBuilder modelBuilder)
-        : base(connectionString, modelBuilder) { }
+    public MyDbContextInitializer(DbModelBuilder modelBuilder)
+        : base(modelBuilder) { }
 
     protected override void Seed(MyDbContext context)
     {
