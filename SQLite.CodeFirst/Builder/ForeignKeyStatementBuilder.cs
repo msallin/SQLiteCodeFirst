@@ -2,14 +2,15 @@
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using SQLite.CodeFirst.Statement;
+using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst.Builder
 {
     internal class ForeignKeyStatementBuilder : IStatementBuilder<ColumnStatementCollection>
     {
-        private readonly IEnumerable<AssociationType> associationTypes;
+        private readonly IEnumerable<AssociationTypeWrapper> associationTypes;
 
-        public ForeignKeyStatementBuilder(IEnumerable<AssociationType> associationTypes)
+        public ForeignKeyStatementBuilder(IEnumerable<AssociationTypeWrapper> associationTypes)
         {
             this.associationTypes = associationTypes;
         }
@@ -26,10 +27,10 @@ namespace SQLite.CodeFirst.Builder
             {
                 yield return new ForeignKeyStatement
                 {
-                    ForeignKey = associationType.Constraint.ToProperties.Select(x => x.Name),
-                    ForeignTable = associationType.Constraint.FromRole.Name,
-                    ForeignPrimaryKey = associationType.Constraint.FromProperties.Select(x => x.Name),
-                    CascadeDelete = associationType.Constraint.FromRole.DeleteBehavior == OperationAction.Cascade
+                    ForeignKey = associationType.AssociationType.Constraint.ToProperties.Select(x => x.Name),
+                    ForeignTable = associationType.FromTableName,
+                    ForeignPrimaryKey = associationType.AssociationType.Constraint.FromProperties.Select(x => x.Name),
+                    CascadeDelete = associationType.AssociationType.Constraint.FromRole.DeleteBehavior == OperationAction.Cascade
                 };
             }
         }

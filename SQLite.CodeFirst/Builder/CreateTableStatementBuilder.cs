@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
-using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Statement;
+using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst.Builder
 {
     internal class CreateTableStatementBuilder : IStatementBuilder<CreateTableStatement>
     {
         private readonly EntitySet entitySet;
-        private readonly IEnumerable<AssociationType> associationTypes;
+        private readonly IEnumerable<AssociationTypeWrapper> associationTypes;
 
-        public CreateTableStatementBuilder(EntitySet entitySet, IEnumerable<AssociationType> associationTypes)
+        public CreateTableStatementBuilder(EntitySet entitySet, IEnumerable<AssociationTypeWrapper> associationTypes)
         {
             this.entitySet = entitySet;
             this.associationTypes = associationTypes;

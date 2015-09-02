@@ -2,6 +2,7 @@
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using SQLite.CodeFirst.Statement;
+using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst.Builder
 {
@@ -30,7 +31,14 @@ namespace SQLite.CodeFirst.Builder
                 ICollection<AssociationType> associationTypes =
                     edmModel.AssociationTypes.Where(a => a.Constraint.ToRole.Name == entitySet.Name).ToList();
 
-                var tableStatementBuilder = new CreateTableStatementBuilder(entitySet, associationTypes);
+                var b = associationTypes.Select(a => new AssociationTypeWrapper
+                {
+                    AssociationType = a,
+                    FromTableName = edmModel.Container.GetEntitySetByName(a.Constraint.FromRole.Name, true).Table,
+                    ToTableName = edmModel.Container.GetEntitySetByName(a.Constraint.ToRole.Name, true).Table
+                });
+
+                var tableStatementBuilder = new CreateTableStatementBuilder(entitySet, b);
                 yield return tableStatementBuilder.BuildStatement();
             }
         }

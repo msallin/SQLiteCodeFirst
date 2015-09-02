@@ -16,11 +16,12 @@ namespace SQLite.CodeFirst.Console
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
             ConfigureTeamEntity(modelBuilder);
             ConfigureStadionEntity(modelBuilder);
+            ConfigureCoachEntity(modelBuilder);
             ConfigurePlayerEntity(modelBuilder);
-
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             var initializer = new FootballDbInitializer(modelBuilder);
             Database.SetInitializer(initializer);
@@ -31,9 +32,14 @@ namespace SQLite.CodeFirst.Console
             modelBuilder.Entity<Team>();
 
             modelBuilder.Entity<Team>()
-                .HasOptional(p => p.Coach)
+                .HasRequired(t => t.Coach)
                 .WithMany()
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Team>()
+                .HasRequired(t => t.Stadion)
+                .WithRequiredPrincipal()
+                .WillCascadeOnDelete(true);
         }
 
         private static void ConfigureStadionEntity(DbModelBuilder modelBuilder)
@@ -45,8 +51,8 @@ namespace SQLite.CodeFirst.Console
         {
             modelBuilder.Entity<Coach>()
                 .HasRequired(p => p.Team)
-                .WithMany()
-                .WillCascadeOnDelete(true);
+                .WithRequiredPrincipal(t => t.Coach)
+                .WillCascadeOnDelete(false);
         }
 
         private static void ConfigurePlayerEntity(DbModelBuilder modelBuilder)
