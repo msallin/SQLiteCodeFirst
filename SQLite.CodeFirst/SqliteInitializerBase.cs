@@ -60,6 +60,16 @@ namespace SQLite.CodeFirst
         {
             var model = modelBuilder.Build(context.Database.Connection);
 
+            //mprattinger: Possible fix for #45
+            var dbFile = GetDatabasePathFromContext(context);
+            var dbFileInfo = new System.IO.FileInfo(dbFile);
+            if (!dbFileInfo.Directory.Exists)
+            {
+                //DBPath doesn't exist -> create it:
+                dbFileInfo.Directory.Create();
+            }
+            //mprattinger
+
             using (var transaction = context.Database.BeginTransaction())
             {
                 try
