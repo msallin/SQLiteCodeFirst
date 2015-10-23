@@ -66,13 +66,13 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Statement\PrimaryKeyStatementTest.cs" />
     <Compile Include="Statement\StatementTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Builder\" />
     <Folder Include="Convention\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Statement\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SQLite.CodeFirst\SQLite.CodeFirst.csproj">
