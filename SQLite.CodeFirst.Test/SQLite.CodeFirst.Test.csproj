@@ -69,6 +69,7 @@
     <Compile Include="Statement\PrimaryKeyStatementTest.cs" />
     <Compile Include="Statement\CreateDatabaseStatementTest.cs" />
     <Compile Include="Statement\StatementTestBase.cs" />
+    <Compile Include="Statement\ForeignKeyStatementTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Builder\" />
