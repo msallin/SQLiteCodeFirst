@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using SQLite.CodeFirst.Statement;
 
 namespace SQLite.CodeFirst.Test.Statement
@@ -10,13 +9,10 @@ namespace SQLite.CodeFirst.Test.Statement
         [TestMethod]
         public void CreateStatementTest()
         {
-            var statementCollectionMock = new Mock<IStatementCollection>();
-            statementCollectionMock.Setup(s => s.CreateStatement()).Returns("dummyColumnDefinition");
-
             var createTableStatement = new CreateTableStatement
             {
                 TableName = "dummyTable",
-                ColumnStatementCollection = statementCollectionMock.Object
+                ColumnStatementCollection = CreateStatementCollectionMock("dummyColumnDefinition").Object
             };
 
             string output = createTableStatement.CreateStatement();

@@ -5,7 +5,7 @@ using SQLite.CodeFirst.Statement;
 namespace SQLite.CodeFirst.Test.Statement
 {
     [TestClass]
-    public class ForeignKeyStatementTest
+    public class ForeignKeyStatementTest : StatementTestBase
     {
         [TestMethod]
         public void CreateStatementOneForeignKeyTest()

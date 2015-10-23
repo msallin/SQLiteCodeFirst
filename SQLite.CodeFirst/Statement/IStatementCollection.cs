@@ -2,7 +2,7 @@
 
 namespace SQLite.CodeFirst.Statement
 {
-    internal interface IStatementCollection : IStatement, ICollection<IStatement>
+    public interface IStatementCollection : IStatement, ICollection<IStatement>
     {
     }
 }

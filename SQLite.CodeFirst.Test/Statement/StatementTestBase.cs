@@ -11,5 +11,12 @@ namespace SQLite.CodeFirst.Test.Statement
             statementMock.Setup(s => s.CreateStatement()).Returns(createStatementReturnValue);
             return statementMock;
         }
+
+        protected Mock<IStatementCollection> CreateStatementCollectionMock(string createStatementReturnValue)
+        {
+            var statementCollectionMock = new Mock<IStatementCollection>();
+            statementCollectionMock.Setup(s => s.CreateStatement()).Returns(createStatementReturnValue);
+            return statementCollectionMock;
+        }
     }
 }
