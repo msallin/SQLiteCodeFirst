@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SQLite.CodeFirst.Statement.ColumnConstraint
 {
-    internal class ColumnConstraintCollection : Collection<IColumnConstraint>, IColumnConstraint
+    internal class ColumnConstraintCollection : Collection<IColumnConstraint>, IColumnConstraintCollection
     {
         private const string ConstraintStatementSeperator = " ";
 
