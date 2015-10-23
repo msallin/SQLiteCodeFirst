@@ -76,6 +76,7 @@
     <Compile Include="Statement\ForeignKeyStatementTest.cs" />
     <Compile Include="Statement\CreateTableStatementTest.cs" />
     <Compile Include="Statement\CreateIndexStatementCollectionTest.cs" />
+    <Compile Include="Statement\ColumnStatementTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Builder\" />
