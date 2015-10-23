@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SQLite.CodeFirst.Statement
 {
-    internal class ColumnStatementCollection : Collection<IStatement>, IStatement
+    internal class ColumnStatementCollection : Collection<IStatement>, IStatementCollection
     {
         private const string ColumnStatementSeperator = ", ";
 
