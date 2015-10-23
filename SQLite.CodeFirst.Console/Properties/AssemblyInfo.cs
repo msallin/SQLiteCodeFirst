@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("SQLite.CodeFirst")]
-[assembly: AssemblyDescription("A console application which demonstrates how to use QLite.CodeFirst.")]
+[assembly: AssemblyDescription("A console application which demonstrates how to use SQLite.CodeFirst.")]
 [assembly: AssemblyProduct("SQLite.CodeFirst")]
 [assembly: AssemblyCopyright("Copyright © Marc Sallin")]
 
