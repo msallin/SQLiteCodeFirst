@@ -35,14 +35,11 @@ namespace SQLite.CodeFirst.Builder
                 IList<AssociationTypeWrapper> associationTypeWrappers = new List<AssociationTypeWrapper>();
                 foreach (var associationType in associationTypes)
                 {
-                    string fromSchema = edmModel.Container.GetEntitySetByName(associationType.Constraint.FromRole.Name, true).Schema;
-                    string fromName = edmModel.Container.GetEntitySetByName(associationType.Constraint.FromRole.Name, true).Table;
+                    string fromTable = edmModel.Container.GetEntitySetByName(associationType.Constraint.FromRole.Name, true).Table;
+                    string toTable = edmModel.Container.GetEntitySetByName(associationType.Constraint.ToRole.Name, true).Table;
 
-                    string toSchema = edmModel.Container.GetEntitySetByName(associationType.Constraint.ToRole.Name, true).Schema;
-                    string toName = edmModel.Container.GetEntitySetByName(associationType.Constraint.ToRole.Name, true).Table;
-
-                    string fromTableName = TableNameCreator.CreateTableName(fromSchema, fromName);
-                    string toTableName = TableNameCreator.CreateTableName(toSchema, toName);
+                    string fromTableName = TableNameCreator.CreateTableName(fromTable);
+                    string toTableName = TableNameCreator.CreateTableName(toTable);
 
                     associationTypeWrappers.Add(new AssociationTypeWrapper
                     {

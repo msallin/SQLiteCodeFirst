@@ -31,7 +31,7 @@ namespace SQLite.CodeFirst.Builder
 
             return new CreateTableStatement
             {
-                TableName = TableNameCreator.CreateTableName(entitySet.Schema, entitySet.Table),
+                TableName = TableNameCreator.CreateTableName(entitySet.Table),
                 ColumnStatementCollection = new ColumnStatementCollection(columnStatements)
             };
         }

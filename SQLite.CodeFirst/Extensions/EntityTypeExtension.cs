@@ -24,10 +24,9 @@ namespace SQLite.CodeFirst.Extensions
             Type metadataPropertyValueType = metadataProperty.Value.GetType();
 
             // The type DatabaseName is internal. So we need reflection...
-            var schema = (string)metadataPropertyValueType.GetProperty("Schema").GetValue(metadataPropertyValue);
             var name = (string)metadataPropertyValueType.GetProperty("Name").GetValue(metadataPropertyValue);
 
-            return TableNameCreator.CreateTableName(schema, name);
+            return TableNameCreator.CreateTableName(name);
         }
     }
 }

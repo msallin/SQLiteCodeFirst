@@ -41,7 +41,7 @@ namespace SQLite.CodeFirst.Builder
                         {
                             IsUnique = index.IsUnique,
                             Name = indexName,
-                            Table = TableNameCreator.CreateTableName(entitySet.Schema, entitySet.Table),
+                            Table = TableNameCreator.CreateTableName(entitySet.Table),
                             Columns = new Collection<CreateIndexStatement.IndexColumn>()
                         };
                         createIndexStatments.Add(indexName, createIndexStatement);
