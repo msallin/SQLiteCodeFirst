@@ -6,6 +6,7 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Globalization;
 using System.Linq;
+using SQLite.CodeFirst.Builder.NameCreators;
 using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Statement;
 
@@ -40,7 +41,7 @@ namespace SQLite.CodeFirst.Builder
                         {
                             IsUnique = index.IsUnique,
                             Name = indexName,
-                            Table = entitySet.Table,
+                            Table = TableNameCreator.CreateTableName(entitySet.Schema, entitySet.Table),
                             Columns = new Collection<CreateIndexStatement.IndexColumn>()
                         };
                         createIndexStatments.Add(indexName, createIndexStatement);
@@ -59,7 +60,7 @@ namespace SQLite.CodeFirst.Builder
 
         private string GetIndexName(IndexAttribute index, EdmProperty property)
         {
-            return index.Name ?? String.Format(CultureInfo.InvariantCulture, "IX_{0}_{1}", entitySet.ElementType.GetTableName(), property.Name);
+            return index.Name ?? IndexNameCreator.CreateIndexName(entitySet.ElementType.GetTableName(), property.Name);
         }
     }
 }

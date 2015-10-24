@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
+using SQLite.CodeFirst.Builder.NameCreators;
 using SQLite.CodeFirst.Statement;
 using SQLite.CodeFirst.Utility;
 
@@ -31,14 +32,27 @@ namespace SQLite.CodeFirst.Builder
                 ICollection<AssociationType> associationTypes =
                     edmModel.AssociationTypes.Where(a => a.Constraint.ToRole.Name == entitySet.Name).ToList();
 
-                var b = associationTypes.Select(a => new AssociationTypeWrapper
+                IList<AssociationTypeWrapper> associationTypeWrappers = new List<AssociationTypeWrapper>();
+                foreach (var associationType in associationTypes)
                 {
-                    AssociationType = a,
-                    FromTableName = edmModel.Container.GetEntitySetByName(a.Constraint.FromRole.Name, true).Table,
-                    ToTableName = edmModel.Container.GetEntitySetByName(a.Constraint.ToRole.Name, true).Table
-                });
+                    string fromSchema = edmModel.Container.GetEntitySetByName(associationType.Constraint.FromRole.Name, true).Schema;
+                    string fromName = edmModel.Container.GetEntitySetByName(associationType.Constraint.FromRole.Name, true).Table;
 
-                var tableStatementBuilder = new CreateTableStatementBuilder(entitySet, b);
+                    string toSchema = edmModel.Container.GetEntitySetByName(associationType.Constraint.ToRole.Name, true).Schema;
+                    string toName = edmModel.Container.GetEntitySetByName(associationType.Constraint.ToRole.Name, true).Table;
+
+                    string fromTableName = TableNameCreator.CreateTableName(fromSchema, fromName);
+                    string toTableName = TableNameCreator.CreateTableName(toSchema, toName);
+
+                    associationTypeWrappers.Add(new AssociationTypeWrapper
+                    {
+                        AssociationType = associationType,
+                        FromTableName = fromTableName,
+                        ToTableName = toTableName
+                    });
+                }
+
+                var tableStatementBuilder = new CreateTableStatementBuilder(entitySet, associationTypeWrappers);
                 yield return tableStatementBuilder.BuildStatement();
             }
         }

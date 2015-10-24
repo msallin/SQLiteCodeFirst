@@ -8,6 +8,7 @@ using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Globalization;
 using System.Linq;
+using SQLite.CodeFirst.Builder.NameCreators;
 
 namespace SQLite.CodeFirst.Convention
 {
@@ -69,7 +70,7 @@ namespace SQLite.CodeFirst.Convention
 
         private static IndexAnnotation CreateIndexAnnotation(string tableName, string propertyName, int count)
         {
-            var indexName = String.Format(CultureInfo.InvariantCulture, "IX_{0}_{1}", tableName, propertyName);
+            var indexName = IndexNameCreator.CreateIndexName(tableName, propertyName);
 
             // If there are two Indicies on the same property, the count is added.
             // In SQLite an Index name must be global unique.

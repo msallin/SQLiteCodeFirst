@@ -1,4 +1,7 @@
-﻿using System.Data.Entity.Core.Metadata.Edm;
+﻿using System;
+using System.Data.Entity.Core.Metadata.Edm;
+using SQLite.CodeFirst.Builder.NameCreators;
+using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst.Extensions
 {
@@ -7,12 +10,24 @@ namespace SQLite.CodeFirst.Extensions
         public static string GetTableName(this EntityType entityType)
         {
             MetadataProperty metadataProperty;
-            if (entityType.MetadataProperties.TryGetValue("TableName", false, out metadataProperty))
+            if (!entityType.MetadataProperties.TryGetValue("TableName", false, out metadataProperty))
             {
-                return metadataProperty.Value.ToString();
+                return entityType.Name;
             }
 
-            return entityType.Name;
+            if (metadataProperty.Value.GetType().Name != "DatabaseName")
+            {
+                return entityType.Name;
+            }
+
+            object metadataPropertyValue = metadataProperty.Value;
+            Type metadataPropertyValueType = metadataProperty.Value.GetType();
+
+            // The type DatabaseName is internal. So we need reflection...
+            var schema = (string)metadataPropertyValueType.GetProperty("Schema").GetValue(metadataPropertyValue);
+            var name = (string)metadataPropertyValueType.GetProperty("Name").GetValue(metadataPropertyValue);
+
+            return TableNameCreator.CreateTableName(schema, name);
         }
     }
 }
