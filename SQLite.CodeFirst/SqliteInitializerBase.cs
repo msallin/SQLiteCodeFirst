@@ -2,6 +2,7 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using SQLite.CodeFirst.Convention;
+using System.IO;
 
 namespace SQLite.CodeFirst
 {
@@ -59,6 +60,11 @@ namespace SQLite.CodeFirst
         public virtual void InitializeDatabase(TContext context)
         {
             var model = modelBuilder.Build(context.Database.Connection);
+
+            var dbFile = GetDatabasePathFromContext(context);
+            var dbFileInfo = new FileInfo(dbFile);
+            dbFileInfo.Directory.Create();
+
 
             using (var transaction = context.Database.BeginTransaction())
             {
