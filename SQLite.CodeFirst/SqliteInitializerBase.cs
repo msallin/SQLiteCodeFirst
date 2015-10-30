@@ -2,6 +2,7 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using SQLite.CodeFirst.Convention;
+using System.IO;
 
 namespace SQLite.CodeFirst
 {
@@ -60,15 +61,10 @@ namespace SQLite.CodeFirst
         {
             var model = modelBuilder.Build(context.Database.Connection);
 
-            //mprattinger: Possible fix for #45
             var dbFile = GetDatabasePathFromContext(context);
-            var dbFileInfo = new System.IO.FileInfo(dbFile);
-            if (!dbFileInfo.Directory.Exists)
-            {
-                //DBPath doesn't exist -> create it:
-                dbFileInfo.Directory.Create();
-            }
-            //mprattinger
+            var dbFileInfo = new FileInfo(dbFile);
+            dbFileInfo.Directory.Create();
+
 
             using (var transaction = context.Database.BeginTransaction())
             {
