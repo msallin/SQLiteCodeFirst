@@ -6,7 +6,6 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Builder.NameCreators;
 

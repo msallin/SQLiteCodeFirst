@@ -65,7 +65,6 @@ namespace SQLite.CodeFirst
             var dbFileInfo = new FileInfo(dbFile);
             dbFileInfo.Directory.Create();
 
-
             using (var transaction = context.Database.BeginTransaction())
             {
                 try

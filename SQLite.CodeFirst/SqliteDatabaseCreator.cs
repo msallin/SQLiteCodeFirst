@@ -14,7 +14,12 @@ namespace SQLite.CodeFirst
         private readonly Database db;
         private readonly DbModel model;
 
-        public SqliteDatabaseCreator(Database db, DbModel model)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SqliteDatabaseCreator"/> class.
+		/// </summary>
+		/// <param name="db">The database.</param>
+		/// <param name="model">The model.</param>
+		public SqliteDatabaseCreator(Database db, DbModel model)
         {
             this.db = db;
             this.model = model;

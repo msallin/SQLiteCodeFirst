@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Entity.Core.Metadata.Edm;
 using SQLite.CodeFirst.Builder.NameCreators;
-using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst.Extensions
 {
