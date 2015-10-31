@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("SQLite.CodeFirst")]
@@ -9,6 +10,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("SQLite.CodeFirst")]
 [assembly: AssemblyCopyright("Copyright © Marc Sallin")]
 [assembly: AssemblyCompany("Marc Sallin")]
+
+[assembly: InternalsVisibleTo("SQLite.CodeFirst.Test", AllInternalsVisible = true)]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

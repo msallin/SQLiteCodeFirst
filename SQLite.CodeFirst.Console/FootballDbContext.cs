@@ -29,9 +29,7 @@ namespace SQLite.CodeFirst.Console
 
         private static void ConfigureTeamEntity(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Team>();
-
-            modelBuilder.Entity<Team>()
+            modelBuilder.Entity<Team>().ToTable("Base.MyTable")
                 .HasRequired(t => t.Coach)
                 .WithMany()
                 .WillCascadeOnDelete(false);

@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace SQLite.CodeFirst.Statement
 {
-    internal class CreateIndexStatementCollection : Collection<CreateIndexStatement>, IStatement
+    internal class CreateIndexStatementCollection : Collection<IStatement>, IStatementCollection
     {
         private const string StatementSeperator = "\r\n";
 
-        public CreateIndexStatementCollection(IEnumerable<CreateIndexStatement> createIndexStatements)
+        public CreateIndexStatementCollection(IEnumerable<IStatement> createIndexStatements)
         {
             foreach (var createIndexStatement in createIndexStatements)
             {

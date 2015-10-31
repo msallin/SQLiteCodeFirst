@@ -73,6 +73,10 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\NameCreators\IndexNameCreator.cs" />
+    <Compile Include="Builder\NameCreators\SpecialChars.cs" />
+    <Compile Include="Statement\ColumnConstraint\IColumnConstraintCollection.cs" />
+    <Compile Include="Statement\IStatementCollection.cs" />
     <Compile Include="Utility\AssociationTypeWrapper.cs" />
     <Compile Include="Builder\ColumnStatementCollectionBuilder.cs" />
     <Compile Include="Builder\CreateIndexStatementBuilder.cs" />
@@ -102,6 +106,7 @@
     <Compile Include="Statement\CreateTableStatement.cs" />
     <Compile Include="Statement\IStatement.cs" />
     <Compile Include="Builder\CreateTableStatementBuilder.cs" />
+    <Compile Include="Builder\NameCreators\TableNameCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

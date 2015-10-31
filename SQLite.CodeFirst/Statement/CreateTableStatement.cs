@@ -7,7 +7,7 @@ namespace SQLite.CodeFirst.Statement
         private const string Template = "CREATE TABLE {table-name} ({column-def});";
 
         public string TableName { get; set; }
-        public ColumnStatementCollection ColumnStatementCollection { get; set; }
+        public IStatementCollection ColumnStatementCollection { get; set; }
 
         public string CreateStatement()
         {

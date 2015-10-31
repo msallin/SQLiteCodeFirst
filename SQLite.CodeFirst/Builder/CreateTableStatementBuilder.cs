@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
+using SQLite.CodeFirst.Builder.NameCreators;
 using SQLite.CodeFirst.Statement;
 using SQLite.CodeFirst.Utility;
 
@@ -29,7 +31,7 @@ namespace SQLite.CodeFirst.Builder
 
             return new CreateTableStatement
             {
-                TableName = entitySet.Table,
+                TableName = TableNameCreator.CreateTableName(entitySet.Table),
                 ColumnStatementCollection = new ColumnStatementCollection(columnStatements)
             };
         }

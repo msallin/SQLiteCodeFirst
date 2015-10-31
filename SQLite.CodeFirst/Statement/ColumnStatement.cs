@@ -9,7 +9,7 @@ namespace SQLite.CodeFirst.Statement
 
         public string ColumnName { get; set; }
         public string TypeName { get; set; }
-        public ColumnConstraintCollection ColumnConstraints { get; set; }
+        public IColumnConstraintCollection ColumnConstraints { get; set; }
 
         public string CreateStatement()
         {
