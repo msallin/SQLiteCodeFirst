@@ -27,6 +27,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{436039AE-ADD
 		Lib\Moq.dll = Lib\Moq.dll
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{1F6D4E0E-5D07-4889-961A-A6AFC0ECD7C7}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\AssemblySharedInfo.cs = Shared\AssemblySharedInfo.cs
+		Shared\AssemblyVersionInfo.cs = Shared\AssemblyVersionInfo.cs
+		Shared\SQLite.CodeFirst.StrongNameKey.snk = Shared\SQLite.CodeFirst.StrongNameKey.snk
+	EndProjectSection
+EndProject
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
