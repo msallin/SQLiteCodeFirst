@@ -3,6 +3,12 @@
 
 **CI Build** [![Build status](https://ci.appveyor.com/api/projects/status/oc1miog385h801qe?svg=true)](https://ci.appveyor.com/project/msallin/sqlitecodefirst)
 
+**Support** <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ARTMHALNW4VC6&lc=CH&item_name=SQLite%2eCodeFirst&item_number=sqlitecodefirst&currency_code=CHF&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" title="Donate to this project using Paypal"><img src="https://camo.githubusercontent.com/11b2f47d7b4af17ef3a803f57c37de3ac82ac039/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f70617970616c2d646f6e6174652d79656c6c6f772e737667" alt="PayPal donate button" data-canonical-src="https://img.shields.io/badge/paypal-donate-yellow.svg" style="max-width:100%;"></a>
+
+To support this project you can: report bugs by creating new issues, write code and create PRs or donate.
+Especially if you use it for a commercial project, a donation is welcome.
+
+
 Creates a [SQLite Database](https://sqlite.org/) from Code, using [Entity Framework](https://msdn.microsoft.com/en-us/data/ef.aspx) CodeFirst.
 
 This Project ships several `IDbInitializer` classes. These create new SQLite Databases based on your model/code.
