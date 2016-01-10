@@ -38,6 +38,8 @@ You can use the SQLite CodeFirst in projects that target the following framework
 - .NET 4.5 (use net45)
 - .NET 4.5.1 (use net45)
 - .NET 4.5.2 (use net45)
+- .NET 4.6 (use net45)
+- .NET 4.6.1 (use net45)
 
 ## How to use
 When you want to let the Entity Framework create database if it does not exist, just set `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists<>` as your `IDbInitializer<>`.
