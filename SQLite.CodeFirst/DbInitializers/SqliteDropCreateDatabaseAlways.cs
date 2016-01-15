@@ -30,8 +30,8 @@ namespace SQLite.CodeFirst
         {
             string databseFilePath = GetDatabasePathFromContext(context);
 
-            bool dbExists = File.Exists(databseFilePath);
-            if (dbExists)
+            bool exists = File.Exists(databseFilePath);
+            if (exists)
             {
                 File.Delete(databseFilePath);
             }

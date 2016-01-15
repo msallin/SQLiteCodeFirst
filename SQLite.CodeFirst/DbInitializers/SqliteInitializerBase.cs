@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using SQLite.CodeFirst.Convention;
 using System.IO;
+using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst
 {
@@ -10,17 +11,17 @@ namespace SQLite.CodeFirst
     /// An basic implementation of the <see cref="IDatabaseInitializer{TContext}"/> interface.
     /// This class provides common logic which can be used when writing an Sqlite-Initializer.
     /// The logic provided is: 
-    ///   1. Remove/Add specific Conventions 
+    ///   1. Remove/Add specific conventions 
     ///   2. Get the path to the database file  
-    ///   3. Create a new SQLite-Database from the model (Code First)
+    ///   3. Create a new SQLite-database from the model (Code First)
     ///   4. Seed data to the new created database
-    /// The following implementations are provided: <see cref="T:SQLite.CodeFirst.SqliteCreateDatabaseIfNotExists`1"/>,  <see cref="T:SQlite.CodeFirst.SqliteDropCreateDatabaseAlways`1"/>.
+    /// The following implementations are provided: <see cref="T:SQLite.CodeFirst.SqliteCreateDatabaseIfNotExists`1"/>, <see cref="T:SQlite.CodeFirst.SqliteDropCreateDatabaseAlways`1"/>.
     /// </summary>
     /// <typeparam name="TContext">The type of the context.</typeparam>
     public abstract class SqliteInitializerBase<TContext> : IDatabaseInitializer<TContext>
         where TContext : DbContext
     {
-        private readonly DbModelBuilder modelBuilder;
+        protected readonly DbModelBuilder ModelBuilder;
 
         protected SqliteInitializerBase(DbModelBuilder modelBuilder)
         {
@@ -29,7 +30,7 @@ namespace SQLite.CodeFirst
                 throw new ArgumentNullException("modelBuilder");
             }
 
-            this.modelBuilder = modelBuilder;
+            ModelBuilder = modelBuilder;
 
             // This convention will crash the SQLite Provider before "InitializeDatabase" gets called.
             // See https://github.com/msallin/SQLiteCodeFirst/issues/7 for details.
@@ -44,7 +45,7 @@ namespace SQLite.CodeFirst
                 // The own convention will rename the automatically created indicies by using the correct scheme.
                 modelBuilder.Conventions.AddAfter<ForeignKeyIndexConvention>(new SqliteForeignKeyIndexConvention());
             }
-            catch (InvalidOperationException exception)
+            catch (InvalidOperationException)
             {
                 // Ignore it.
             }
@@ -59,7 +60,7 @@ namespace SQLite.CodeFirst
         /// <param name="context">The context. </param>
         public virtual void InitializeDatabase(TContext context)
         {
-            var model = modelBuilder.Build(context.Database.Connection);
+            var model = ModelBuilder.Build(context.Database.Connection);
 
             var dbFile = GetDatabasePathFromContext(context);
             var dbFileInfo = new FileInfo(dbFile);
@@ -110,7 +111,7 @@ namespace SQLite.CodeFirst
         /// <returns>The full path to the SQLite database file.</returns>
         protected string GetDatabasePathFromContext(TContext context)
         {
-            return SqliteConnectionStringParser.GetDataSource(context.Database.Connection.ConnectionString);
+            return ConnectionStringParser.GetDataSource(context.Database.Connection.ConnectionString);
         }
     }
 }
