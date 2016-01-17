@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using SQLite.CodeFirst.Utility;
@@ -31,6 +30,7 @@ namespace SQLite.CodeFirst
         /// Initializes a new instance of the <see cref="SqliteDropCreateDatabaseWhenModelChanges{TContext}"/> class.
         /// </summary>
         /// <param name="modelBuilder">The model builder.</param>
+        //TODO: Also specifi 0 bytes means not exists.. May inherit?
         public SqliteDropCreateDatabaseWhenModelChanges(DbModelBuilder modelBuilder)
             : base(modelBuilder)
         {
