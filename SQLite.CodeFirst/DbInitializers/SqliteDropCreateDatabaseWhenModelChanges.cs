@@ -121,14 +121,18 @@ namespace SQLite.CodeFirst
 
         private bool IsSameModel(TContext context)
         {
+
+            var hash = GetHashFromModel(context.Database.Connection);
+
             try
             {
-                var hash = GetHashFromModel(context.Database.Connection);
                 var history = GetHistoryRecord(context);
                 return history?.Hash == hash;
             }
             catch (Exception)
             {
+                // This happens if the history table does not exist.
+                // So it covers also the case with a null byte file (see SqliteCreateDatabaseIfNotExists).
                 return false;
             }
         }
