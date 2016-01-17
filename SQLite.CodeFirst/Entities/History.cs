@@ -15,7 +15,6 @@ namespace SQLite.CodeFirst
         /// The postfix which is appended to the history table name 
         /// to ensure that this table name is unique.
         /// </summary>
-        [NotMapped]
         public const string TableNamePostfix = "82c009b41631-48579635f1ff64eb62d9";
 
         /// <summary>
