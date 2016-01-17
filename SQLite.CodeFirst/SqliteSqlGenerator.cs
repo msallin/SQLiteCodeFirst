@@ -17,7 +17,7 @@ namespace SQLite.CodeFirst
         }
 
         /// <summary>
-        /// Generates the SQL statement.
+        /// Generates the SQL statement, based on the <see cref="EdmModel"/>.
         /// </summary>
         public string Generate()
         {
