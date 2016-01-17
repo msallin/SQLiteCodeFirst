@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using SQLite.CodeFirst.Utility;
@@ -139,12 +141,11 @@ namespace SQLite.CodeFirst
 
         private IHistory GetHistoryRecord(TContext context)
         {
-            return context.Set(historyEntityType)
-                .AsNoTracking()
-                .ToListAsync()
-                .Result
-                .Cast<IHistory>()
-                .SingleOrDefault();
+            // Yes, it seams to be complicated but it has to be done this way
+            // in order to be supported by .NET 4.0.
+            DbQuery dbQuery = context.Set(historyEntityType).AsNoTracking();
+            IEnumerable<IHistory> records = Enumerable.Cast<IHistory>(dbQuery);
+            return records.SingleOrDefault();
         }
 
         private string GetHashFromModel(DbConnection connection)
