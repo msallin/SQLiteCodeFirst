@@ -87,25 +87,12 @@ namespace SQLite.CodeFirst
             }
         }
 
-        private void DeleteDatabase(TContext context, string databseFilePath)
+        private static void DeleteDatabase(TContext context, string databseFilePath)
         {
             context.Database.Connection.Close();
             GC.Collect();
-
-            // TODO: Comment
-            for (int i = 0; i < 5; i++)
-            {
-                try
-                {
-                    File.Delete(databseFilePath);
-                    // TODO: Throw exception if 5 tries..
-                    break;
-                }
-                catch (Exception)
-                {
-                    System.Threading.Thread.Sleep(1);
-                }
-            }
+            GC.WaitForPendingFinalizers();
+            File.Delete(databseFilePath);
         }
 
         private void SaveHistory(TContext context)
