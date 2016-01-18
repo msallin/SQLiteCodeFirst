@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
   </ItemGroup>
@@ -85,40 +86,48 @@
     <Compile Include="..\Shared\AssemblyVersionInfo.cs">
       <Link>Properties\AssemblyVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="Builder\NameCreators\IndexNameCreator.cs" />
-    <Compile Include="Builder\NameCreators\SpecialChars.cs" />
-    <Compile Include="Statement\ColumnConstraint\IColumnConstraintCollection.cs" />
-    <Compile Include="Statement\IStatementCollection.cs" />
-    <Compile Include="Utility\AssociationTypeWrapper.cs" />
-    <Compile Include="Builder\ColumnStatementCollectionBuilder.cs" />
-    <Compile Include="Builder\CreateIndexStatementBuilder.cs" />
-    <Compile Include="Builder\ForeignKeyStatementBuilder.cs" />
-    <Compile Include="Builder\CreateDatabaseStatementBuilder.cs" />
-    <Compile Include="Builder\PrimaryKeyStatementBuilder.cs" />
-    <Compile Include="Convention\SqliteForeignKeyIndexConvention.cs" />
-    <Compile Include="Extensions\EntityTypeExtension.cs" />
-    <Compile Include="SqliteCreateDatabaseIfNotExists.cs" />
-    <Compile Include="SqliteDropCreateDatabaseAlways.cs" />
-    <Compile Include="Statement\ColumnConstraint\MaxLengthConstraint.cs" />
-    <Compile Include="Statement\CreateIndexStatement.cs" />
-    <Compile Include="Statement\CreateIndexStatementCollection.cs" />
-    <Compile Include="Statement\PrimaryKeyStatement.cs" />
+    <Compile Include="Entities\IHistory.cs" />
+    <Compile Include="Internal\Builder\NameCreators\IndexNameCreator.cs" />
+    <Compile Include="Internal\Builder\NameCreators\SpecialChars.cs" />
+    <Compile Include="IDatabaseCreator.cs" />
+    <Compile Include="Internal\Utility\HashCreator.cs" />
+    <Compile Include="Internal\Utility\HistoryEntityTypeValidator.cs" />
+    <Compile Include="ISqliteSqlGenerator.cs" />
+    <Compile Include="DbInitializers\SqliteDropCreateDatabaseWhenModelChanges.cs" />
+    <Compile Include="Entities\History.cs" />
+    <Compile Include="SqliteSqlGenerator.cs" />
+    <Compile Include="Internal\Statement\ColumnConstraint\IColumnConstraintCollection.cs" />
+    <Compile Include="Internal\Statement\IStatementCollection.cs" />
+    <Compile Include="Internal\Utility\AssociationTypeWrapper.cs" />
+    <Compile Include="Internal\Builder\ColumnStatementCollectionBuilder.cs" />
+    <Compile Include="Internal\Builder\CreateIndexStatementBuilder.cs" />
+    <Compile Include="Internal\Builder\ForeignKeyStatementBuilder.cs" />
+    <Compile Include="Internal\Builder\CreateDatabaseStatementBuilder.cs" />
+    <Compile Include="Internal\Builder\PrimaryKeyStatementBuilder.cs" />
+    <Compile Include="Internal\Convention\SqliteForeignKeyIndexConvention.cs" />
+    <Compile Include="Internal\Extensions\EntityTypeExtension.cs" />
+    <Compile Include="DbInitializers\SqliteCreateDatabaseIfNotExists.cs" />
+    <Compile Include="DbInitializers\SqliteDropCreateDatabaseAlways.cs" />
+    <Compile Include="Internal\Statement\ColumnConstraint\MaxLengthConstraint.cs" />
+    <Compile Include="Internal\Statement\CreateIndexStatement.cs" />
+    <Compile Include="Internal\Statement\CreateIndexStatementCollection.cs" />
+    <Compile Include="Internal\Statement\PrimaryKeyStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqliteConnectionStringParser.cs" />
-    <Compile Include="SqliteInitializerBase.cs" />
-    <Compile Include="Builder\IStatementBuilder.cs" />
+    <Compile Include="Internal\Utility\ConnectionStringParser.cs" />
+    <Compile Include="DbInitializers\SqliteInitializerBase.cs" />
+    <Compile Include="Internal\Builder\IStatementBuilder.cs" />
     <Compile Include="SqliteDatabaseCreator.cs" />
-    <Compile Include="Statement\ColumnConstraint\ColumnConstraintCollection.cs" />
-    <Compile Include="Statement\ForeignKeyStatement.cs" />
-    <Compile Include="Statement\ColumnConstraint\IColumnConstraint.cs" />
-    <Compile Include="Statement\ColumnConstraint\NotNullConstraint.cs" />
-    <Compile Include="Statement\ColumnStatementCollection.cs" />
-    <Compile Include="Statement\ColumnStatement.cs" />
-    <Compile Include="Statement\CreateDatabaseStatement.cs" />
-    <Compile Include="Statement\CreateTableStatement.cs" />
-    <Compile Include="Statement\IStatement.cs" />
-    <Compile Include="Builder\CreateTableStatementBuilder.cs" />
-    <Compile Include="Builder\NameCreators\TableNameCreator.cs" />
+    <Compile Include="Internal\Statement\ColumnConstraint\ColumnConstraintCollection.cs" />
+    <Compile Include="Internal\Statement\ForeignKeyStatement.cs" />
+    <Compile Include="Internal\Statement\ColumnConstraint\IColumnConstraint.cs" />
+    <Compile Include="Internal\Statement\ColumnConstraint\NotNullConstraint.cs" />
+    <Compile Include="Internal\Statement\ColumnStatementCollection.cs" />
+    <Compile Include="Internal\Statement\ColumnStatement.cs" />
+    <Compile Include="Internal\Statement\CreateDatabaseStatement.cs" />
+    <Compile Include="Internal\Statement\CreateTableStatement.cs" />
+    <Compile Include="Internal\Statement\IStatement.cs" />
+    <Compile Include="Internal\Builder\CreateTableStatementBuilder.cs" />
+    <Compile Include="Internal\Builder\NameCreators\TableNameCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -131,8 +140,6 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.97.0\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.97.0\build\net40\System.Data.SQLite.Core.targets'))" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.97.0\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.97.0\build\net40\System.Data.SQLite.Core.targets')" />
 </Project>

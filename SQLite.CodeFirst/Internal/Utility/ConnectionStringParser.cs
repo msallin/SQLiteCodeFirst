@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace SQLite.CodeFirst
+namespace SQLite.CodeFirst.Utility
 {
-    internal static class SqliteConnectionStringParser
+    internal static class ConnectionStringParser
     {
         private const string DataDirectoryToken = "|datadirectory|";
         private const char KeyValuePairSeperator = ';';
@@ -12,7 +12,7 @@ namespace SQLite.CodeFirst
         private const int KeyPosition = 0;
         private const int ValuePosition = 1;
 
-        public static IDictionary<string, string> ParseSqliteConnectionString(string connectionString)
+        public static IDictionary<string, string> ParseConnectionString(string connectionString)
         {
             connectionString = connectionString.Trim();
             string[] keyValuePairs = connectionString.Split(KeyValuePairSeperator);
@@ -32,7 +32,7 @@ namespace SQLite.CodeFirst
 
         public static string GetDataSource(string connectionString)
         {
-            var path = ExpandDataDirectory(ParseSqliteConnectionString(connectionString)["data source"]);
+            var path = ExpandDataDirectory(ParseConnectionString(connectionString)["data source"]);
             // remove quotation mark if exists
             path = path.Trim('"');
             return path;

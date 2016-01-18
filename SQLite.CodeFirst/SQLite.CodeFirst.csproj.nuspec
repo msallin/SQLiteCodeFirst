@@ -18,6 +18,7 @@
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
+      <frameworkAssembly assemblyName="System.ComponentModel.DataAnnotations" targetFramework="" />
       <frameworkAssembly assemblyName="System.Core" targetFramework="" />
       <frameworkAssembly assemblyName="System.Data" targetFramework="" />
     </frameworkAssemblies>
