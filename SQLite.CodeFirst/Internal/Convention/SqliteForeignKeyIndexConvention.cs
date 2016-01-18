@@ -17,7 +17,7 @@ namespace SQLite.CodeFirst.Convention
     /// This is necessary because in SQLite an index-name must be unique.
     /// Must be added right after the <see cref="ForeignKeyIndexConvention"/>-Convention.
     /// </summary>
-    public class SqliteForeignKeyIndexConvention : IStoreModelConvention<AssociationType>
+    internal class SqliteForeignKeyIndexConvention : IStoreModelConvention<AssociationType>
     {
         private const string IndexAnnotationName = "http://schemas.microsoft.com/ado/2013/11/edm/customannotation:Index";
 
