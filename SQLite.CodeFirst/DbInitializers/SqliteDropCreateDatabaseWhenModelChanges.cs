@@ -32,7 +32,6 @@ namespace SQLite.CodeFirst
         /// Initializes a new instance of the <see cref="SqliteDropCreateDatabaseWhenModelChanges{TContext}"/> class.
         /// </summary>
         /// <param name="modelBuilder">The model builder.</param>
-        //TODO: Also specifi 0 bytes means not exists.. May inherit?
         public SqliteDropCreateDatabaseWhenModelChanges(DbModelBuilder modelBuilder)
             : base(modelBuilder)
         {
