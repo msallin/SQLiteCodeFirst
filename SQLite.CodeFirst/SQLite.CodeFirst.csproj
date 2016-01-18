@@ -83,9 +83,6 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\AssemblyVersionInfo.cs">
-      <Link>Properties\AssemblyVersionInfo.cs</Link>
-    </Compile>
     <Compile Include="Entities\IHistory.cs" />
     <Compile Include="Internal\Builder\NameCreators\IndexNameCreator.cs" />
     <Compile Include="Internal\Builder\NameCreators\SpecialChars.cs" />

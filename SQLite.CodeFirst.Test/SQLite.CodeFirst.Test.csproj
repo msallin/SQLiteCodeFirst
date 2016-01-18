@@ -76,9 +76,6 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\AssemblyVersionInfo.cs">
-      <Link>Properties\AssemblyVersionInfo.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statement\ColumnConstraint\MaxLengthConstraint.cs" />
     <Compile Include="Statement\ColumnConstraint\ColumnConstraintCollectionTest.cs" />

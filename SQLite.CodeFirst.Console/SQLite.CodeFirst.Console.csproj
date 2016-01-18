@@ -75,9 +75,6 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\AssemblyVersionInfo.cs">
-      <Link>Properties\AssemblyVersionInfo.cs</Link>
-    </Compile>
     <Compile Include="Entity\Coach.cs" />
     <Compile Include="Entity\CustomHistory.cs" />
     <Compile Include="Entity\IEntity.cs" />
