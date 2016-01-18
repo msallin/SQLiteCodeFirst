@@ -1,7 +1,10 @@
-﻿namespace SQLite.CodeFirst
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+
+namespace SQLite.CodeFirst
 {
     public interface IDatabaseCreator
     {
-        void Create();
+        void Create(Database db, DbModel model);
     }
 }

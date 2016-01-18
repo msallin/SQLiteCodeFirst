@@ -158,8 +158,8 @@ namespace SQLite.CodeFirst
         private string GetSqlFromModel(DbConnection connection)
         {
             var model = ModelBuilder.Build(connection);
-            var sqliteSqlGenerator = new SqliteSqlGenerator(model.StoreModel);
-            return sqliteSqlGenerator.Generate();
+            var sqliteSqlGenerator = new SqliteSqlGenerator();
+            return sqliteSqlGenerator.Generate(model.StoreModel);
         }
     }
 }

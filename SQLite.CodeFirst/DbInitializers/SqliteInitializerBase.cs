@@ -70,8 +70,8 @@ namespace SQLite.CodeFirst
             {
                 try
                 {
-                    var sqliteDatabaseCreator = new SqliteDatabaseCreator(context.Database, model);
-                    sqliteDatabaseCreator.Create();
+                    var sqliteDatabaseCreator = new SqliteDatabaseCreator();
+                    sqliteDatabaseCreator.Create(context.Database, model);
                     transaction.Commit();
                 }
                 catch (Exception)

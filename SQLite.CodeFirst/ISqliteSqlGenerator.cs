@@ -1,7 +1,9 @@
-﻿namespace SQLite.CodeFirst
+﻿using System.Data.Entity.Core.Metadata.Edm;
+
+namespace SQLite.CodeFirst
 {
     public interface ISqlGenerator
     {
-        string Generate();
+        string Generate(EdmModel storeModel);
     }
 }

@@ -9,27 +9,13 @@ namespace SQLite.CodeFirst
     /// </summary>
     public class SqliteDatabaseCreator : IDatabaseCreator
     {
-        private readonly Database db;
-        private readonly DbModel model;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SqliteDatabaseCreator"/> class.
-        /// </summary>
-        /// <param name="db">The database.</param>
-        /// <param name="model">The model.</param>
-        public SqliteDatabaseCreator(Database db, DbModel model)
-        {
-            this.db = db;
-            this.model = model;
-        }
-
         /// <summary>
         /// Creates the SQLite-Database.
         /// </summary>
-        public void Create()
+        public void Create(Database db, DbModel model)
         {
-            var sqliteSqlGenerator = new SqliteSqlGenerator(model.StoreModel);
-            string sql = sqliteSqlGenerator.Generate();
+            var sqliteSqlGenerator = new SqliteSqlGenerator();
+            string sql = sqliteSqlGenerator.Generate(model.StoreModel);
             db.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, sql);
         }
     }

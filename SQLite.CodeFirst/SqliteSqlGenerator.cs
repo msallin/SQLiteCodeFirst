@@ -9,17 +9,10 @@ namespace SQLite.CodeFirst
     /// </summary>
     public class SqliteSqlGenerator : ISqlGenerator
     {
-        private readonly EdmModel storeModel;
-
-        public SqliteSqlGenerator(EdmModel storeModel)
-        {
-            this.storeModel = storeModel;
-        }
-
         /// <summary>
         /// Generates the SQL statement, based on the <see cref="EdmModel"/>.
         /// </summary>
-        public string Generate()
+        public string Generate(EdmModel storeModel)
         {
             IStatementBuilder<CreateDatabaseStatement> statementBuilder = new CreateDatabaseStatementBuilder(storeModel);
             IStatement statement = statementBuilder.BuildStatement();
