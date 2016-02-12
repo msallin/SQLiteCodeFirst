@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -92,6 +93,7 @@
     <Compile Include="ISqliteSqlGenerator.cs" />
     <Compile Include="DbInitializers\SqliteDropCreateDatabaseWhenModelChanges.cs" />
     <Compile Include="Entities\History.cs" />
+    <Compile Include="SqliteMigrationSqlGenerator.cs" />
     <Compile Include="SqliteSqlGenerator.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\IColumnConstraintCollection.cs" />
     <Compile Include="Internal\Statement\IStatementCollection.cs" />
