@@ -83,6 +83,8 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
+    <Compile Include="Attributes\OnConflictAction.cs" />
+    <Compile Include="Attributes\UniqueAttribute.cs" />
     <Compile Include="Entities\IHistory.cs" />
     <Compile Include="Internal\Builder\NameCreators\IndexNameCreator.cs" />
     <Compile Include="Internal\Builder\NameCreators\SpecialChars.cs" />
