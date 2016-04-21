@@ -22,6 +22,7 @@ Currently the following is supported:
 - Not Null constraint
 - Auto increment (An int PrimaryKey will automatically be incremented)
 - Index (Decorate columns with the `Index` attribute. Indices are automatically created for foreign keys by default. To prevent this you can remove the convetion `ForeignKeyIndexConvention`)
+- Unique constraint (Decorate columsn with the `UniqueAttribute` which is part of this library)
 
 I tried to write the code in a extensible way.
 The logic is divided into two main parts, Builder and Statement.
