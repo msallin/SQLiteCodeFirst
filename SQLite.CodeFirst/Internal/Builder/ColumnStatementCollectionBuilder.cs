@@ -36,6 +36,7 @@ namespace SQLite.CodeFirst.Builder
                 AddMaxLengthConstraintIfNecessary(property, columnStatement);
                 AdjustDatatypeForAutogenerationIfNecessary(property, columnStatement);
                 AddNullConstraintIfNecessary(property, columnStatement);
+                AddUniqueConstraintIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
             }
@@ -64,6 +65,20 @@ namespace SQLite.CodeFirst.Builder
             {
                 // Only mark it as NotNull if it should not be generated.
                 columnStatement.ColumnConstraints.Add(new NotNullConstraint());
+            }
+        }
+
+        private static void AddUniqueConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        {
+            MetadataProperty item;
+            bool found = property.MetadataProperties.TryGetValue("http://schemas.microsoft.com/ado/2013/11/edm/customannotation:IsUnique", true, out item);
+            if (found)
+            {
+                var value = (UniqueAttribute)item.Value;
+                columnStatement.ColumnConstraints.Add(new UniqueConstraint
+                {
+                    OnConflict = value.OnConflict
+                });
             }
         }
     }
