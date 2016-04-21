@@ -80,6 +80,7 @@
     <Compile Include="Statement\ColumnConstraint\MaxLengthConstraint.cs" />
     <Compile Include="Statement\ColumnConstraint\ColumnConstraintCollectionTest.cs" />
     <Compile Include="Statement\ColumnConstraint\NotNullConstraintTest.cs" />
+    <Compile Include="Statement\ColumnConstraint\UniqueConstraintTest.cs" />
     <Compile Include="Statement\ColumnStatementCollectionTest.cs" />
     <Compile Include="Statement\PrimaryKeyStatementTest.cs" />
     <Compile Include="Statement\CreateDatabaseStatementTest.cs" />
