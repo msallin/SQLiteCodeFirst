@@ -91,6 +91,8 @@
     <Compile Include="Internal\Builder\NameCreators\IndexNameCreator.cs" />
     <Compile Include="Internal\Builder\NameCreators\SpecialChars.cs" />
     <Compile Include="IDatabaseCreator.cs" />
+    <Compile Include="Internal\Extensions\DbModelBuilderExtensions.cs" />
+    <Compile Include="Internal\Extensions\EdmPropertyExtensions.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\CollateConstraint.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\UniqueConstraint.cs" />
     <Compile Include="Internal\Utility\HashCreator.cs" />
