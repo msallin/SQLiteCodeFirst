@@ -4,6 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using SQLite.CodeFirst.Convention;
 using System.IO;
 using System.Linq;
+using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst
@@ -37,9 +38,11 @@ namespace SQLite.CodeFirst
             // See https://github.com/msallin/SQLiteCodeFirst/issues/7 for details.
             modelBuilder.Conventions.Remove<TimestampAttributeConvention>();
 
-            modelBuilder.Properties()
-                .Having(x => x.GetCustomAttributes(false).OfType<UniqueAttribute>().FirstOrDefault())
-                .Configure((config, attribute) => config.HasColumnAnnotation("IsUnique", attribute));
+            // There is some functionality which is supported by SQLite which can not be covered
+            // by using the data annotation attributes from the .net framework.
+            // So there are some custom attributes.
+            modelBuilder.RegisterAttributeAsColumnAnnotation<UniqueAttribute>();
+            modelBuilder.RegisterAttributeAsColumnAnnotation<CollateAttribute>();
 
             // By default there is a 'ForeignKeyIndexConvention' but it can be removed.
             // And there is no "Contains" and no way to enumerate the ConventionsCollection.

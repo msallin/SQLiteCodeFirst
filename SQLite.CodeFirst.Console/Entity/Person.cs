@@ -7,6 +7,7 @@ namespace SQLite.CodeFirst.Console.Entity
         public int Id { get; set; }
 
         [MaxLength(50)]
+        [Collate(CollationFunction.NoCase)]
         public string FirstName { get; set; }
 
         [MaxLength(50)]

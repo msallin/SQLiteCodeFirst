@@ -2,6 +2,7 @@
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Globalization;
 using System.Linq;
+using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Statement;
 using SQLite.CodeFirst.Statement.ColumnConstraint;
 
@@ -37,6 +38,7 @@ namespace SQLite.CodeFirst.Builder
                 AdjustDatatypeForAutogenerationIfNecessary(property, columnStatement);
                 AddNullConstraintIfNecessary(property, columnStatement);
                 AddUniqueConstraintIfNecessary(property, columnStatement);
+                AddCollationConstraintIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
             }
@@ -68,17 +70,21 @@ namespace SQLite.CodeFirst.Builder
             }
         }
 
+        private static void AddCollationConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        {
+            var value = property.GetCustomAnnotation<CollateAttribute>();
+            if (value != null)
+            {
+                columnStatement.ColumnConstraints.Add(new CollateConstraint { CollationFunction = value.Collation });
+            }
+        }
+
         private static void AddUniqueConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
         {
-            MetadataProperty item;
-            bool found = property.MetadataProperties.TryGetValue("http://schemas.microsoft.com/ado/2013/11/edm/customannotation:IsUnique", true, out item);
-            if (found)
+            var value = property.GetCustomAnnotation<UniqueAttribute>();
+            if (value != null)
             {
-                var value = (UniqueAttribute)item.Value;
-                columnStatement.ColumnConstraints.Add(new UniqueConstraint
-                {
-                    OnConflict = value.OnConflict
-                });
+                columnStatement.ColumnConstraints.Add(new UniqueConstraint { OnConflict = value.OnConflict });
             }
         }
     }
