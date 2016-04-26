@@ -76,6 +76,7 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
+    <Compile Include="Builder\NameCreators\TableNameCreatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statement\ColumnConstraint\MaxLengthConstraint.cs" />
     <Compile Include="Statement\ColumnConstraint\ColumnConstraintCollectionTest.cs" />
@@ -92,7 +93,6 @@
     <Compile Include="Statement\ColumnStatementTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Builder\" />
     <Folder Include="Convention\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
