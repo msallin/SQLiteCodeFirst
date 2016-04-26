@@ -92,6 +92,7 @@
     <Compile Include="Statement\CreateTableStatementTest.cs" />
     <Compile Include="Statement\CreateIndexStatementCollectionTest.cs" />
     <Compile Include="Statement\ColumnStatementTest.cs" />
+    <Compile Include="Utility\HashCreatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Convention\" />
