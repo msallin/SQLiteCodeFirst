@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using SQLite.CodeFirst.Convention;
 using System.IO;
-using System.Linq;
 using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Utility;
 

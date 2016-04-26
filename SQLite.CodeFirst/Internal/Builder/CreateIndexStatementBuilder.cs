@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure.Annotations;
-using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Builder.NameCreators;
 using SQLite.CodeFirst.Extensions;
