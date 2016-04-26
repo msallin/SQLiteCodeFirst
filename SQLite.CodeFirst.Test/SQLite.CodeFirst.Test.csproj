@@ -93,6 +93,7 @@
     <Compile Include="Statement\CreateIndexStatementCollectionTest.cs" />
     <Compile Include="Statement\ColumnStatementTest.cs" />
     <Compile Include="Utility\HashCreatorTest.cs" />
+    <Compile Include="Utility\HistoryEntityTypeValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Convention\" />
