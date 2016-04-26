@@ -9,11 +9,16 @@ namespace SQLite.CodeFirst
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class CollateAttribute : Attribute
     {
-        public CollateAttribute(CollationFunction collation = CollationFunction.None)
+        public CollateAttribute()
+        {
+            Collation = CollationFunction.None;
+        }
+
+        public CollateAttribute(CollationFunction collation)
         {
             Collation = collation;
         }
 
-        public CollationFunction Collation { get; set; }
+        public CollationFunction Collation { get; private set; }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace SQLite.CodeFirst.Utility
@@ -12,6 +13,7 @@ namespace SQLite.CodeFirst.Utility
         private const int KeyPosition = 0;
         private const int ValuePosition = 1;
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "ToUppercase makes no sense.")]
         public static IDictionary<string, string> ParseConnectionString(string connectionString)
         {
             connectionString = connectionString.Trim();

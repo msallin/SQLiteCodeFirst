@@ -8,11 +8,16 @@ namespace SQLite.CodeFirst
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class UniqueAttribute : Attribute
     {
-        public UniqueAttribute(OnConflictAction onConflict = OnConflictAction.None)
+        public UniqueAttribute()
+        {
+            OnConflict = OnConflictAction.None;
+        }
+
+        public UniqueAttribute(OnConflictAction onConflict)
         {
             OnConflict = onConflict;
         }
 
-        public OnConflictAction OnConflict { get; set; }
+        public OnConflictAction OnConflict { get; private set; }
     }
 }

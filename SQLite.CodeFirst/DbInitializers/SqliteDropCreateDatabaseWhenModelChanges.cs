@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using SQLite.CodeFirst.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SQLite.CodeFirst
 {
@@ -88,6 +89,7 @@ namespace SQLite.CodeFirst
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "Required.")]
         private static void DeleteDatabase(TContext context, string databseFilePath)
         {
             context.Database.Connection.Close();
@@ -120,6 +122,7 @@ namespace SQLite.CodeFirst
             context.SaveChanges();
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private bool IsSameModel(TContext context)
         {
 

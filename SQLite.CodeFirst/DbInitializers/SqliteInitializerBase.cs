@@ -22,7 +22,7 @@ namespace SQLite.CodeFirst
     public abstract class SqliteInitializerBase<TContext> : IDatabaseInitializer<TContext>
         where TContext : DbContext
     {
-        protected readonly DbModelBuilder ModelBuilder;
+        protected DbModelBuilder ModelBuilder { get; }
 
         protected SqliteInitializerBase(DbModelBuilder modelBuilder)
         {

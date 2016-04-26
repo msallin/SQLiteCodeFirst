@@ -57,7 +57,7 @@ namespace SQLite.CodeFirst.Builder
             if (property.StoreGeneratedPattern == StoreGeneratedPattern.Identity)
             {
                 // Must be INTEGER else SQLite will not generate the Ids
-                columnStatement.TypeName = columnStatement.TypeName.ToLower(CultureInfo.InvariantCulture) == "int" ? "INTEGER" : columnStatement.TypeName;
+                columnStatement.TypeName = columnStatement.TypeName.ToUpperInvariant() == "INT" ? "INTEGER" : columnStatement.TypeName;
             }
         }
 

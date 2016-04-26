@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
 namespace SQLite.CodeFirst
@@ -14,6 +15,9 @@ namespace SQLite.CodeFirst
         /// </summary>
         public void Create(Database db, DbModel model)
         {
+            if (db == null) throw new ArgumentNullException("db");
+            if (model == null) throw new ArgumentNullException("model");
+
             var sqliteSqlGenerator = new SqliteSqlGenerator();
             string sql = sqliteSqlGenerator.Generate(model.StoreModel);
             db.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, sql);

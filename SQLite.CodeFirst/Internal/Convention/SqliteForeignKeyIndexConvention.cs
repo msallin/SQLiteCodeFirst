@@ -6,6 +6,7 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Builder.NameCreators;
 
@@ -76,7 +77,7 @@ namespace SQLite.CodeFirst.Convention
             // To be honest, it should never happen. But because its possible by using the API, it should be covered.
             if (count > 0)
             {
-                indexName = String.Format("{0}_{1}", indexName, count);
+                indexName = String.Format(CultureInfo.InvariantCulture, "{0}_{1}", indexName, count);
             }
 
             var indexAttribute = new IndexAttribute(indexName);
