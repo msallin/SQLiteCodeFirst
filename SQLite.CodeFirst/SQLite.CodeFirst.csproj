@@ -101,13 +101,14 @@
     <Compile Include="Internal\Statement\ColumnConstraint\UniqueConstraint.cs" />
     <Compile Include="Internal\Utility\HashCreator.cs" />
     <Compile Include="Internal\Utility\HistoryEntityTypeValidator.cs" />
+    <Compile Include="Internal\Utility\SqliteAssociationType.cs" />
     <Compile Include="ISqliteSqlGenerator.cs" />
     <Compile Include="DbInitializers\SqliteDropCreateDatabaseWhenModelChanges.cs" />
     <Compile Include="Entities\History.cs" />
     <Compile Include="SqliteSqlGenerator.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\IColumnConstraintCollection.cs" />
     <Compile Include="Internal\Statement\IStatementCollection.cs" />
-    <Compile Include="Internal\Utility\AssociationTypeWrapper.cs" />
+    <Compile Include="Internal\Utility\AssociationTypeContainer.cs" />
     <Compile Include="Internal\Builder\ColumnStatementCollectionBuilder.cs" />
     <Compile Include="Internal\Builder\CreateIndexStatementBuilder.cs" />
     <Compile Include="Internal\Builder\ForeignKeyStatementBuilder.cs" />

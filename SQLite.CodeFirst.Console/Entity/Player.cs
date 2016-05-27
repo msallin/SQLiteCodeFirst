@@ -15,5 +15,7 @@ namespace SQLite.CodeFirst.Console.Entity
 
         // Its not possible to set an index on this property. Use the FK property (teamId).
         public virtual Team Team { get; set; }
+
+        public virtual Player Mentor { get; set; }
     }
 }
