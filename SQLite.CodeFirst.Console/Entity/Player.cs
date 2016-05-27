@@ -9,5 +9,7 @@ namespace SQLite.CodeFirst.Console.Entity
         public int Number { get; set; }
 
         public virtual Team Team { get; set; }
+
+        public virtual Player Mentor { get; set; }
     }
 }
