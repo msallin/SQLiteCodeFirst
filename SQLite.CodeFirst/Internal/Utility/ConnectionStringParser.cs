@@ -8,13 +8,22 @@ namespace SQLite.CodeFirst.Utility
     internal static class ConnectionStringParser
     {
         private const string DataDirectoryToken = "|datadirectory|";
+        private const string DataSourceToken = "data source";
         private const char KeyValuePairSeperator = ';';
         private const char KeyValueSeperator = '=';
         private const int KeyPosition = 0;
         private const int ValuePosition = 1;
 
+        public static string GetDataSource(string connectionString)
+        {
+            var path = ExpandDataDirectory(ParseConnectionString(connectionString)[DataSourceToken]);
+            // remove quotation mark if exists
+            path = path.Trim('"');
+            return path;
+        }
+
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "ToUppercase makes no sense.")]
-        public static IDictionary<string, string> ParseConnectionString(string connectionString)
+        private static IDictionary<string, string> ParseConnectionString(string connectionString)
         {
             connectionString = connectionString.Trim();
             string[] keyValuePairs = connectionString.Split(KeyValuePairSeperator);
@@ -25,19 +34,11 @@ namespace SQLite.CodeFirst.Utility
                 string[] keyValue = keyValuePair.Split(KeyValueSeperator);
                 if (keyValue.Length >= 2)
                 {
-                    keyValuePairDictionary.Add(keyValue[KeyPosition].ToLower(CultureInfo.InvariantCulture), keyValue[ValuePosition]);
+                    keyValuePairDictionary.Add(keyValue[KeyPosition].Trim().ToLower(CultureInfo.InvariantCulture), keyValue[ValuePosition]);
                 }
             }
 
             return keyValuePairDictionary;
-        }
-
-        public static string GetDataSource(string connectionString)
-        {
-            var path = ExpandDataDirectory(ParseConnectionString(connectionString)["data source"]);
-            // remove quotation mark if exists
-            path = path.Trim('"');
-            return path;
         }
 
         private static string ExpandDataDirectory(string path)
