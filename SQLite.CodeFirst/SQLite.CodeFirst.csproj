@@ -87,14 +87,14 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="Attributes\CollateAttribute.cs" />
-    <Compile Include="Attributes\CollationFunction.cs" />
-    <Compile Include="Attributes\OnConflictAction.cs" />
-    <Compile Include="Attributes\UniqueAttribute.cs" />
-    <Compile Include="Entities\IHistory.cs" />
+    <Compile Include="Public\Attributes\CollateAttribute.cs" />
+    <Compile Include="Public\Attributes\CollationFunction.cs" />
+    <Compile Include="Public\Attributes\OnConflictAction.cs" />
+    <Compile Include="Public\Attributes\UniqueAttribute.cs" />
+    <Compile Include="Public\Entities\IHistory.cs" />
     <Compile Include="Internal\Builder\NameCreators\IndexNameCreator.cs" />
     <Compile Include="Internal\Builder\NameCreators\SpecialChars.cs" />
-    <Compile Include="IDatabaseCreator.cs" />
+    <Compile Include="Public\IDatabaseCreator.cs" />
     <Compile Include="Internal\Extensions\DbModelBuilderExtensions.cs" />
     <Compile Include="Internal\Extensions\EdmPropertyExtensions.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\CollateConstraint.cs" />
@@ -102,10 +102,10 @@
     <Compile Include="Internal\Utility\HashCreator.cs" />
     <Compile Include="Internal\Utility\HistoryEntityTypeValidator.cs" />
     <Compile Include="Internal\Utility\SqliteAssociationType.cs" />
-    <Compile Include="ISqliteSqlGenerator.cs" />
-    <Compile Include="DbInitializers\SqliteDropCreateDatabaseWhenModelChanges.cs" />
-    <Compile Include="Entities\History.cs" />
-    <Compile Include="SqliteSqlGenerator.cs" />
+    <Compile Include="Public\ISqliteSqlGenerator.cs" />
+    <Compile Include="Public\DbInitializers\SqliteDropCreateDatabaseWhenModelChanges.cs" />
+    <Compile Include="Public\Entities\History.cs" />
+    <Compile Include="Public\SqliteSqlGenerator.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\IColumnConstraintCollection.cs" />
     <Compile Include="Internal\Statement\IStatementCollection.cs" />
     <Compile Include="Internal\Utility\AssociationTypeContainer.cs" />
@@ -116,17 +116,17 @@
     <Compile Include="Internal\Builder\PrimaryKeyStatementBuilder.cs" />
     <Compile Include="Internal\Convention\SqliteForeignKeyIndexConvention.cs" />
     <Compile Include="Internal\Extensions\EntityTypeExtension.cs" />
-    <Compile Include="DbInitializers\SqliteCreateDatabaseIfNotExists.cs" />
-    <Compile Include="DbInitializers\SqliteDropCreateDatabaseAlways.cs" />
+    <Compile Include="Public\DbInitializers\SqliteCreateDatabaseIfNotExists.cs" />
+    <Compile Include="Public\DbInitializers\SqliteDropCreateDatabaseAlways.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\MaxLengthConstraint.cs" />
     <Compile Include="Internal\Statement\CreateIndexStatement.cs" />
     <Compile Include="Internal\Statement\CreateIndexStatementCollection.cs" />
     <Compile Include="Internal\Statement\PrimaryKeyStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\Utility\ConnectionStringParser.cs" />
-    <Compile Include="DbInitializers\SqliteInitializerBase.cs" />
+    <Compile Include="Public\DbInitializers\SqliteInitializerBase.cs" />
     <Compile Include="Internal\Builder\IStatementBuilder.cs" />
-    <Compile Include="SqliteDatabaseCreator.cs" />
+    <Compile Include="Public\SqliteDatabaseCreator.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\ColumnConstraintCollection.cs" />
     <Compile Include="Internal\Statement\ForeignKeyStatement.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\IColumnConstraint.cs" />
