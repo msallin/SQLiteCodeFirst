@@ -36,7 +36,15 @@ namespace SQLite.CodeFirst.Utility
 
         private static bool IsSelfReferencing(AssociationType associationType)
         {
-            return associationType.Constraint.ToRole.Name.Remove(associationType.Constraint.ToRole.Name.Length - SelfReferencingPostfix.Length, SelfReferencingPostfix.Length) == associationType.Constraint.FromRole.Name;
+            string to = associationType.Constraint.ToRole.Name;
+            string from = associationType.Constraint.FromRole.Name;
+
+            if (to.Length <= SelfReferencingPostfix.Length)
+            {
+                return false;
+            }
+
+            return to.Remove(to.Length - SelfReferencingPostfix.Length, SelfReferencingPostfix.Length) == from;
         }
 
         public string ToRoleEntitySetName { get; set; }

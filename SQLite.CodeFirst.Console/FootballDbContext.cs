@@ -18,6 +18,7 @@ namespace SQLite.CodeFirst.Console
             ConfigureStadionEntity(modelBuilder);
             ConfigureCoachEntity(modelBuilder);
             ConfigurePlayerEntity(modelBuilder);
+            ConfigureSetEntity(modelBuilder);
 
             var initializer = new FootballDbInitializer(modelBuilder);
             Database.SetInitializer(initializer);
@@ -55,6 +56,12 @@ namespace SQLite.CodeFirst.Console
                 .HasRequired(p => p.Team)
                 .WithMany(team => team.Players)
                 .WillCascadeOnDelete(true);
+        }
+
+        private static void ConfigureSetEntity(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Set>()
+                .HasRequired(s => s.Player);
         }
     }
 }

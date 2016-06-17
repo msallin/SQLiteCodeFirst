@@ -80,6 +80,7 @@
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\Person.cs" />
     <Compile Include="Entity\Player.cs" />
+    <Compile Include="Entity\Set.cs" />
     <Compile Include="Entity\Stadion.cs" />
     <Compile Include="Entity\Team.cs" />
     <Compile Include="FootballDbContext.cs" />
