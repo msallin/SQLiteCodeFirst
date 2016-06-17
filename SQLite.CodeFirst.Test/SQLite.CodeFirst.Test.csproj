@@ -94,7 +94,7 @@
     <Compile Include="Statement\ColumnStatementTest.cs" />
     <Compile Include="Utility\ConnectionStringParserTest.cs" />
     <Compile Include="Utility\HashCreatorTest.cs" />
-    <Compile Include="Utility\HistoryEntityTypeValidator.cs" />
+    <Compile Include="Utility\HistoryEntityTypeValidatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Convention\" />
