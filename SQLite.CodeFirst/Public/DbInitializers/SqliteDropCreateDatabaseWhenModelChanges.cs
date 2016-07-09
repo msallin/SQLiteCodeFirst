@@ -89,7 +89,7 @@ namespace SQLite.CodeFirst
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "Required.")]
+        [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "Required.")]
         private static void DeleteDatabase(TContext context, string databseFilePath)
         {
             context.Database.Connection.Close();

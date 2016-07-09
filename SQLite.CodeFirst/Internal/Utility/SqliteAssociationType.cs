@@ -7,8 +7,6 @@ namespace SQLite.CodeFirst.Utility
 {
     internal class SqliteAssociationType
     {
-        private const string SelfReferencingPostfix = "Self";
-
         public SqliteAssociationType(AssociationType associationType, EntityContainer container)
         {
             FromRoleEntitySetName = associationType.Constraint.FromRole.Name;
@@ -36,15 +34,10 @@ namespace SQLite.CodeFirst.Utility
 
         private static bool IsSelfReferencing(AssociationType associationType)
         {
-            string to = associationType.Constraint.ToRole.Name;
-            string from = associationType.Constraint.FromRole.Name;
-
-            if (to.Length <= SelfReferencingPostfix.Length)
-            {
-                return false;
-            }
-
-            return to.Remove(to.Length - SelfReferencingPostfix.Length, SelfReferencingPostfix.Length) == from;
+            var toRoleRefType = (RefType)associationType.Constraint.ToRole.TypeUsage.EdmType;
+            var fromRoleRefType = (RefType)associationType.Constraint.FromRole.TypeUsage.EdmType;
+            bool isSelfReferencing = toRoleRefType.ElementType.Name == fromRoleRefType.ElementType.Name;
+            return isSelfReferencing;
         }
 
         public string ToRoleEntitySetName { get; set; }
