@@ -79,6 +79,7 @@
     <Compile Include="Builder\NameCreators\IndexNameCreatorTest.cs" />
     <Compile Include="Builder\NameCreators\TableNameCreatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Statement\ColumnConstraint\AutoincrementConstraintTest.cs" />
     <Compile Include="Statement\ColumnConstraint\MaxLengthConstraint.cs" />
     <Compile Include="Statement\ColumnConstraint\ColumnConstraintCollectionTest.cs" />
     <Compile Include="Statement\ColumnConstraint\NotNullConstraintTest.cs" />

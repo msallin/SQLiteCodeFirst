@@ -3,6 +3,8 @@ using System.Data.Entity.Core.Metadata.Edm;
 using SQLite.CodeFirst.Builder.NameCreators;
 using SQLite.CodeFirst.Statement;
 using SQLite.CodeFirst.Utility;
+using System.Linq;
+using SQLite.CodeFirst.Extensions;
 
 namespace SQLite.CodeFirst.Builder
 {
@@ -19,13 +21,19 @@ namespace SQLite.CodeFirst.Builder
 
         public CreateTableStatement BuildStatement()
         {
+            var nonAutoincrementKeys = entitySet.ElementType.KeyMembers
+                .Where(km => (km as EdmProperty)?.GetCustomAnnotation<AutoincrementAttribute>() == null);
+
             var simpleColumnCollection = new ColumnStatementCollectionBuilder(entitySet.ElementType.Properties).BuildStatement();
-            var primaryKeyStatement = new PrimaryKeyStatementBuilder(entitySet.ElementType.KeyMembers).BuildStatement();
             var foreignKeyCollection = new ForeignKeyStatementBuilder(associationTypeContainer.GetAssociationTypes(entitySet.Name)).BuildStatement();
 
             var columnStatements = new List<IStatement>();
             columnStatements.AddRange(simpleColumnCollection);
-            columnStatements.Add(primaryKeyStatement);
+            if (nonAutoincrementKeys.Count() > 0)
+            {
+                var primaryKeyStatement = new PrimaryKeyStatementBuilder(nonAutoincrementKeys).BuildStatement();
+                columnStatements.Add(primaryKeyStatement);
+            }
             columnStatements.AddRange(foreignKeyCollection);
 
             return new CreateTableStatement

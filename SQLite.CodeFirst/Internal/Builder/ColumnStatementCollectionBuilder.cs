@@ -39,6 +39,7 @@ namespace SQLite.CodeFirst.Builder
                 AddNullConstraintIfNecessary(property, columnStatement);
                 AddUniqueConstraintIfNecessary(property, columnStatement);
                 AddCollationConstraintIfNecessary(property, columnStatement);
+                AddAutoincrtementConstraintIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
             }
@@ -85,6 +86,15 @@ namespace SQLite.CodeFirst.Builder
             if (value != null)
             {
                 columnStatement.ColumnConstraints.Add(new UniqueConstraint { OnConflict = value.OnConflict });
+            }
+        }
+
+        private static void AddAutoincrtementConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        {
+            var value = property.GetCustomAnnotation<AutoincrementAttribute>();
+            if (value != null)
+            {
+                columnStatement.ColumnConstraints.Add(new AutoincrementConstraint());
             }
         }
     }
