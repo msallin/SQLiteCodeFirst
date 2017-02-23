@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
-using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Statement;
@@ -11,10 +10,12 @@ namespace SQLite.CodeFirst.Builder
     internal class ColumnStatementCollectionBuilder : IStatementBuilder<ColumnStatementCollection>
     {
         private readonly IEnumerable<EdmProperty> properties;
+        private readonly IEnumerable<EdmProperty> keyMembers;
 
-        public ColumnStatementCollectionBuilder(IEnumerable<EdmProperty> properties)
+        public ColumnStatementCollectionBuilder(IEnumerable<EdmProperty> properties, IEnumerable<EdmProperty> keyMembers)
         {
             this.properties = properties;
+            this.keyMembers = keyMembers;
         }
 
         public ColumnStatementCollection BuildStatement()
@@ -39,6 +40,7 @@ namespace SQLite.CodeFirst.Builder
                 AddNullConstraintIfNecessary(property, columnStatement);
                 AddUniqueConstraintIfNecessary(property, columnStatement);
                 AddCollationConstraintIfNecessary(property, columnStatement);
+                AddPrimaryKeyConstraintAndAdjustTypeIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
             }
@@ -57,7 +59,7 @@ namespace SQLite.CodeFirst.Builder
             if (property.StoreGeneratedPattern == StoreGeneratedPattern.Identity)
             {
                 // Must be INTEGER else SQLite will not generate the Ids
-                columnStatement.TypeName = columnStatement.TypeName.ToUpperInvariant() == "INT" ? "INTEGER" : columnStatement.TypeName;
+                ConvertIntegerType(columnStatement);
             }
         }
 
@@ -86,6 +88,26 @@ namespace SQLite.CodeFirst.Builder
             {
                 columnStatement.ColumnConstraints.Add(new UniqueConstraint { OnConflict = value.OnConflict });
             }
+        }
+
+        private void AddPrimaryKeyConstraintAndAdjustTypeIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        {
+            // Only handle a single primary key this way.
+            if (keyMembers.Count() != 1 || !property.Equals(keyMembers.Single()))
+            {
+                return;
+            }
+
+            ConvertIntegerType(columnStatement);
+            var primaryKeyConstraint = new PrimaryKeyConstraint();
+            primaryKeyConstraint.Autoincrement = property.GetCustomAnnotation<AutoincrementAttribute>() != null;
+            columnStatement.ColumnConstraints.Add(primaryKeyConstraint);
+        }
+
+        private static void ConvertIntegerType(ColumnStatement columnStatement)
+        {
+            const string integerType = "INTEGER";
+            columnStatement.TypeName = columnStatement.TypeName.ToUpperInvariant() == "INT" ? integerType : columnStatement.TypeName;
         }
     }
 }

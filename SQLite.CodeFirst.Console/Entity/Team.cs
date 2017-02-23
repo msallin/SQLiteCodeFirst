@@ -6,6 +6,7 @@ namespace SQLite.CodeFirst.Console.Entity
 {
     public class Team : IEntity
     {
+        [Autoincrement]
         public int Id { get; set; }
 
         [Index("IX_Team_TeamsName")] // Test for named index.
