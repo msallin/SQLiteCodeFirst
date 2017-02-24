@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
-using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Statement;
@@ -39,7 +38,7 @@ namespace SQLite.CodeFirst.Builder
                 AddNullConstraintIfNecessary(property, columnStatement);
                 AddUniqueConstraintIfNecessary(property, columnStatement);
                 AddCollationConstraintIfNecessary(property, columnStatement);
-                AddAutoincrtementConstraintIfNecessary(property, columnStatement);
+                AddAutoincrementConstraintIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
             }
@@ -89,7 +88,7 @@ namespace SQLite.CodeFirst.Builder
             }
         }
 
-        private static void AddAutoincrtementConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        private static void AddAutoincrementConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
         {
             var value = property.GetCustomAnnotation<AutoincrementAttribute>();
             if (value != null)

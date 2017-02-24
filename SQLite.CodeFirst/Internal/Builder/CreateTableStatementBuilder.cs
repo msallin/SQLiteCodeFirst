@@ -29,7 +29,7 @@ namespace SQLite.CodeFirst.Builder
 
             var columnStatements = new List<IStatement>();
             columnStatements.AddRange(simpleColumnCollection);
-            if (nonAutoincrementKeys.Count() > 0)
+            if (nonAutoincrementKeys.Any())
             {
                 var primaryKeyStatement = new PrimaryKeyStatementBuilder(nonAutoincrementKeys).BuildStatement();
                 columnStatements.Add(primaryKeyStatement);
