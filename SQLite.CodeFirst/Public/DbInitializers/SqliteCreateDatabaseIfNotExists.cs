@@ -43,16 +43,24 @@ namespace SQLite.CodeFirst
         {
             string databaseFilePath = GetDatabasePathFromContext(context);
 
-            var fileInfo = new FileInfo(databaseFilePath);
-
             bool exists;
-            if (nullByteFileMeansNotExisting)
+            if (this.IsMemoryDb(databaseFilePath))
             {
-                exists = fileInfo.Exists && fileInfo.Length != 0;
+                //We consider that memory database has to be created each time
+                exists = false;
             }
             else
             {
-                exists = fileInfo.Exists;
+                var fileInfo = new FileInfo(databaseFilePath);
+
+                if (nullByteFileMeansNotExisting)
+                {
+                    exists = fileInfo.Exists && fileInfo.Length != 0;
+                }
+                else
+                {
+                    exists = fileInfo.Exists;
+                }
             }
 
             if (exists)
