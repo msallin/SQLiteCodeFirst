@@ -3,7 +3,7 @@ using Moq;
 using SQLite.CodeFirst.Statement;
 using SQLite.CodeFirst.Statement.ColumnConstraint;
 
-namespace SQLite.CodeFirst.Test.Statement
+namespace SQLite.CodeFirst.Test.UnitTests.Statement
 {
     [TestClass]
     public class ColumnStatementTest : StatementTestBase

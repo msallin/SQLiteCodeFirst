@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLite.CodeFirst.Utility;
 
-namespace SQLite.CodeFirst.Test.Utility
+namespace SQLite.CodeFirst.Test.UnitTests.Utility
 {
     [TestClass]
     public class HistoryEntityTypeValidatorTest

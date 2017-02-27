@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.IO;
+using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst
 {
@@ -30,10 +31,10 @@ namespace SQLite.CodeFirst
         {
             string databseFilePath = GetDatabasePathFromContext(context);
 
-            bool exists = File.Exists(databseFilePath);
+            bool exists = InMemoryAwareFile.Exists(databseFilePath);
             if (exists)
             {
-                File.Delete(databseFilePath);
+                InMemoryAwareFile.Delete(databseFilePath);
             }
 
             base.InitializeDatabase(context);

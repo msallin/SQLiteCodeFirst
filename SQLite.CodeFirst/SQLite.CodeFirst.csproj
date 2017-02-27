@@ -87,6 +87,7 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
+    <Compile Include="Internal\Utility\InMemoryAwareFile.cs" />
     <Compile Include="Public\Attributes\CollateAttribute.cs" />
     <Compile Include="Public\Attributes\CollationFunction.cs" />
     <Compile Include="Public\Attributes\OnConflictAction.cs" />
