@@ -90,12 +90,15 @@ namespace SQLite.CodeFirst
         }
 
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "Required.")]
-        private static void DeleteDatabase(TContext context, string databseFilePath)
+        private void DeleteDatabase(TContext context, string databseFilePath)
         {
             context.Database.Connection.Close();
             GC.Collect();
             GC.WaitForPendingFinalizers();
-            File.Delete(databseFilePath);
+            if (!IsMemoryDb(databseFilePath))
+            {
+                File.Delete(databseFilePath);
+            }
         }
 
         private void SaveHistory(TContext context)

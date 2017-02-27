@@ -70,7 +70,7 @@ namespace SQLite.CodeFirst
             var model = ModelBuilder.Build(context.Database.Connection);
 
             var dbFile = GetDatabasePathFromContext(context);
-            if (!this.IsMemoryDb(dbFile))
+            if (!IsMemoryDb(dbFile))
             {
                 var dbFileInfo = new FileInfo(dbFile);
                 dbFileInfo.Directory.Create();
@@ -124,7 +124,7 @@ namespace SQLite.CodeFirst
             return ConnectionStringParser.GetDataSource(context.Database.Connection.ConnectionString);
         }
 
-        protected bool IsMemoryDb(string dbFile)
+        public static bool IsMemoryDb(string dbFile)
         {
             return StringComparer.InvariantCultureIgnoreCase.Equals(dbFile, ":memory:");
         }

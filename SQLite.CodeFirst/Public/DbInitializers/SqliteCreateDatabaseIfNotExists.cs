@@ -44,7 +44,7 @@ namespace SQLite.CodeFirst
             string databaseFilePath = GetDatabasePathFromContext(context);
 
             bool exists;
-            if (this.IsMemoryDb(databaseFilePath))
+            if (IsMemoryDb(databaseFilePath))
             {
                 //We consider that memory database has to be created each time
                 exists = false;
