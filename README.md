@@ -1,17 +1,8 @@
-# SQLite CodeFirst
+# SQLite CodeFirst (With Migrations)
+Creates and update a [SQLite Database](https://sqlite.org/) from Code, using [Entity Framework](https://msdn.microsoft.com/en-us/data/ef.aspx) CodeFirst and [Migrations](https://msdn.microsoft.com/pt-br/library/system.data.entity.migrations(v=vs.113).aspx).
 
-**Release Build** [![Build status](https://ci.appveyor.com/api/projects/status/2qavdqctw0ehscm6/branch/master?svg=true)](https://ci.appveyor.com/project/msallin/sqlitecodefirst-nv6vn/branch/master)
-
-**CI Build** [![Build status](https://ci.appveyor.com/api/projects/status/oc1miog385h801qe?svg=true)](https://ci.appveyor.com/project/msallin/sqlitecodefirst)
-
-Creates a [SQLite Database](https://sqlite.org/) from Code, using [Entity Framework](https://msdn.microsoft.com/en-us/data/ef.aspx) CodeFirst.
-
-## Support the project <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ARTMHALNW4VC6&lc=CH&item_name=SQLite%2eCodeFirst&item_number=sqlitecodefirst&currency_code=CHF&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" title="Donate to this project using Paypal"><img src="https://camo.githubusercontent.com/11b2f47d7b4af17ef3a803f57c37de3ac82ac039/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f70617970616c2d646f6e6174652d79656c6c6f772e737667" alt="PayPal donate button" data-canonical-src="https://img.shields.io/badge/paypal-donate-yellow.svg" style="max-width:100%;"></a>
-
-To support this project you can: *star the repository*, report bugs/request features by creating new issues, write code and create PRs or donate.
-Especially if you use it for a commercial project, a donation is welcome.
-If you need a specific feature for a commercial project, I am glad to offer a paid implementation.
-
+If you need a specific feature for a commercial project, I am glad to offer a paid implementation.   
+This project is forked from [msallin](https://github.com/msallin/SQLiteCodeFirst) Sqlite Code First Projet and [zaniants](https://github.com/zanyants/SQLiteCodeFirst) Sqlite Migrations code.
 ## Features
 
 This project ships several `IDbInitializer` classes. These create new SQLite Databases based on your model/code.
@@ -49,11 +40,17 @@ Depending on your need, you can choose from the following initializers:
 - SqliteCreateDatabaseIfNotExists
 - SqliteDropCreateDatabaseAlways
 - SqliteDropCreateDatabaseWhenModelChanges
+- SqliteMigrateDatabaseToLatestVersion
 
 If you want to have more control, you can use the `SqliteDatabaseCreator` (implements `IDatabaseCreator`) which lets you control the creation of the SQLite database.
 Or for even more control, use the `SqliteSqlGenerator` (implements `ISqlGenerator`), which lets you generate the SQL code based on your `EdmModel`.
 
 When you want to let the Entity Framework create database if it does not exist, just set `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists<>` as your `IDbInitializer<>`.
+
+When using Migrations feature you will always use `SqliteMigrateDatabaseToLatestVersion<>`.
+
+**Know issue with Migrations:**
+Entity Framework 6.2.0 has an initialization bug with Sqlite and some other databases. It already [was fixed](https://github.com/aspnet/EntityFramework6/issues/398) to EF 6.3. When you need to create a new migration change using command `Add-Migration` you will need to downgrade EF to version 6.1.3 until EF 6.3 is not released.
 
 ### Initializer Sample
 
@@ -161,6 +158,12 @@ You will find an extensive usage of the composite pattern.
 If you try to reinstall the NuGet-Packages (e.g. if you want to downgrade to .NET 4.0), the app.config will be overwritten and you may getting an exception when you try to run the console project.
 In this case please check the following issue: <https://github.com/msallin/SQLiteCodeFirst/issues/13.>
 
-## Recognition
+Pay attention when running Migrations routines because Sqlite does not support some SQL commands suggested by the Entity Framework. For example, to rename a column will be suggested to run `Rename("dbo.table_name", "old_column_name", "new_column_name")`. However Sqlite does not support column rename command!
 
+When creating a new Migrations change may you need to inform StringConnection property to Migration, like this:
+`Add-Migration MyChangeName -ConnectionString "Data Source='C:\path_to_your_database\footballDb.sqlite';" -ConnectionProviderName "System.Data.SQLite"`
+
+## Recognition
 I started with the [code](https://gist.github.com/flaub/1968486e1b3f2b9fddaf) from [flaub](https://github.com/flaub).
+
+Migrations uses a code started by Julio C. Borges and upgraded by [digocesar](https://github.com/digocesar).

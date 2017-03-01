@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.IO;
 using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst

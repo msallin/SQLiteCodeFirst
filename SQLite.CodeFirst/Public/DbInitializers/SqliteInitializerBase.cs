@@ -2,7 +2,6 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.IO;
 using SQLite.CodeFirst.Convention;
 using SQLite.CodeFirst.Extensions;
 using SQLite.CodeFirst.Utility;

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net40;net45</TargetFrameworks>
     <Authors>Marc Sallin</Authors>
     <Company />
     <Version />  <!-- This empty tag is necessary to make appveyor csproj version patching work! -->
@@ -20,8 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="EntityFramework" Version="6.3.0" />
   </ItemGroup>
-  
+
 </Project>
