@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -122,6 +122,10 @@ namespace SQLite.CodeFirst
             {
                 using ( var tw = CreateIndentedTextWriter() )
                 {
+                    var indexName = op.HasDefaultName
+                        ? string.Format( "{0}_{1}", op.Name, RemoveDBO( op.Table ) )
+                        : op.Name;
+
                     tw.Write( "CREATE " );
 
                     if ( op.IsUnique )
@@ -151,8 +155,12 @@ namespace SQLite.CodeFirst
             {
                 using ( var tw = CreateIndentedTextWriter() )
                 {
+                    var indexName = op.HasDefaultName
+                        ? string.Format( "{0}_{1}", op.Name, RemoveDBO( op.Table ) )
+                        : op.Name;
+
                     tw.Write( "DROP INDEX " );
-                    tw.Write( RemoveDBO( op.Name ) );
+                    tw.Write( indexName );
 
                     AddSqlStatement( tw );
                 }
@@ -230,6 +238,8 @@ namespace SQLite.CodeFirst
 
             void Generate( SqlOperation opeSQL )
             {
+                var sql = RemoveDBO( opeSQL.Sql );
+
                 AddSqlStatement( opeSQL.Sql, opeSQL.SuppressTransaction );
             }
 
