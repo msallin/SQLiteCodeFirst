@@ -108,8 +108,33 @@ namespace SQLite.CodeFirst
 
             void Generate( AddForeignKeyOperation op )
             {
-                // Currently not supported.
-                throw new NotSupportedException();
+                if ( !_migrationStatements.Any( item => item.Sql.Contains( "CREATE TABLE" ) ) ) 
+                    return;
+
+                var migrationStatement = _migrationStatements
+                    .FirstOrDefault( item => item.Sql
+                        .Contains( string.Format( "CREATE TABLE {0} (", RemoveDBO( op.DependentTable ) ) ) );
+
+                if (migrationStatement == null)
+                    throw new NotSupportedException( "SQL command to create the dependent table not found." );
+
+                migrationStatement.Sql = migrationStatement.Sql.TrimEnd( ')' );
+                migrationStatement.Sql += ",";
+
+                foreach ( var foreignKey in op.DependentColumns )
+                {
+                    var cmd = RemoveDBO( string.Format( "FOREIGN KEY ([{0}]) REFERENCES [{1}] ([{2}]) {3}",
+                        foreignKey,
+                        op.PrincipalTable,
+                        op.PrincipalColumns[op.DependentColumns.IndexOf( foreignKey )],
+                        ( op.CascadeDelete
+                            ? "ON DELETE CASCADE"
+                            : "ON DELETE NO ACTION" ) ) );
+
+                    migrationStatement.Sql += cmd;
+                }
+
+                migrationStatement.Sql += ")";
             }
 
             void Generate( DropForeignKeyOperation op )
