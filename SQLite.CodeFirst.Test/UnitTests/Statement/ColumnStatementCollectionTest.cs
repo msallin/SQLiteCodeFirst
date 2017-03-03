@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLite.CodeFirst.Statement;
 
-namespace SQLite.CodeFirst.Test.Statement
+namespace SQLite.CodeFirst.Test.UnitTests.Statement
 {
     [TestClass]
     public class ColumnStatementCollectionTest : StatementTestBase

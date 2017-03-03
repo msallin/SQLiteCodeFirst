@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.IO;
+using SQLite.CodeFirst.Utility;
 
 namespace SQLite.CodeFirst
 {
@@ -43,18 +44,7 @@ namespace SQLite.CodeFirst
         {
             string databaseFilePath = GetDatabasePathFromContext(context);
 
-            var fileInfo = new FileInfo(databaseFilePath);
-
-            bool exists;
-            if (nullByteFileMeansNotExisting)
-            {
-                exists = fileInfo.Exists && fileInfo.Length != 0;
-            }
-            else
-            {
-                exists = fileInfo.Exists;
-            }
-
+            bool exists = InMemoryAwareFile.Exists(databaseFilePath, nullByteFileMeansNotExisting);
             if (exists)
             {
                 return;

@@ -95,7 +95,7 @@ namespace SQLite.CodeFirst
             context.Database.Connection.Close();
             GC.Collect();
             GC.WaitForPendingFinalizers();
-            File.Delete(databseFilePath);
+            InMemoryAwareFile.Delete(databseFilePath);
         }
 
         private void SaveHistory(TContext context)

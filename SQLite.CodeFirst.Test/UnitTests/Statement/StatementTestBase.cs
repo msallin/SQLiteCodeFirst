@@ -1,7 +1,7 @@
 ﻿using Moq;
 using SQLite.CodeFirst.Statement;
 
-namespace SQLite.CodeFirst.Test.Statement
+namespace SQLite.CodeFirst.Test.UnitTests.Statement
 {
     public abstract class StatementTestBase
     {
