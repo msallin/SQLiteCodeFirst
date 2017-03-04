@@ -88,6 +88,9 @@
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
     <Compile Include="Internal\Utility\InMemoryAwareFile.cs" />
+    <Compile Include="Internal\Extensions\ListExtensions.cs" />
+    <Compile Include="Internal\Statement\ColumnConstraint\PrimaryKeyConstraint.cs" />
+    <Compile Include="Public\Attributes\AutoincrementAttribute.cs" />
     <Compile Include="Public\Attributes\CollateAttribute.cs" />
     <Compile Include="Public\Attributes\CollationFunction.cs" />
     <Compile Include="Public\Attributes\OnConflictAction.cs" />
@@ -114,7 +117,7 @@
     <Compile Include="Internal\Builder\CreateIndexStatementBuilder.cs" />
     <Compile Include="Internal\Builder\ForeignKeyStatementBuilder.cs" />
     <Compile Include="Internal\Builder\CreateDatabaseStatementBuilder.cs" />
-    <Compile Include="Internal\Builder\PrimaryKeyStatementBuilder.cs" />
+    <Compile Include="Internal\Builder\CompositePrimaryKeyStatementBuilder.cs" />
     <Compile Include="Internal\Convention\SqliteForeignKeyIndexConvention.cs" />
     <Compile Include="Internal\Extensions\EntityTypeExtension.cs" />
     <Compile Include="Public\DbInitializers\SqliteCreateDatabaseIfNotExists.cs" />
@@ -122,7 +125,7 @@
     <Compile Include="Internal\Statement\ColumnConstraint\MaxLengthConstraint.cs" />
     <Compile Include="Internal\Statement\CreateIndexStatement.cs" />
     <Compile Include="Internal\Statement\CreateIndexStatementCollection.cs" />
-    <Compile Include="Internal\Statement\PrimaryKeyStatement.cs" />
+    <Compile Include="Internal\Statement\CompositePrimaryKeyStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\Utility\ConnectionStringParser.cs" />
     <Compile Include="Public\DbInitializers\SqliteInitializerBase.cs" />

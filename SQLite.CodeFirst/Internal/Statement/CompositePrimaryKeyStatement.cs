@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 
 namespace SQLite.CodeFirst.Statement
 {
-    internal class PrimaryKeyStatement : Collection<string>, IStatement
+    internal class CompositePrimaryKeyStatement : Collection<string>, IStatement
     {
         private const string Template = "PRIMARY KEY({primary-keys})";
         private const string PrimaryKeyColumnNameSeperator = ", ";
 
-        public PrimaryKeyStatement(IEnumerable<string> keyMembers)
+        public CompositePrimaryKeyStatement(IEnumerable<string> keyMembers)
         {
             foreach (var keyMember in keyMembers)
             {

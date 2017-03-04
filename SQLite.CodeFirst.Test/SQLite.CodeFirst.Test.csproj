@@ -97,6 +97,7 @@
     <Compile Include="IntegrationTests\MemoryDbTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\MaxLengthConstraint.cs" />
+    <Compile Include="UnitTests\Statement\ColumnConstraint\PrimaryKeyConstraintTest.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\ColumnConstraintCollectionTest.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\NotNullConstraintTest.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\CollateConstraintTest.cs" />
