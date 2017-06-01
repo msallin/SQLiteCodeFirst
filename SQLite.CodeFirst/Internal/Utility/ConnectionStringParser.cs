@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 
 namespace SQLite.CodeFirst.Utility
 {
@@ -64,14 +65,14 @@ namespace SQLite.CodeFirst.Utility
 
             // We don't know if rootFolderpath ends with '\', and we don't know if the given name starts with onw
             int fileNamePosition = DataDirectoryToken.Length;    // filename starts right after the '|datadirectory|' keyword
-            bool rootFolderEndsWith = (0 < rootFolderPath.Length) && rootFolderPath[rootFolderPath.Length - 1] == '\\';
-            bool fileNameStartsWith = (fileNamePosition < path.Length) && path[fileNamePosition] == '\\';
+            bool rootFolderEndsWith = (0 < rootFolderPath.Length) && rootFolderPath[rootFolderPath.Length - 1] == Path.DirectorySeparatorChar;
+            bool fileNameStartsWith = (fileNamePosition < path.Length) && path[fileNamePosition] == Path.DirectorySeparatorChar;
 
             // replace |datadirectory| with root folder path
             if (!rootFolderEndsWith && !fileNameStartsWith)
             {
                 // need to insert '\'
-                fullPath = rootFolderPath + '\\' + path.Substring(fileNamePosition);
+                fullPath = rootFolderPath + Path.DirectorySeparatorChar + path.Substring(fileNamePosition);
             }
             else if (rootFolderEndsWith && fileNameStartsWith)
             {
