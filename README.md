@@ -22,7 +22,7 @@ The following features are supported:
 - ForeignKey constraint (1-n relationships, support for 'Cascade on delete')
 - Not Null constraint
 - Auto increment (An int PrimaryKey will automatically be incremented and you can explicit set the "AUTOINCREMENT" constraint to a PrimaryKey using the Autoincrement-Attribute)
-- Index (Decorate columns with the `Index` attribute. Indices are automatically created for foreign keys by default. To prevent this you can remove the convetion `ForeignKeyIndexConvention`)
+- Index (Decorate columns with the `Index` attribute. Indices are automatically created for foreign keys by default. To prevent this you can remove the convention `ForeignKeyIndexConvention`)
 - Unique constraint (Decorate columns with the `UniqueAttribute`, which is part of this library)
 - Collate constraint (Decorate columns with the `CollateAttribute`, which is part of this library)
 
