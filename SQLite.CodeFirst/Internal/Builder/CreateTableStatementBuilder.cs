@@ -41,7 +41,7 @@ namespace SQLite.CodeFirst.Builder
 
             return new CreateTableStatement
             {
-                TableName = TableNameCreator.CreateTableName(entitySet.Table),
+                TableName = NameCreator.EscapeName(entitySet.Table),
                 ColumnStatementCollection = new ColumnStatementCollection(columnStatements)
             };
         }

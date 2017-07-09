@@ -26,7 +26,7 @@ namespace SQLite.CodeFirst.Extensions
             // GetValue() overload with one value was introduces in .net 4.5 so use the overload with two parameters. 
             var name = (string)metadataPropertyValueType.GetProperty("Name").GetValue(metadataPropertyValue, null);
 
-            return TableNameCreator.CreateTableName(name);
+            return NameCreator.EscapeName(name);
         }
     }
 }

@@ -25,8 +25,8 @@ namespace SQLite.CodeFirst.Utility
                 toTable = container.GetEntitySetByName(ToRoleEntitySetName, true).Table;
             }
 
-            FromTableName = TableNameCreator.CreateTableName(fromTable);
-            ToTableName = TableNameCreator.CreateTableName(toTable);
+            FromTableName = NameCreator.EscapeName(fromTable);
+            ToTableName = NameCreator.EscapeName(toTable);
             ForeignKey = associationType.Constraint.ToProperties.Select(x => x.Name);
             ForeignPrimaryKey = associationType.Constraint.FromProperties.Select(x => x.Name);
             CascadeDelete = associationType.Constraint.FromRole.DeleteBehavior == OperationAction.Cascade;

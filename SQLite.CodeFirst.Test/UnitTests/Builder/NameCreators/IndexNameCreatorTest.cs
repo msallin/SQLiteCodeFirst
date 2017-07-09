@@ -9,14 +9,14 @@ namespace SQLite.CodeFirst.Test.UnitTests.Builder.NameCreators
         [TestMethod]
         public void CreateIndexName()
         {
-            string result = IndexNameCreator.CreateIndexName("MyTable", "MyProperty");
+            string result = IndexNameCreator.CreateName("MyTable", "MyProperty");
             Assert.AreEqual("\"IX_MyTable_MyProperty\"", result);
         }
 
         [TestMethod]
         public void CreateIndexNameEscaped()
         {
-            string result = IndexNameCreator.CreateIndexName("\"base.MyTable\"", "MyProperty");
+            string result = IndexNameCreator.CreateName("\"base.MyTable\"", "MyProperty");
             Assert.AreEqual("\"IX_base.MyTable_MyProperty\"", result);
         }
     }
