@@ -87,6 +87,7 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
+    <Compile Include="Internal\Builder\NameCreators\NameCreator.cs" />
     <Compile Include="Internal\Utility\InMemoryAwareFile.cs" />
     <Compile Include="Internal\Extensions\ListExtensions.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\PrimaryKeyConstraint.cs" />
@@ -141,7 +142,6 @@
     <Compile Include="Internal\Statement\CreateTableStatement.cs" />
     <Compile Include="Internal\Statement\IStatement.cs" />
     <Compile Include="Internal\Builder\CreateTableStatementBuilder.cs" />
-    <Compile Include="Internal\Builder\NameCreators\TableNameCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

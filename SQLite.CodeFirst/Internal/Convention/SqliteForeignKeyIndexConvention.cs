@@ -70,7 +70,7 @@ namespace SQLite.CodeFirst.Convention
 
         private static IndexAnnotation CreateIndexAnnotation(string tableName, string propertyName, int count)
         {
-            var indexName = IndexNameCreator.CreateIndexName(tableName, propertyName);
+            var indexName = IndexNameCreator.CreateName(tableName, propertyName);
 
             // If there are two Indicies on the same property, the count is added.
             // In SQLite an Index name must be global unique.

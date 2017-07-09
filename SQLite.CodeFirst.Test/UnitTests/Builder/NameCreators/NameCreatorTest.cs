@@ -4,12 +4,12 @@ using SQLite.CodeFirst.Builder.NameCreators;
 namespace SQLite.CodeFirst.Test.UnitTests.Builder.NameCreators
 {
     [TestClass]
-    public class TableNameCreatorTest
+    public class NameCreatorTest
     {
         [TestMethod]
         public void CreateTableNameTest()
         {
-            string result = TableNameCreator.CreateTableName("Test");
+            string result = NameCreator.EscapeName("Test");
             Assert.AreEqual("\"Test\"", result);
         }
     }

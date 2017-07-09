@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 
 namespace SQLite.CodeFirst
 {
@@ -20,6 +21,7 @@ namespace SQLite.CodeFirst
 
             var sqliteSqlGenerator = new SqliteSqlGenerator();
             string sql = sqliteSqlGenerator.Generate(model.StoreModel);
+            Debug.Write(sql);
             db.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, sql);
         }
     }
