@@ -7,7 +7,7 @@ namespace SQLite.CodeFirst.Builder.NameCreators
     {
         public const string IndexNamePrefix = "IX_";
 
-        public static string CreateIndexName(string tableName, string propertyName)
+        public static string CreateName(string tableName, string propertyName)
         {
             // If the tableName is escaped it means that this name contains special chars e.g. a dot (base.myTable)
             // Because the tablename is used to build the index name the index name must also be escaped.
