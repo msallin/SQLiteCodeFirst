@@ -17,10 +17,17 @@ namespace SQLite.CodeFirst.Utility
 
         public static string GetDataSource(string connectionString)
         {
-            var path = ExpandDataDirectory(ParseConnectionString(connectionString)[DataSourceToken]);
-            // remove quotation mark if exists
-            path = path.Trim('"');
-            return path;
+            // Check if the datasource token exists and return Null if it doesn't.
+            // This will allow connection strings with FullUri to work.
+            IDictionary<string, string> strings = ParseConnectionString(connectionString);
+            if (strings.ContainsKey(DataSourceToken))
+            {
+                var path = ExpandDataDirectory(ParseConnectionString(connectionString)[DataSourceToken]);
+                // remove quotation mark if exists
+                path = path.Trim('"');
+                return path;
+            }
+            return null;
         }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "ToUppercase makes no sense.")]
