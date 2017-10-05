@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SQLite.CodeFirst.Console.Entity
 {
@@ -18,5 +20,9 @@ namespace SQLite.CodeFirst.Console.Entity
 
         [Required]
         public string City { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [SqlDefaultValue(DefaultValue = "DATETIME('now')")]
+        public DateTime CreatedUtc { get; set; }
     }
 }

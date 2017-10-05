@@ -41,6 +41,7 @@ namespace SQLite.CodeFirst.Builder
                 AddUniqueConstraintIfNecessary(property, columnStatement);
                 AddCollationConstraintIfNecessary(property, columnStatement);
                 AddPrimaryKeyConstraintAndAdjustTypeIfNecessary(property, columnStatement);
+                AddDefaultValueConstraintIfNecessary(property, columnStatement);
 
                 yield return columnStatement;
             }
@@ -87,6 +88,15 @@ namespace SQLite.CodeFirst.Builder
             if (value != null)
             {
                 columnStatement.ColumnConstraints.Add(new UniqueConstraint { OnConflict = value.OnConflict });
+            }
+        }
+
+        private static void AddDefaultValueConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        {
+            var value = property.GetCustomAnnotation<SqlDefaultValueAttribute>();
+            if (value != null)
+            {
+                columnStatement.ColumnConstraints.Add(new DefaultValueConstraint { DefaultValue = value.DefaultValue });
             }
         }
 
