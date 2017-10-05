@@ -12,7 +12,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
             var defaultValueConstraint = new DefaultValueConstraint();
             defaultValueConstraint.DefaultValue = "0";
             string output = defaultValueConstraint.CreateStatement();
-            Assert.AreEqual(output, "DEFAULT 0");
+            Assert.AreEqual(output, "DEFAULT (0)");
         }
 
         [TestMethod]
@@ -21,14 +21,14 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
             var defaultValueConstraint = new DefaultValueConstraint();
             defaultValueConstraint.DefaultValue = @"'Something'";
             string output = defaultValueConstraint.CreateStatement();
-            Assert.AreEqual(output, "DEFAULT 'Something'");
+            Assert.AreEqual(output, "DEFAULT ('Something')");
         }
 
         [TestMethod]
         public void CreateStatement_StatementIsCorrect_ExpressionDefault()
         {
             var defaultValueConstraint = new DefaultValueConstraint();
-            defaultValueConstraint.DefaultValue = @"(datetime('now'))";
+            defaultValueConstraint.DefaultValue = @"datetime('now')";
             string output = defaultValueConstraint.CreateStatement();
             Assert.AreEqual(output, "DEFAULT (datetime('now'))");
         }
