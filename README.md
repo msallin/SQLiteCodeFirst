@@ -25,6 +25,7 @@ The following features are supported:
 - Index (Decorate columns with the `Index` attribute. Indices are automatically created for foreign keys by default. To prevent this you can remove the convention `ForeignKeyIndexConvention`)
 - Unique constraint (Decorate columns with the `UniqueAttribute`, which is part of this library)
 - Collate constraint (Decorate columns with the `CollateAttribute`, which is part of this library)
+- SQL default value (Decorate columns with the `SqlDefaultValueAttribute`, which is part of this library)
 
 ## Install
 Either get the assembly from the latest [GitHub Release Page](https://github.com/msallin/SQLiteCodeFirst/releases) or install the NuGet-Package [SQLite.CodeFirst](https://www.nuget.org/packages/SQLite.CodeFirst/) (`PM> Install-Package SQLite.CodeFirst`).
