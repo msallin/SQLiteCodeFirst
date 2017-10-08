@@ -52,9 +52,7 @@ namespace SQLite.CodeFirst.Utility
 
         private static bool IsInMemoryPath(string path)
         {
-            // If the path doesn't exists then the datasource was empty as probably a FullUri was specified instead.
-            return string.IsNullOrEmpty(path)
-                   || string.Equals(path, ":memory:", StringComparison.OrdinalIgnoreCase);
+            return string.Equals(path, ":memory:", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

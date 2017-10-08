@@ -22,9 +22,9 @@ namespace SQLite.CodeFirst.Utility
             if (strings.ContainsKey(DataSourceToken))
             {
                 var path = ExpandDataDirectory(ParseConnectionString(connectionString)[DataSourceToken]);
-                // remove quotation mark if exists
                 return path.Trim('"');
             }
+
             // TODO: Implement FullUri parsing.
             if (connectionString.Contains(":memory:")) 
             {
