@@ -88,6 +88,7 @@
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
     <Compile Include="Internal\Builder\NameCreators\NameCreator.cs" />
+    <Compile Include="Internal\Statement\ColumnConstraint\DefaultValueConstraint.cs" />
     <Compile Include="Internal\Utility\InMemoryAwareFile.cs" />
     <Compile Include="Internal\Extensions\ListExtensions.cs" />
     <Compile Include="Internal\Statement\ColumnConstraint\PrimaryKeyConstraint.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Public\Attributes\CollateAttribute.cs" />
     <Compile Include="Public\Attributes\CollationFunction.cs" />
     <Compile Include="Public\Attributes\OnConflictAction.cs" />
+    <Compile Include="Public\Attributes\SqlDefaultValueAttribute.cs" />
     <Compile Include="Public\Attributes\UniqueAttribute.cs" />
     <Compile Include="Public\Entities\IHistory.cs" />
     <Compile Include="Internal\Builder\NameCreators\IndexNameCreator.cs" />

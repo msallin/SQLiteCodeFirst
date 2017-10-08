@@ -17,10 +17,20 @@ namespace SQLite.CodeFirst.Utility
 
         public static string GetDataSource(string connectionString)
         {
-            var path = ExpandDataDirectory(ParseConnectionString(connectionString)[DataSourceToken]);
-            // remove quotation mark if exists
-            path = path.Trim('"');
-            return path;
+            // If the datasource token does not exists this is a FullUri connection string.
+            IDictionary<string, string> strings = ParseConnectionString(connectionString);
+            if (strings.ContainsKey(DataSourceToken))
+            {
+                var path = ExpandDataDirectory(ParseConnectionString(connectionString)[DataSourceToken]);
+                // remove quotation mark if exists
+                return path.Trim('"');
+            }
+            // TODO: Implement FullUri parsing.
+            if (connectionString.Contains(":memory:")) 
+            {
+                return ":memory:";
+            }
+            throw new NotSupportedException("FullUri format is currently only supported for :memory:.");
         }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "ToUppercase makes no sense.")]

@@ -43,6 +43,7 @@ namespace SQLite.CodeFirst
             modelBuilder.RegisterAttributeAsColumnAnnotation<UniqueAttribute>();
             modelBuilder.RegisterAttributeAsColumnAnnotation<CollateAttribute>();
             modelBuilder.RegisterAttributeAsColumnAnnotation<AutoincrementAttribute>();
+            modelBuilder.RegisterAttributeAsColumnAnnotation<SqlDefaultValueAttribute>();
 
             // By default there is a 'ForeignKeyIndexConvention' but it can be removed.
             // And there is no "Contains" and no way to enumerate the ConventionsCollection.

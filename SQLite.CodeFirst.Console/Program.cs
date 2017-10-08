@@ -131,6 +131,7 @@ namespace SQLite.CodeFirst.Console
                     System.Console.WriteLine("\t\t LastName: {0}", player.LastName);
                     System.Console.WriteLine("\t\t Street: {0}", player.Street);
                     System.Console.WriteLine("\t\t City: {0}", player.City);
+                    System.Console.WriteLine("\t\t Created: {0}", player.CreatedUtc);
                     System.Console.WriteLine();
                 }
             }

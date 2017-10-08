@@ -98,6 +98,7 @@
     <Compile Include="UnitTests\Statement\ColumnConstraint\ColumnConstraintCollectionTest.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\NotNullConstraintTest.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\CollateConstraintTest.cs" />
+    <Compile Include="UnitTests\Statement\ColumnConstraint\DefaultValueConstraintTest.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\UniqueConstraintTest.cs" />
     <Compile Include="UnitTests\Statement\ColumnStatementCollectionTest.cs" />
     <Compile Include="UnitTests\Statement\PrimaryKeyStatementTest.cs" />
