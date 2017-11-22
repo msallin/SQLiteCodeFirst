@@ -8,6 +8,8 @@ namespace SQLite.CodeFirst.Statement.ColumnConstraint
 
         public CollationFunction CollationFunction { get; set; }
 
+        public string CustomCollationFunction { get; set; }
+
         public string CreateStatement()
         {
             if (CollationFunction == CollationFunction.None)
@@ -17,8 +19,9 @@ namespace SQLite.CodeFirst.Statement.ColumnConstraint
 
             var sb = new StringBuilder(Template);
 
-            sb.Replace("{collation-name}", CollationFunction.ToString().ToUpperInvariant());
-
+            string name = CollationFunction == CollationFunction.Custom ? CustomCollationFunction : CollationFunction.ToString().ToUpperInvariant();
+            sb.Replace("{collation-name}", name);
+            
             return sb.ToString().Trim();
         }
     }
