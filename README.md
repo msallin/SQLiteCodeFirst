@@ -30,7 +30,7 @@ The following features are supported:
 ## Install
 Either get the assembly from the latest [GitHub Release Page](https://github.com/msallin/SQLiteCodeFirst/releases) or install the NuGet-Package [SQLite.CodeFirst](https://www.nuget.org/packages/SQLite.CodeFirst/) (`PM> Install-Package SQLite.CodeFirst`).
 
-The project is built to target.NET framework versions 4.0 and 4.5.
+The project is built to target .NET framework versions 4.0 and 4.5.
 You can use the SQLite CodeFirst in projects that target the following frameworks:
 - .NET 4.0 (use net40)
 - .NET 4.5 (use net45)
@@ -38,6 +38,9 @@ You can use the SQLite CodeFirst in projects that target the following framework
 - .NET 4.5.2 (use net45)
 - .NET 4.6 (use net45)
 - .NET 4.6.1 (use net45)
+- .NET 4.6.2 (use net45)
+- .NET 4.7 (use net45)
+- .NET 4.7.1 (use net45)
 
 ## How to use
 The functionality is exposed by using implementations of the `IDbInitializer<>` interface.
