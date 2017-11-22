@@ -70,7 +70,7 @@ namespace SQLite.CodeFirst
         {
             string databseFilePath = GetDatabasePathFromContext(context);
 
-            bool dbExists = File.Exists(databseFilePath);
+            bool dbExists = InMemoryAwareFile.Exists(databseFilePath);
             if (dbExists)
             {
                 if (IsSameModel(context))
@@ -78,8 +78,10 @@ namespace SQLite.CodeFirst
                     return;
                 }
 
+                FileAttributes? attributes = InMemoryAwareFile.GetFileAttributes(databseFilePath);
                 DeleteDatabase(context, databseFilePath);
                 base.InitializeDatabase(context);
+                InMemoryAwareFile.SetFileAttributes(databseFilePath, attributes);
                 SaveHistory(context);
             }
             else

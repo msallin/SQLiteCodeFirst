@@ -34,10 +34,15 @@ namespace SQLite.CodeFirst
             bool exists = InMemoryAwareFile.Exists(databseFilePath);
             if (exists)
             {
+                FileAttributes? attributes = InMemoryAwareFile.GetFileAttributes(databseFilePath);
                 InMemoryAwareFile.Delete(databseFilePath);
+                base.InitializeDatabase(context);
+                InMemoryAwareFile.SetFileAttributes(databseFilePath, attributes);
             }
-
-            base.InitializeDatabase(context);
+            else
+            {
+                base.InitializeDatabase(context);
+            }
         }
     }
 }

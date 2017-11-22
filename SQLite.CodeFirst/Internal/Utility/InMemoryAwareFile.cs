@@ -5,6 +5,24 @@ namespace SQLite.CodeFirst.Utility
 {
     internal class InMemoryAwareFile
     {
+        public static FileAttributes? GetFileAttributes(string path)
+        {
+            if (IsInMemoryPath(path))
+            {
+                return null;
+            }
+            return File.GetAttributes(path);
+        }
+
+        public static void SetFileAttributes(string path, FileAttributes? fileAttributes)
+        {
+            if (IsInMemoryPath(path) || fileAttributes == null)
+            {
+                return;
+            }
+            File.SetAttributes(path, fileAttributes.Value);
+        }
+
         public static bool Exists(string path)
         {
             if (IsInMemoryPath(path))
