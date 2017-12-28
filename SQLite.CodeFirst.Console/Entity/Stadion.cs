@@ -18,5 +18,9 @@ namespace SQLite.CodeFirst.Console.Entity
         [Key]
         [Column(Order = 3)]
         public string City { get; set; }
+
+        [Column(Order = 4)]
+        [Index("ReservedKeyWordTest", IsUnique = true)]
+        public int Order { get; set; }
     }
 }
