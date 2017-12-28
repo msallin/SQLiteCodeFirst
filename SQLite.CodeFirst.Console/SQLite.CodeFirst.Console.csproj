@@ -74,6 +74,9 @@
     </Compile>
     <Compile Include="Entity\Coach.cs" />
     <Compile Include="Entity\CustomHistory.cs" />
+    <Compile Include="Entity\FooCompositeKey.cs" />
+    <Compile Include="Entity\FooRelationshipA.cs" />
+    <Compile Include="Entity\FooRelationshipB.cs" />
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\Person.cs" />
     <Compile Include="Entity\Player.cs" />

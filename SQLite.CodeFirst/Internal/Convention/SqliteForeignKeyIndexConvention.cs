@@ -46,7 +46,11 @@ namespace SQLite.CodeFirst.Convention
                 }
 
                 string tableName = item.Constraint.ToRole.GetEntityType().GetTableName();
-                string propertyName = edmProperty.Name;
+
+                // Special treatment for composite primary keys
+                string propertyName = item.Constraint.FromProperties.Count > 1 
+                    ? String.Join("_", item.Constraint.ToProperties) 
+                    : edmProperty.Name;
 
                 // The original attribute is removed. The none-ForeignKeyIndicies will be remained and readded without any modification
                 // and the foreignKeyIncidies will be readded with the correct name.
