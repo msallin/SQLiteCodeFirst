@@ -78,7 +78,7 @@ namespace SQLite.CodeFirst.Builder
             var value = property.GetCustomAnnotation<CollateAttribute>();
             if (value != null)
             {
-                columnStatement.ColumnConstraints.Add(new CollateConstraint { CollationFunction = value.Collation });
+                columnStatement.ColumnConstraints.Add(new CollateConstraint { CollationFunction = value.Collation, CustomCollationFunction = value.Function });
             }
         }
 

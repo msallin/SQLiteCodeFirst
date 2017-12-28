@@ -9,8 +9,8 @@
         None,
 
         /// <summary>
-        /// Compares string data using memcmp(), regardless of text encoding.
-        /// </summary>
+        /// The same as binary, except that trailing space characters are ignored.
+        /// </summary>        
         RTrim,
 
         /// <summary>
@@ -21,8 +21,13 @@
         NoCase,
 
         /// <summary>
-        /// The same as binary, except that trailing space characters are ignored.
+        /// Compares string data using memcmp(), regardless of text encoding.
         /// </summary>
-        Binary
+        Binary,
+
+        /// <summary>
+        /// An application can register additional collating functions using the sqlite3_create_collation() interface.
+        /// </summary>
+        Custom
     }
 }
