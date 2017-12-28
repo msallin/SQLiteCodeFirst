@@ -12,6 +12,7 @@ namespace SQLite.CodeFirst.Console
             ConfigureCoachEntity(modelBuilder);
             ConfigurePlayerEntity(modelBuilder);
             ConfigureSelfReferencingEntities(modelBuilder);
+            ConfigureCompositeKeyEntities(modelBuilder);
         }
 
         private static void ConfigureTeamEntity(DbModelBuilder modelBuilder)
@@ -53,6 +54,13 @@ namespace SQLite.CodeFirst.Console
             modelBuilder.Entity<Foo>();
             modelBuilder.Entity<FooSelf>();
             modelBuilder.Entity<FooStep>();
+        }
+
+        private static void ConfigureCompositeKeyEntities(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FooCompositeKey>();
+            modelBuilder.Entity<FooRelationshipA>();
+            modelBuilder.Entity<FooRelationshipB>();
         }
     }
 }
