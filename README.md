@@ -125,7 +125,7 @@ internal sealed class Configuration : DbMigrationsConfiguration<MyContext>
         SetSqlGenerator(DatabaseManager.ProviderName, new SqliteMigrationSqlGenerator());
     }
 
-    protected override void Seed(ServiceContext context)
+    protected override void Seed(MyContext context)
     {
         //  This method will be called after migrating to the latest version.
     }
