@@ -114,7 +114,7 @@ namespace SQLite.CodeFirst
 
                 var migrationStatement = _migrationStatements
                     .FirstOrDefault(item => item.Sql
-                        .Contains(string.Format("CREATE TABLE {0} (", RemoveDBO(op.DependentTable))));
+                        .Contains(string.Format(CultureInfo.InvariantCulture, "CREATE TABLE {0} (", RemoveDBO(op.DependentTable))));
 
                 if (migrationStatement == null)
                     throw new NotSupportedException("SQL command to create the dependent table not found.");
@@ -124,7 +124,7 @@ namespace SQLite.CodeFirst
 
                 foreach (var foreignKey in op.DependentColumns)
                 {
-                    var cmd = RemoveDBO(string.Format("FOREIGN KEY ([{0}]) REFERENCES [{1}] ([{2}]) {3}",
+                    var cmd = RemoveDBO(string.Format(CultureInfo.InvariantCulture, "FOREIGN KEY ([{0}]) REFERENCES [{1}] ([{2}]) {3}",
                         foreignKey,
                         op.PrincipalTable,
                         op.PrincipalColumns[op.DependentColumns.IndexOf(foreignKey)],
@@ -149,7 +149,7 @@ namespace SQLite.CodeFirst
                 using (var tw = CreateIndentedTextWriter())
                 {
                     var indexName = op.HasDefaultName
-                        ? string.Format("{0}_{1}", op.Name, RemoveDBO(op.Table))
+                        ? string.Format(CultureInfo.InvariantCulture, "{0}_{1}", op.Name, RemoveDBO(op.Table))
                         : op.Name;
 
                     tw.Write("CREATE ");
@@ -182,7 +182,7 @@ namespace SQLite.CodeFirst
                 using (var tw = CreateIndentedTextWriter())
                 {
                     var indexName = op.HasDefaultName
-                        ? string.Format("{0}_{1}", op.Name, RemoveDBO(op.Table))
+                        ? string.Format(CultureInfo.InvariantCulture, "{0}_{1}", op.Name, RemoveDBO(op.Table))
                         : op.Name;
 
                     tw.Write("DROP INDEX ");
@@ -454,7 +454,7 @@ namespace SQLite.CodeFirst
 
             #endregion
 
-            #region Support methods.
+            #region Support methods
 
             /// <summary>
             /// Builds a column type
