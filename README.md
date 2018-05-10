@@ -105,6 +105,33 @@ public class MyContext : DbContext
 }
 ```
 
+### SqliteMigrationSqlGenerator Sample
+```csharp
+public class MyContext : DbContext
+{
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+        Database.SetInitializer(new MigrateDatabaseToLatestVersion<MyContext, Migrations.Configuration>(true));
+    }
+}
+
+internal sealed class Configuration : DbMigrationsConfiguration<MyContext>
+{
+    public Configuration()
+    {
+        AutomaticMigrationsEnabled = true;
+
+        // This command alter the class to support Migration to SQLite. 
+        SetSqlGenerator(DatabaseManager.ProviderName, new SqliteMigrationSqlGenerator());
+    }
+
+    protected override void Seed(ServiceContext context)
+    {
+        //  This method will be called after migrating to the latest version.
+    }
+}
+```
+
 ## Structure
 I tried to write the code in a extensible way.
 The logic is divided into two main parts, Builder and Statement.
