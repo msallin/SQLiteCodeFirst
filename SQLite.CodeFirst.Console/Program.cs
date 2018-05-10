@@ -1,34 +1,107 @@
-﻿using SQLite.CodeFirst.Console.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.SQLite;
+using System.Linq;
+using SQLite.CodeFirst.Console.Entity;
 
 namespace SQLite.CodeFirst.Console
 {
     public static class Program
     {
-        static void Main()
+        private static void Main()
         {
-            System.Console.WriteLine("Starting Demo Application");
-
-            var context = CreateAndSeedDatabase();
-
-            DisplaySeededData(context);
-
+            StartDemoUseInMemory();
+            StartDemoUseFile();
             PressEnterToExit();
         }
 
-        private static FootballDbContext CreateAndSeedDatabase()
+        private static void StartDemoUseInMemory()
         {
-            System.Console.WriteLine("Create and seed the database.");
-            var context = new FootballDbContext();
-            System.Console.WriteLine("Completed.");
-            System.Console.WriteLine();
-            return context;
+            System.Console.WriteLine("Starting Demo Application (In Memory)");
+            System.Console.WriteLine(string.Empty);
+
+            using (var sqLiteConnection = new SQLiteConnection("data source=:memory:"))
+            {
+                // This is required if a in memory db is used.
+                sqLiteConnection.Open();
+
+                using (var context = new FootballDbContext(sqLiteConnection, false))
+                {
+                    CreateAndSeedDatabase(context);
+                    DisplaySeededData(context);
+                }
+            }
         }
 
-        private static void DisplaySeededData(FootballDbContext context)
+        private static void StartDemoUseFile()
+        {
+            System.Console.WriteLine("Starting Demo Application (File)");
+            System.Console.WriteLine(string.Empty);
+
+            using (var context = new FootballDbContext("footballDb"))
+            {
+                CreateAndSeedDatabase(context);
+                DisplaySeededData(context);
+            }
+        }
+
+        private static void CreateAndSeedDatabase(DbContext context)
+        {
+            System.Console.WriteLine("Create and seed the database.");
+
+            if (context.Set<Team>().Count() != 0)
+            {
+                return;
+            }
+
+            context.Set<Team>().Add(new Team
+            {
+                Name = "YB",
+                Coach = new Coach
+                {
+                    City = "Zürich",
+                    FirstName = "Masssaman",
+                    LastName = "Nachn",
+                    Street = "Testingstreet 844"
+                },
+                Players = new List<Player>
+                {
+                    new Player
+                    {
+                        City = "Bern",
+                        FirstName = "Marco",
+                        LastName = "Bürki",
+                        Street = "Wunderstrasse 43",
+                        Number = 12
+                    },
+                    new Player
+                    {
+                        City = "Berlin",
+                        FirstName = "Alain",
+                        LastName = "Rochat",
+                        Street = "Wonderstreet 13",
+                        Number = 14
+                    }
+                },
+                Stadion = new Stadion
+                {
+                    Name = "Stade de Suisse",
+                    City = "Bern",
+                    Street = "Papiermühlestrasse 71"
+                }
+            });
+
+            context.SaveChanges();
+
+            System.Console.WriteLine("Completed.");
+            System.Console.WriteLine();
+        }
+
+        private static void DisplaySeededData(DbContext context)
         {
             System.Console.WriteLine("Display seeded data.");
 
-            foreach (var team in context.Set<Team>())
+            foreach (Team team in context.Set<Team>())
             {
                 System.Console.WriteLine("\t Team:");
                 System.Console.WriteLine("\t Id: {0}", team.Id);
@@ -49,7 +122,7 @@ namespace SQLite.CodeFirst.Console
                 System.Console.WriteLine("\t\t City: {0}", team.Coach.City);
                 System.Console.WriteLine();
 
-                foreach (var player in team.Players)
+                foreach (Player player in team.Players)
                 {
                     System.Console.WriteLine("\t\t Player:");
                     System.Console.WriteLine("\t\t Id: {0}", player.Id);
@@ -58,6 +131,7 @@ namespace SQLite.CodeFirst.Console
                     System.Console.WriteLine("\t\t LastName: {0}", player.LastName);
                     System.Console.WriteLine("\t\t Street: {0}", player.Street);
                     System.Console.WriteLine("\t\t City: {0}", player.City);
+                    System.Console.WriteLine("\t\t Created: {0}", player.CreatedUtc);
                     System.Console.WriteLine();
                 }
             }

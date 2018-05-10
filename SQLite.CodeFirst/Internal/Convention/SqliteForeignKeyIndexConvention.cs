@@ -6,6 +6,7 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Builder.NameCreators;
 
@@ -45,7 +46,11 @@ namespace SQLite.CodeFirst.Convention
                 }
 
                 string tableName = item.Constraint.ToRole.GetEntityType().GetTableName();
-                string propertyName = edmProperty.Name;
+
+                // Special treatment for composite primary keys
+                string propertyName = item.Constraint.FromProperties.Count > 1 
+                    ? String.Join("_", item.Constraint.ToProperties) 
+                    : edmProperty.Name;
 
                 // The original attribute is removed. The none-ForeignKeyIndicies will be remained and readded without any modification
                 // and the foreignKeyIncidies will be readded with the correct name.
@@ -69,14 +74,14 @@ namespace SQLite.CodeFirst.Convention
 
         private static IndexAnnotation CreateIndexAnnotation(string tableName, string propertyName, int count)
         {
-            var indexName = IndexNameCreator.CreateIndexName(tableName, propertyName);
+            var indexName = IndexNameCreator.CreateName(tableName, propertyName);
 
             // If there are two Indicies on the same property, the count is added.
             // In SQLite an Index name must be global unique.
             // To be honest, it should never happen. But because its possible by using the API, it should be covered.
             if (count > 0)
             {
-                indexName = String.Format("{0}_{1}", indexName, count);
+                indexName = String.Format(CultureInfo.InvariantCulture, "{0}_{1}", indexName, count);
             }
 
             var indexAttribute = new IndexAttribute(indexName);

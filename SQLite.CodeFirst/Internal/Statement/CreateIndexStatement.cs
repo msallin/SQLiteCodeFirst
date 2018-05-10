@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SQLite.CodeFirst.Builder.NameCreators;
 
 namespace SQLite.CodeFirst.Statement
 {
@@ -23,7 +24,7 @@ namespace SQLite.CodeFirst.Statement
             stringBuilder.Replace("{index-name}", Name);
             stringBuilder.Replace("{table-name}", Table);
 
-            IEnumerable<string> orderedColumnNames = Columns.OrderBy(c => c.Order).Select(c => c.Name);
+            IEnumerable<string> orderedColumnNames = Columns.OrderBy(c => c.Order).Select(c => c.Name).Select(NameCreator.EscapeName);
             string columnDefinition = String.Join(ColumnNameSeperator, orderedColumnNames);
             stringBuilder.Replace("{column-def}", columnDefinition);
 

@@ -1,4 +1,4 @@
-version: 1.1.{build}.0
+version: 1.5.1.{build}
 branches:
   only:
   - master
@@ -41,9 +41,3 @@ deploy:
   draft: true
   on:
     branch: master
-notifications:
-- provider: Webhook
-  url: https://zapier.com/hooks/catch/b3cbz0/
-  on_build_success: true
-  on_build_failure: true
-  on_build_status_changed: false

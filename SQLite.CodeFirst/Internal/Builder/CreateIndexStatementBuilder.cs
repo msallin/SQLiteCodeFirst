@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure.Annotations;
-using System.Globalization;
 using System.Linq;
 using SQLite.CodeFirst.Builder.NameCreators;
 using SQLite.CodeFirst.Extensions;
@@ -31,6 +29,7 @@ namespace SQLite.CodeFirst.Builder
                     .Select(x => x.Value)
                     .OfType<IndexAnnotation>();
 
+                string tableName = NameCreator.EscapeName(entitySet.Table);
                 foreach (var index in indexAnnotations.SelectMany(ia => ia.Indexes))
                 {
                     CreateIndexStatement createIndexStatement;
@@ -41,7 +40,7 @@ namespace SQLite.CodeFirst.Builder
                         {
                             IsUnique = index.IsUnique,
                             Name = indexName,
-                            Table = TableNameCreator.CreateTableName(entitySet.Table),
+                            Table = tableName,
                             Columns = new Collection<CreateIndexStatement.IndexColumn>()
                         };
                         createIndexStatments.Add(indexName, createIndexStatement);
@@ -60,7 +59,7 @@ namespace SQLite.CodeFirst.Builder
 
         private string GetIndexName(IndexAttribute index, EdmProperty property)
         {
-            return index.Name ?? IndexNameCreator.CreateIndexName(entitySet.ElementType.GetTableName(), property.Name);
+            return index.Name == null ? IndexNameCreator.CreateName(entitySet.ElementType.GetTableName(), property.Name) : NameCreator.EscapeName(index.Name);
         }
     }
 }

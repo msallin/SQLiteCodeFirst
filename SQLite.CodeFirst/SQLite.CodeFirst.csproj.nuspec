@@ -14,7 +14,7 @@
     <copyright>Copyright (C) Marc Sallin</copyright>
     <tags>SQLite EntityFramework EF CodeFirst</tags>
     <dependencies>
-      <dependency id="EntityFramework" version="6.1" />
+      <dependency id="EntityFramework" version="6.2" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
