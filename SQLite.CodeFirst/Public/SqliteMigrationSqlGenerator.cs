@@ -266,7 +266,7 @@ namespace SQLite.CodeFirst
             {
                 var sql = RemoveDBO(opeSQL.Sql);
 
-                AddSqlStatement(opeSQL.Sql, opeSQL.SuppressTransaction);
+                AddSqlStatement(sql, opeSQL.SuppressTransaction);
             }
 
             void Generate(RenameColumnOperation op)
