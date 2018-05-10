@@ -23,6 +23,7 @@ namespace SQLite.CodeFirst
     /// </remarks>
     public sealed class SqliteMigrationSqlGenerator : MigrationSqlGenerator
     {
+
         #region Overrides from MigrationSqlGenerator
 
         /// <summary>
@@ -157,7 +158,7 @@ namespace SQLite.CodeFirst
                         tw.Write(" UNIQUE ");
 
                     tw.Write("INDEX ");
-                    tw.Write(op.Name);
+                    tw.Write(indexName);
                     tw.Write(" ON ");
                     tw.Write(RemoveDBO(op.Table));
                     tw.Write("(");
