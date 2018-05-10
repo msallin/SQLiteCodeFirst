@@ -1,8 +1,6 @@
 # SQLite CodeFirst (With Migrations)
 Creates and update a [SQLite Database](https://sqlite.org/) from Code, using [Entity Framework](https://msdn.microsoft.com/en-us/data/ef.aspx) CodeFirst and [Migrations](https://msdn.microsoft.com/pt-br/library/system.data.entity.migrations(v=vs.113).aspx).
 
-This project is forked from [msallin](https://github.com/msallin/SQLiteCodeFirst) Sqlite Code First Projet and [zaniants](https://github.com/zanyants/SQLiteCodeFirst) Sqlite Migrations code.
-
 ## Features
 This Project ships several `IDbInitializer` classes. These create new SQLite Databases based on your model/code.
 
@@ -17,9 +15,6 @@ The following features are supported:
 - Unique constraint (Decorate columns with the `UniqueAttribute`, which is part of this library)
 - Collate constraint (Decorate columns with the `CollateAttribute`, which is part of this library. Use `CollationFunction.Custom` to specify a own collation function.)
 - SQL default value (Decorate columns with the `SqlDefaultValueAttribute`, which is part of this library)
-
-## Migrations and Sqlite
-Pay attention when running Migrations routines because Sqlite does not support some SQL commands suggested by the Entity Framework. For example, to rename a column will be suggested to run `Rename("dbo.table_name", "old_column_name", "new_column_name")`. However Sqlite does not support column rename command!
 
 ## Install
 Either get the assembly from the latest [GitHub Release Page](https://github.com/msallin/SQLiteCodeFirst/releases) or install the NuGet-Package [SQLite.CodeFirst](https://www.nuget.org/packages/SQLite.CodeFirst/) (`PM> Install-Package SQLite.CodeFirst`).
@@ -121,5 +116,9 @@ You will find an extensive usage of the composite pattern.
 If you try to reinstall the NuGet-Packages (e.g. if you want to downgrade to .NET 4.0), the app.config will be overwritten and you may getting an exception when you try to run the console project.
 In this case please check the following issue: https://github.com/msallin/SQLiteCodeFirst/issues/13.
 
+Pay attention when running Migrations routines because Sqlite does not support some SQL commands suggested by the Entity Framework. For example, to rename a column will be suggested to run `Rename("dbo.table_name", "old_column_name", "new_column_name")`. However Sqlite does not support column rename command!
+
 ## Recognition
-I started with the [code](https://gist.github.com/flaub/1968486e1b3f2b9fddaf) from [flaub](https://github.com/flaub). 
+This project is forked from [msallin](https://github.com/msallin/SQLiteCodeFirst) Sqlite Code First Projet and using [zaniants](https://github.com/zanyants/SQLiteCodeFirst) Sqlite Migrations code.
+
+And [msallin](https://github.com/msallin) started with the [code](https://gist.github.com/flaub/1968486e1b3f2b9fddaf) from [flaub](https://github.com/flaub). 
