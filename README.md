@@ -122,7 +122,7 @@ internal sealed class Configuration : DbMigrationsConfiguration<MyContext>
         AutomaticMigrationsEnabled = true;
 
         // This command alter the class to support Migration to SQLite. 
-        SetSqlGenerator(DatabaseManager.ProviderName, new SqliteMigrationSqlGenerator());
+        SetSqlGenerator("System.Data.SQLite", new SqliteMigrationSqlGenerator());
     }
 
     protected override void Seed(MyContext context)
