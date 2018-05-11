@@ -52,6 +52,7 @@ namespace SQLite.CodeFirst
             const int _defaultNumericPrecision = 10;
             const byte _defaultTimePrecision = 7;
             const byte _defaultNumericScale = 0;
+            static readonly Regex _rxMatchParameterReference = new Regex("@p[0-9]+", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Multiline);
 
             #endregion
 
@@ -97,7 +98,7 @@ namespace SQLite.CodeFirst
 
             #region Migration Statement Generation
 
-            void Generate(CreateTableOperation op)
+            private void Generate(CreateTableOperation op)
             {
                 using (var tw = CreateIndentedTextWriter())
                 {
@@ -107,7 +108,7 @@ namespace SQLite.CodeFirst
                 }
             }
 
-            void Generate(AddForeignKeyOperation op)
+            private void Generate(AddForeignKeyOperation op)
             {
                 if (!_migrationStatements.Any(item => item.Sql.Contains("CREATE TABLE")))
                     return;
@@ -138,13 +139,14 @@ namespace SQLite.CodeFirst
                 migrationStatement.Sql += ")";
             }
 
-            void Generate(DropForeignKeyOperation op)
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "op")]
+            private static void Generate(DropForeignKeyOperation op)
             {
                 // Currently not supported.
                 throw new NotSupportedException();
             }
 
-            void Generate(CreateIndexOperation op)
+            private void Generate(CreateIndexOperation op)
             {
                 using (var tw = CreateIndentedTextWriter())
                 {
@@ -177,7 +179,7 @@ namespace SQLite.CodeFirst
                 }
             }
 
-            void Generate(DropIndexOperation op)
+            private void Generate(DropIndexOperation op)
             {
                 using (var tw = CreateIndentedTextWriter())
                 {
@@ -192,17 +194,19 @@ namespace SQLite.CodeFirst
                 }
             }
 
-            void Generate(AddPrimaryKeyOperation op)
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "op")]
+            private static void Generate(AddPrimaryKeyOperation op)
             {
                 throw new NotImplementedException("AddPrimaryKey is non-trivial and has not been implemented. See http://sqlite.org/lang_altertable.html");
             }
 
-            void Generate(DropPrimaryKeyOperation op)
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "op")]
+            private static void Generate(DropPrimaryKeyOperation op)
             {
                 throw new NotImplementedException("DropPrimaryKey is non-trivial and has not been implemented. See http://sqlite.org/lang_altertable.html");
             }
 
-            void Generate(AddColumnOperation op)
+            private void Generate(AddColumnOperation op)
             {
                 using (var tw = CreateIndentedTextWriter())
                 {
@@ -222,8 +226,8 @@ namespace SQLite.CodeFirst
                         && !col.IsTimestamp
                         && (
                             col.StoreType == null || (
-                                !col.StoreType.Equals("rowversion", StringComparison.InvariantCultureIgnoreCase)
-                                && !col.StoreType.Equals("timestamp", StringComparison.InvariantCultureIgnoreCase))))
+                                !col.StoreType.Equals("rowversion", StringComparison.OrdinalIgnoreCase)
+                                && !col.StoreType.Equals("timestamp", StringComparison.OrdinalIgnoreCase))))
                     {
                         tw.Write(" DEFAULT ");
 
@@ -241,17 +245,19 @@ namespace SQLite.CodeFirst
                 }
             }
 
-            void Generate(DropColumnOperation op)
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "op")]
+            private static void Generate(DropColumnOperation op)
             {
                 throw new NotImplementedException("DropColumn is non-trivial and has not been implemented. See http://sqlite.org/lang_altertable.html");
             }
 
-            void Generate(AlterColumnOperation op)
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "op")]
+            private static void Generate(AlterColumnOperation op)
             {
                 throw new NotImplementedException("AlterColumn is non-trivial and has not been implemented. See http://sqlite.org/lang_altertable.html");
             }
 
-            void Generate(DropTableOperation op)
+            private void Generate(DropTableOperation op)
             {
                 using (var tw = CreateIndentedTextWriter())
                 {
@@ -262,19 +268,20 @@ namespace SQLite.CodeFirst
                 }
             }
 
-            void Generate(SqlOperation opeSQL)
+            private void Generate(SqlOperation opeSQL)
             {
                 var sql = RemoveDBO(opeSQL.Sql);
 
                 AddSqlStatement(sql, opeSQL.SuppressTransaction);
             }
 
-            void Generate(RenameColumnOperation op)
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "op")]
+            private static void Generate(RenameColumnOperation op)
             {
                 throw new NotImplementedException("RenameColumn is non-trivial and has not been implemented. See http://sqlite.org/lang_altertable.html");
             }
 
-            void Generate(RenameTableOperation op)
+            private void Generate(RenameTableOperation op)
             {
                 using (var tw = CreateIndentedTextWriter())
                 {
@@ -287,7 +294,8 @@ namespace SQLite.CodeFirst
                 }
             }
 
-            void Generate(MoveTableOperation opeMoveTable)
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "opeMoveTable")]
+            private static void Generate(MoveTableOperation opeMoveTable)
             {
                 throw new NotSupportedException();
             }
@@ -295,7 +303,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate column definition. Returns <c>true</c> if the column was the primary key.
             /// </summary>
-            bool Generate(ColumnModel column, IndentedTextWriter tw, PrimaryKeyOperation primaryKeyOp)
+            private bool Generate(ColumnModel column, IndentedTextWriter tw, PrimaryKeyOperation primaryKeyOp)
             {
                 bool isIdPk = false;
 
@@ -345,9 +353,7 @@ namespace SQLite.CodeFirst
                 return isIdPk;
             }
 
-            static readonly Regex _rxMatchParameterReference = new Regex("@p[0-9]+", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Multiline);
-
-            void Generate(HistoryOperation operation)
+            private void Generate(HistoryOperation operation)
             {
                 foreach (var cmdTree in operation.CommandTrees)
                 {
@@ -368,7 +374,7 @@ namespace SQLite.CodeFirst
                             cmdText,
                             (Match m) =>
                             {
-                                int idx = int.Parse(m.Value.Substring(2));
+                                int idx = int.Parse(m.Value.Substring(2), CultureInfo.InvariantCulture);
                                 dynamic dynValue = cmd.Parameters[idx].Value;
                                 string literal = Generate(dynValue);
                                 return literal;
@@ -382,7 +388,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate byte array literal.
             /// </summary>
-            string Generate(byte[] v)
+            private static string Generate(byte[] v)
             {
                 var sb = new StringBuilder((v.Length * 2) + 3);
 
@@ -399,7 +405,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate boolean literal.
             /// </summary>
-            string Generate(bool v)
+            private static string Generate(bool v)
             {
                 return v ? "1" : "0";
             }
@@ -407,7 +413,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate DateTime literal.
             /// </summary>
-            string Generate(DateTime v)
+            private static string Generate(DateTime v)
             {
                 return "'" + v.ToString(_defaultDateTimeFormat, CultureInfo.InvariantCulture) + "'";
             }
@@ -415,7 +421,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate DateTimeOffSet literal.
             /// </summary>
-            string Generate(DateTimeOffset v)
+            private static string Generate(DateTimeOffset v)
             {
                 return "'" + v.ToString(_defaultDateTimeFormat, CultureInfo.InvariantCulture) + "'";
             }
@@ -423,7 +429,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate Guid literal.
             /// </summary>
-            string Generate(Guid v)
+            private static string Generate(Guid v)
             {
                 return "'" + v + "'";
             }
@@ -431,7 +437,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate string literal.
             /// </summary>
-            string Generate(string v)
+            private static string Generate(string v)
             {
                 return "'" + v.Replace("'", "''") + "'";
             }
@@ -439,7 +445,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate TimeSpan literal.
             /// </summary>
-            string Generate(TimeSpan v)
+            private static string Generate(TimeSpan v)
             {
                 return "'" + v + "'";
             }
@@ -447,7 +453,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate literal for other object.
             /// </summary>
-            string Generate(object v)
+            private static string Generate(object v)
             {
                 return string.Format(CultureInfo.InvariantCulture, "{0}", v);
             }
@@ -460,7 +466,7 @@ namespace SQLite.CodeFirst
             /// Builds a column type
             /// </summary>
             /// <returns> SQL representing the data type. </returns>
-            string BuildColumnType(ColumnModel column)
+            private string BuildColumnType(ColumnModel column)
             {
                 return column.IsTimestamp ? "rowversion" : BuildPropertyType(column);
             }
@@ -470,7 +476,7 @@ namespace SQLite.CodeFirst
             /// </summary>
             /// <param name="column"></param>
             /// <returns></returns>
-            string BuildPropertyType(ColumnModel column)
+            private string BuildPropertyType(ColumnModel column)
             {
                 var originalStoreType = column.StoreType;
 
@@ -487,23 +493,23 @@ namespace SQLite.CodeFirst
                 if (storeType.EndsWith(maxSuffix, StringComparison.Ordinal))
                     storeType = storeType.Substring(0, storeType.Length - maxSuffix.Length) + maxSuffix;
 
-                switch (originalStoreType.ToLowerInvariant())
+                switch (originalStoreType.ToUpperInvariant())
                 {
-                    case "decimal":
-                    case "numeric":
+                    case "DECIMAL":
+                    case "NUMERIC":
                         storeType += "(" + (column.Precision ?? _defaultNumericPrecision)
                                          + ", " + (column.Scale ?? _defaultNumericScale) + ")";
                         break;
-                    case "datetime":
-                    case "time":
+                    case "DATETIME":
+                    case "TIME":
                         storeType += "(" + (column.Precision ?? _defaultTimePrecision) + ")";
                         break;
-                    case "blob":
-                    case "varchar2":
-                    case "varchar":
-                    case "char":
-                    case "nvarchar":
-                    case "nvarchar2":
+                    case "BLOB":
+                    case "VARCHAR2":
+                    case "VARCHAR":
+                    case "CHAR":
+                    case "NVARCHAR":
+                    case "NVARCHAR2":
                         storeType += "(" + (column.MaxLength ?? _defaultStringMaxLength) + ")";
                         break;
                 }
@@ -516,7 +522,7 @@ namespace SQLite.CodeFirst
             /// </summary>
             /// <param name="sql"></param>
             /// <param name="suppressTransaction"></param>
-            void AddSqlStatement(string sql, bool suppressTransaction = false)
+            private void AddSqlStatement(string sql, bool suppressTransaction = false)
             {
                 _migrationStatements.Add(new MigrationStatement
                 {
@@ -529,7 +535,7 @@ namespace SQLite.CodeFirst
             /// Adds a new Statement to be executed against the database.
             /// </summary>
             /// <param name="tw"> The writer containing the SQL to be executed. </param>
-            void AddSqlStatement(IndentedTextWriter tw)
+            private void AddSqlStatement(IndentedTextWriter tw)
             {
                 AddSqlStatement(tw.InnerWriter.ToString());
             }
@@ -538,15 +544,24 @@ namespace SQLite.CodeFirst
             /// Gera um objeto <see cref="IndentedTextWriter" /> Utilizado para gerar os comandos SQL.
             /// </summary>
             /// <returns> An empty text writer to use for SQL generation. </returns>
-            IndentedTextWriter CreateIndentedTextWriter()
+            private static IndentedTextWriter CreateIndentedTextWriter()
             {
-                return new IndentedTextWriter(new StringWriter(CultureInfo.InvariantCulture));
+                var writer = new StringWriter(CultureInfo.InvariantCulture);
+                try
+                {
+                    return new IndentedTextWriter(writer);
+                }
+                catch
+                {
+                    writer.Dispose();
+                    throw;
+                }
             }
 
             /// <summary>
             /// Remove occurences of "dbo." from the supplied string.
             /// </summary>
-            static string RemoveDBO(string str)
+            private static string RemoveDBO(string str)
             {
                 return str.Replace("dbo.", string.Empty);
             }
@@ -554,7 +569,7 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Generate CREATE TABLE command
             /// </summary>
-            void GenerateCreateTableCommand(CreateTableOperation op, IndentedTextWriter tw)
+            private void GenerateCreateTableCommand(CreateTableOperation op, IndentedTextWriter tw)
             {
                 tw.WriteLine("CREATE TABLE " + RemoveDBO(op.Name) + " (");
                 tw.Indent++;
