@@ -130,23 +130,32 @@ namespace SQLite.CodeFirst
                 if (migrationStatement == null)
                     throw new NotSupportedException("SQL command to create the dependent table not found.");
 
-                migrationStatement.Sql = migrationStatement.Sql.TrimEnd(')');
-                migrationStatement.Sql += ",";
-
-                foreach (var foreignKey in op.DependentColumns)
+                using (var tw = CreateIndentedTextWriter())
                 {
-                    var cmd = RemoveDbo(string.Format(CultureInfo.InvariantCulture, "FOREIGN KEY ([{0}]) REFERENCES [{1}] ([{2}]) {3}",
-                        FormatReservedWord(foreignKey),
+                    tw.Write(migrationStatement.Sql.TrimEnd(')').TrimEnd('\r', '\n'));
+
+                    tw.WriteLine(",");
+
+                    tw.Indent++;
+
+                    var referenceList = op.DependentColumns.Select(dependentColumn => op.PrincipalColumns[op.DependentColumns.IndexOf(dependentColumn)]).ToList();
+
+                    var cmd = string.Format(CultureInfo.InvariantCulture, "FOREIGN KEY ({0}) REFERENCES [{1}] ({2}) {3}",
+                        string.Join(", ", op.DependentColumns.Select(FormatReservedWord)),
                         FormatReservedWord(op.PrincipalTable),
-                        FormatReservedWord(op.PrincipalColumns[op.DependentColumns.IndexOf(foreignKey)]),
+                        string.Join(", ", referenceList.Select(FormatReservedWord)),
                         (op.CascadeDelete
                             ? "ON DELETE CASCADE"
-                            : "ON DELETE NO ACTION")));
+                            : "ON DELETE NO ACTION"));
 
-                    migrationStatement.Sql += cmd;
+                    tw.WriteLine(RemoveDbo(cmd));
+
+                    tw.Indent--;
+                    tw.Write(")");
+
+                    migrationStatement.Sql = tw.InnerWriter.ToString();
                 }
 
-                migrationStatement.Sql += ")";
             }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "op")]
