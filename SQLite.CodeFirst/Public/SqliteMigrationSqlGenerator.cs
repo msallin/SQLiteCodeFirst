@@ -6,6 +6,7 @@ using System.Data.Entity.Core.Common;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Migrations.Model;
 using System.Data.Entity.Migrations.Sql;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,15 @@ namespace SQLite.CodeFirst
         {
             var impl = new Impl(providerManifestToken);
             impl.Generate(migrationOperations);
+
+            //var text = new StringBuilder();
+            //foreach (var migrationStatement in impl.MigrationStatements)
+            //{
+            //    text.AppendLine(migrationStatement.Sql);
+            //}
+
+            //Debug.WriteLine(text);
+
             return impl.MigrationStatements;
         }
 
@@ -115,7 +125,7 @@ namespace SQLite.CodeFirst
 
                 var migrationStatement = _migrationStatements
                     .FirstOrDefault(item => item.Sql
-                        .Contains(string.Format(CultureInfo.InvariantCulture, "CREATE TABLE {0} (", RemoveDBO(op.DependentTable))));
+                        .Contains(string.Format(CultureInfo.InvariantCulture, "CREATE TABLE {0} (", FormatReservedWord(RemoveDbo(op.DependentTable)))));
 
                 if (migrationStatement == null)
                     throw new NotSupportedException("SQL command to create the dependent table not found.");
@@ -125,10 +135,10 @@ namespace SQLite.CodeFirst
 
                 foreach (var foreignKey in op.DependentColumns)
                 {
-                    var cmd = RemoveDBO(string.Format(CultureInfo.InvariantCulture, "FOREIGN KEY ([{0}]) REFERENCES [{1}] ([{2}]) {3}",
-                        foreignKey,
-                        op.PrincipalTable,
-                        op.PrincipalColumns[op.DependentColumns.IndexOf(foreignKey)],
+                    var cmd = RemoveDbo(string.Format(CultureInfo.InvariantCulture, "FOREIGN KEY ([{0}]) REFERENCES [{1}] ([{2}]) {3}",
+                        FormatReservedWord(foreignKey),
+                        FormatReservedWord(op.PrincipalTable),
+                        FormatReservedWord(op.PrincipalColumns[op.DependentColumns.IndexOf(foreignKey)]),
                         (op.CascadeDelete
                             ? "ON DELETE CASCADE"
                             : "ON DELETE NO ACTION")));
@@ -151,7 +161,7 @@ namespace SQLite.CodeFirst
                 using (var tw = CreateIndentedTextWriter())
                 {
                     var indexName = op.HasDefaultName
-                        ? string.Format(CultureInfo.InvariantCulture, "{0}_{1}", op.Name, RemoveDBO(op.Table))
+                        ? string.Format(CultureInfo.InvariantCulture, "{0}_{1}", op.Name, RemoveDbo(op.Table))
                         : op.Name;
 
                     tw.Write("CREATE ");
@@ -160,14 +170,14 @@ namespace SQLite.CodeFirst
                         tw.Write(" UNIQUE ");
 
                     tw.Write("INDEX ");
-                    tw.Write(indexName);
+                    tw.Write(FormatReservedWord(indexName));
                     tw.Write(" ON ");
-                    tw.Write(RemoveDBO(op.Table));
+                    tw.Write(FormatReservedWord(RemoveDbo(op.Table)));
                     tw.Write("(");
 
                     for (int i = 0; i < op.Columns.Count; i++)
                     {
-                        tw.Write(op.Columns[i]);
+                        tw.Write(FormatReservedWord(op.Columns[i]));
 
                         if (i < op.Columns.Count - 1)
                             tw.WriteLine(",");
@@ -184,7 +194,7 @@ namespace SQLite.CodeFirst
                 using (var tw = CreateIndentedTextWriter())
                 {
                     var indexName = op.HasDefaultName
-                        ? string.Format(CultureInfo.InvariantCulture, "{0}_{1}", op.Name, RemoveDBO(op.Table))
+                        ? string.Format(CultureInfo.InvariantCulture, "{0}_{1}", op.Name, FormatReservedWord(RemoveDbo(op.Table)))
                         : op.Name;
 
                     tw.Write("DROP INDEX ");
@@ -211,7 +221,7 @@ namespace SQLite.CodeFirst
                 using (var tw = CreateIndentedTextWriter())
                 {
                     tw.Write("ALTER TABLE ");
-                    tw.Write(RemoveDBO(op.Table));
+                    tw.Write(FormatReservedWord(RemoveDbo(op.Table)));
                     tw.Write(" ADD ");
 
                     var col = op.Column;
@@ -262,7 +272,7 @@ namespace SQLite.CodeFirst
                 using (var tw = CreateIndentedTextWriter())
                 {
                     tw.Write("DROP TABLE ");
-                    tw.Write(RemoveDBO(op.Name));
+                    tw.Write(FormatReservedWord(RemoveDbo(op.Name)));
 
                     AddSqlStatement(tw);
                 }
@@ -270,7 +280,7 @@ namespace SQLite.CodeFirst
 
             private void Generate(SqlOperation opeSQL)
             {
-                var sql = RemoveDBO(opeSQL.Sql);
+                var sql = RemoveDbo(opeSQL.Sql);
 
                 AddSqlStatement(sql, opeSQL.SuppressTransaction);
             }
@@ -286,9 +296,9 @@ namespace SQLite.CodeFirst
                 using (var tw = CreateIndentedTextWriter())
                 {
                     tw.Write("ALTER TABLE ");
-                    tw.Write(RemoveDBO(op.Name));
+                    tw.Write(FormatReservedWord(RemoveDbo(op.Name)));
                     tw.Write(" RENAME TO ");
-                    tw.Write(RemoveDBO(op.NewName));
+                    tw.Write(FormatReservedWord(RemoveDbo(op.NewName)));
 
                     AddSqlStatement(tw);
                 }
@@ -307,7 +317,7 @@ namespace SQLite.CodeFirst
             {
                 bool isIdPk = false;
 
-                tw.Write(column.Name);
+                tw.Write(FormatReservedWord(column.Name));
                 tw.Write(" ");
                 bool isPrimaryKey = false;
 
@@ -561,9 +571,147 @@ namespace SQLite.CodeFirst
             /// <summary>
             /// Remove occurences of "dbo." from the supplied string.
             /// </summary>
-            private static string RemoveDBO(string str)
+            private static string RemoveDbo(string str)
             {
                 return str.Replace("dbo.", string.Empty);
+            }
+
+            /// <summary>
+            /// Surround with double-quotes Sqlite reserved words.
+            /// </summary>
+            private static string FormatReservedWord(string word)
+            {
+                switch (word.ToUpper(CultureInfo.InvariantCulture))
+                {
+                    case "ABORT":
+                    case "ACTION":
+                    case "ADD":
+                    case "AFTER":
+                    case "ALL":
+                    case "ALTER":
+                    case "ANALYZE":
+                    case "AND":
+                    case "AS":
+                    case "ASC":
+                    case "ATTACH":
+                    case "AUTOINCREMENT":
+                    case "BEFORE":
+                    case "BEGIN":
+                    case "BETWEEN":
+                    case "BY":
+                    case "CASCADE":
+                    case "CASE":
+                    case "CAST":
+                    case "CHECK":
+                    case "COLLATE":
+                    case "COLUMN":
+                    case "COMMIT":
+                    case "CONFLICT":
+                    case "CONSTRAINT":
+                    case "CREATE":
+                    case "CROSS":
+                    case "CURRENT_DATE":
+                    case "CURRENT_TIME":
+                    case "CURRENT_TIMESTAMP":
+                    case "DATABASE":
+                    case "DEFAULT":
+                    case "DEFERRABLE":
+                    case "DEFERRED":
+                    case "DELETE":
+                    case "DESC":
+                    case "DETACH":
+                    case "DISTINCT":
+                    case "DROP":
+                    case "EACH":
+                    case "ELSE":
+                    case "END":
+                    case "ESCAPE":
+                    case "EXCEPT":
+                    case "EXCLUSIVE":
+                    case "EXISTS":
+                    case "EXPLAIN":
+                    case "FAIL":
+                    case "FOR":
+                    case "FOREIGN":
+                    case "FROM":
+                    case "FULL":
+                    case "GLOB":
+                    case "GROUP":
+                    case "HAVING":
+                    case "IF":
+                    case "IGNORE":
+                    case "IMMEDIATE":
+                    case "IN":
+                    case "INDEX":
+                    case "INDEXED":
+                    case "INITIALLY":
+                    case "INNER":
+                    case "INSERT":
+                    case "INSTEAD":
+                    case "INTERSECT":
+                    case "INTO":
+                    case "IS":
+                    case "ISNULL":
+                    case "JOIN":
+                    case "KEY":
+                    case "LEFT":
+                    case "LIKE":
+                    case "LIMIT":
+                    case "MATCH":
+                    case "NATURAL":
+                    case "NO":
+                    case "NOT":
+                    case "NOTNULL":
+                    case "NULL":
+                    case "OF":
+                    case "OFFSET":
+                    case "ON":
+                    case "OR":
+                    case "ORDER":
+                    case "OUTER":
+                    case "PLAN":
+                    case "PRAGMA":
+                    case "PRIMARY":
+                    case "QUERY":
+                    case "RAISE":
+                    case "RECURSIVE":
+                    case "REFERENCES":
+                    case "REGEXP":
+                    case "REINDEX":
+                    case "RELEASE":
+                    case "RENAME":
+                    case "REPLACE":
+                    case "RESTRICT":
+                    case "RIGHT":
+                    case "ROLLBACK":
+                    case "ROW":
+                    case "SAVEPOINT":
+                    case "SELECT":
+                    case "SET":
+                    case "TABLE":
+                    case "TEMP":
+                    case "TEMPORARY":
+                    case "THEN":
+                    case "TO":
+                    case "TRANSACTION":
+                    case "TRIGGER":
+                    case "UNION":
+                    case "UNIQUE":
+                    case "UPDATE":
+                    case "USING":
+                    case "VACUUM":
+                    case "VALUES":
+                    case "VIEW":
+                    case "VIRTUAL":
+                    case "WHEN":
+                    case "WHERE":
+                    case "WITH":
+                    case "WITHOUT":
+                        return '"' + word + '"';
+
+                    default:
+                        return word;
+                }
             }
 
             /// <summary>
@@ -571,7 +719,7 @@ namespace SQLite.CodeFirst
             /// </summary>
             private void GenerateCreateTableCommand(CreateTableOperation op, IndentedTextWriter tw)
             {
-                tw.WriteLine("CREATE TABLE " + RemoveDBO(op.Name) + " (");
+                tw.WriteLine("CREATE TABLE " + FormatReservedWord(RemoveDbo(op.Name)) + " (");
                 tw.Indent++;
 
                 bool hasGenereatedIdPk = false;
@@ -589,7 +737,7 @@ namespace SQLite.CodeFirst
                 {
                     tw.WriteLine(",");
                     tw.Write("CONSTRAINT ");
-                    tw.Write(RemoveDBO(op.PrimaryKey.Name));
+                    tw.Write(RemoveDbo(op.PrimaryKey.Name));
                     tw.Write(" PRIMARY KEY ");
                     tw.Write("(");
 
