@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity.Core.Common;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.Migrations.Model;
 using System.Data.Entity.Migrations.Sql;
 using System.Diagnostics;
@@ -49,7 +50,7 @@ namespace SQLite.CodeFirst
 
             return impl.MigrationStatements;
         }
-
+        
         #endregion
 
         sealed class Impl
@@ -110,6 +111,8 @@ namespace SQLite.CodeFirst
 
             private void Generate(CreateTableOperation op)
             {
+                SetAnnotatedColumns(op.Columns, op.Name);
+
                 using (var tw = CreateIndentedTextWriter())
                 {
                     GenerateCreateTableCommand(op, tw);
@@ -227,6 +230,8 @@ namespace SQLite.CodeFirst
 
             private void Generate(AddColumnOperation op)
             {
+                SetAnnotatedColumn(op.Column, op.Table);
+
                 using (var tw = CreateIndentedTextWriter())
                 {
                     tw.Write("ALTER TABLE ");
@@ -476,6 +481,56 @@ namespace SQLite.CodeFirst
             {
                 return string.Format(CultureInfo.InvariantCulture, "{0}", v);
             }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "tableName")]
+            private static void SetAnnotatedColumn(ColumnModel column, string tableName)
+            {
+                AnnotationValues values;
+                if (column.Annotations.TryGetValue("SqlDefaultValue", out values))
+                {
+                    if (values.NewValue == null)
+                    {
+                        column.DefaultValueSql = null;
+                        using (var writer = CreateIndentedTextWriter())
+                        {
+                            // Drop Constraint
+                            //writer.WriteLine(GetSqlDropConstraintQuery(tableName, column.Name));
+                            //Statement(writer);
+                        }
+                    }
+                    else
+                    {
+                        column.DefaultValueSql = (string)values.NewValue;
+                    }
+                }
+            }
+
+            private void SetAnnotatedColumns(IEnumerable<ColumnModel> columns, string tableName)
+            {
+                foreach (var column in columns)
+                {
+                    SetAnnotatedColumn(column, tableName);
+                }
+            }
+
+//            private string GetSqlDropConstraintQuery(string tableName, string columnName)
+//            {
+//                var tableNameSplittedByDot = tableName.Split('.');
+//                var tableSchema = tableNameSplittedByDot[0];
+//                var tablePureName = tableNameSplittedByDot[1];
+
+//                var str = @"DECLARE @var{dropConstraintCount} nvarchar(128)
+//                            SELECT @var{dropConstraintCount} = name
+//                            FROM sys.default_constraints
+//                            WHERE parent_object_id = object_id(N'{tableSchema}.[{tablePureName}]')
+//                            AND col_name(parent_object_id, parent_column_id) = '{columnName}';
+//                            IF @var{dropConstraintCount} IS NOT NULL
+//                                EXECUTE('ALTER TABLE {tableSchema}.[{tablePureName}] DROP CONSTRAINT [' + @var{dropConstraintCount} + ']')";
+
+//                dropConstraintCount = dropConstraintCount + 1;
+//                return str;
+//            }
+
 
             #endregion
 
@@ -731,18 +786,18 @@ namespace SQLite.CodeFirst
                 tw.WriteLine("CREATE TABLE " + FormatReservedWord(RemoveDbo(op.Name)) + " (");
                 tw.Indent++;
 
-                bool hasGenereatedIdPk = false;
+                bool hasGeneratedIdPk = false;
 
                 for (int i = 0; i < op.Columns.Count; i++)
                 {
                     ColumnModel lcmDadosColuna = op.Columns.ToList()[i];
-                    hasGenereatedIdPk |= Generate(lcmDadosColuna, tw, op.PrimaryKey);
-
+                    hasGeneratedIdPk |= Generate(lcmDadosColuna, tw, op.PrimaryKey);
+                    
                     if (i < op.Columns.Count - 1)
                         tw.WriteLine(",");
                 }
 
-                if ((op.PrimaryKey != null) && !hasGenereatedIdPk)
+                if ((op.PrimaryKey != null) && !hasGeneratedIdPk)
                 {
                     tw.WriteLine(",");
                     tw.Write("CONSTRAINT ");
