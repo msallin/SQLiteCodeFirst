@@ -342,14 +342,17 @@ namespace SQLite.CodeFirst
                 {
                     if ((column.Type == PrimitiveTypeKind.Int16) ||
                         (column.Type == PrimitiveTypeKind.Int32))
-                        tw.Write(" INTEGER ");
+                        tw.Write("INTEGER");
                     else
                         tw.Write(BuildColumnType(column));
 
-                    if (column.IsIdentity)
+                    if (column.IsIdentity || column.Annotations.ContainsKey("Autoincrement"))
                     {
-                        tw.Write(" PRIMARY KEY AUTOINCREMENT ");
+                        tw.Write(" PRIMARY KEY");
                         isIdPk = true;
+
+                        if (column.Annotations.ContainsKey("Autoincrement"))
+                            tw.Write(" AUTOINCREMENT");
                     }
                 }
                 else
@@ -505,7 +508,7 @@ namespace SQLite.CodeFirst
                 }
             }
 
-            private void SetAnnotatedColumns(IEnumerable<ColumnModel> columns, string tableName)
+            private static void SetAnnotatedColumns(IEnumerable<ColumnModel> columns, string tableName)
             {
                 foreach (var column in columns)
                 {
