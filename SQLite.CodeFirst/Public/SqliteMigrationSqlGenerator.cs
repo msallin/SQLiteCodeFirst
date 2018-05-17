@@ -177,7 +177,7 @@ namespace SQLite.CodeFirst
                         : op.Name;
 
                     tw.Write("CREATE ");
-
+                    
                     if (op.IsUnique)
                         tw.Write(" UNIQUE ");
 
@@ -374,6 +374,15 @@ namespace SQLite.CodeFirst
                     {
                         tw.Write(" DEFAULT ");
                         tw.Write(column.DefaultValueSql);
+                    }
+
+                    AnnotationValues uniqueAnnotation;
+                    if (column.Annotations.TryGetValue("Unique", out uniqueAnnotation))
+                    {
+                        tw.Write(" UNIQUE");
+                        var action = GetUniqueConflictAction(uniqueAnnotation);
+                        if (action != OnConflictAction.None)
+                            tw.Write(" ON CONFLICT " + action.ToString().ToUpperInvariant());
                     }
                 }
 
@@ -827,6 +836,21 @@ namespace SQLite.CodeFirst
 
                 tw.Indent--;
                 tw.Write(")");
+            }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "System.Enum.TryParse<SQLite.CodeFirst.OnConflictAction>(System.String,SQLite.CodeFirst.OnConflictAction@)")]
+            private static OnConflictAction GetUniqueConflictAction(AnnotationValues uniqueAnnotation)
+            {
+                var uniqueText = Convert.ToString(uniqueAnnotation.NewValue, CultureInfo.InvariantCulture);
+                var action = OnConflictAction.None;
+
+                if (uniqueText.StartsWith("OnConflict:", StringComparison.OrdinalIgnoreCase))
+                {
+                    var actionText = uniqueText.Remove(0, "OnConflict:".Length).Trim();
+                    Enum.TryParse(actionText, out action);
+                }
+
+                return action;
             }
 
             #endregion
