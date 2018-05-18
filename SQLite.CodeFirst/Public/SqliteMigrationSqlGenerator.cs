@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations.Model;
 using System.Data.Entity.Migrations.Sql;
-using System.Diagnostics;
-using System.Text;
-using SQLite.CodeFirst.Builder;
 
 namespace SQLite.CodeFirst
 {
@@ -29,7 +25,7 @@ namespace SQLite.CodeFirst
         public override IEnumerable<MigrationStatement> Generate(
             IEnumerable<MigrationOperation> migrationOperations, string providerManifestToken)
         {
-            var impl = new MigrationBuilder(providerManifestToken);
+            var impl = new Builder.MigrationBuilder(providerManifestToken);
             impl.Generate(migrationOperations);
 #if DEBUG
             //var text = new StringBuilder();

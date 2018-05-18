@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SQLite.CodeFirst.Utility
 {
-    public static class MigrationFormatter
+    public class MigrationFormatter
     {
         const int _defaultStringMaxLength = 255;
         const int _defaultNumericPrecision = 10;
