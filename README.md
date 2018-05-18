@@ -111,7 +111,7 @@ public class MyContext : DbContext
 {
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
-        Database.SetInitializer(new MigrateDatabaseToLatestVersion<MyContext, Migrations.Configuration>(true));
+        Database.SetInitializer(new SqliteMigrateDatabaseToLatestVersion<MyContext, Migrations.Configuration>(modelBuilder, true));
     }
 }
 
