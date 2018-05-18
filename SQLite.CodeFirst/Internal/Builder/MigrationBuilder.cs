@@ -17,7 +17,7 @@ namespace SQLite.CodeFirst.Builder
 {
     internal class MigrationBuilder
     {
-        #region Constantes
+        #region Constants
 
         const string _providerInvariantName = "System.Data.SQLite";
         const string _defaultDateTimeFormat = "yyyy-MM-dd hh:mm:ss";
@@ -25,7 +25,7 @@ namespace SQLite.CodeFirst.Builder
 
         #endregion
 
-        #region Instancias
+        #region Instances
 
         DbProviderServices _providerServices;
         DbProviderManifest _providerManifest;
@@ -58,7 +58,6 @@ namespace SQLite.CodeFirst.Builder
 
         internal void Generate(IEnumerable<MigrationOperation> migrationOperations)
         {
-
             foreach (dynamic dynamicOperation in migrationOperations)
                 Generate(dynamicOperation);
         }
@@ -69,7 +68,10 @@ namespace SQLite.CodeFirst.Builder
 
         private void Generate(CreateTableOperation op)
         {
-            SetAnnotatedColumns(op.Columns, op.Name);
+            foreach (var column in op.Columns)
+            {
+                SetAnnotatedColumn(column, op.Name);   
+            }
 
             using (var tw = Format.CreateIndentedTextWriter())
             {
@@ -84,7 +86,7 @@ namespace SQLite.CodeFirst.Builder
             if (!_migrationStatements.Any(item => item.Sql.Contains("CREATE TABLE")))
                 return;
 
-            var createScript = string.Format(CultureInfo.InvariantCulture, 
+            var createScript = string.Format(CultureInfo.InvariantCulture,
                 "CREATE TABLE {0} (", Format.ReservedWord(Format.RemoveDbo(op.DependentTable)));
 
             var migrationStatement = _migrationStatements
@@ -340,10 +342,13 @@ namespace SQLite.CodeFirst.Builder
                 AnnotationValues uniqueAnnotation;
                 if (column.Annotations.TryGetValue("Unique", out uniqueAnnotation))
                 {
-                    tw.Write(" UNIQUE");
-                    var action = GetUniqueConflictAction(uniqueAnnotation);
-                    if (action != OnConflictAction.None)
-                        tw.Write(" ON CONFLICT " + action.ToString().ToUpperInvariant());
+                    tw.Write(" UNIQUE" + Format.UniqueConflictText(uniqueAnnotation));
+                }
+
+                AnnotationValues collateAnnotation;
+                if (column.Annotations.TryGetValue("Collate", out collateAnnotation))
+                {
+                    tw.Write(Format.CollateFunctionText(collateAnnotation));
                 }
             }
 
@@ -456,9 +461,7 @@ namespace SQLite.CodeFirst.Builder
         }
 
         #endregion
-
-
-
+        
         #region Support methods
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "tableName")]
@@ -481,14 +484,6 @@ namespace SQLite.CodeFirst.Builder
                 {
                     column.DefaultValueSql = (string)values.NewValue;
                 }
-            }
-        }
-
-        private static void SetAnnotatedColumns(IEnumerable<ColumnModel> columns, string tableName)
-        {
-            foreach (var column in columns)
-            {
-                SetAnnotatedColumn(column, tableName);
             }
         }
 
@@ -579,21 +574,6 @@ namespace SQLite.CodeFirst.Builder
 
             tw.Indent--;
             tw.Write(")");
-        }
-
-        private static OnConflictAction GetUniqueConflictAction(AnnotationValues uniqueAnnotation)
-        {
-            var uniqueText = Convert.ToString(uniqueAnnotation.NewValue, CultureInfo.InvariantCulture);
-            var action = OnConflictAction.None;
-
-            if (uniqueText.StartsWith("OnConflict:", StringComparison.OrdinalIgnoreCase))
-            {
-                var actionText = uniqueText.Remove(0, "OnConflict:".Length).Trim();
-                if (Enum.TryParse(actionText, out action))
-                    return action;
-            }
-
-            return action;
         }
 
         #endregion

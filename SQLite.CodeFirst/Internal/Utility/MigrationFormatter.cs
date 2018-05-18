@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Data.Entity.Core.Common;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.Migrations.Model;
 using System.Globalization;
 using System.IO;
@@ -242,5 +243,61 @@ namespace SQLite.CodeFirst.Utility
                     return word;
             }
         }
+
+        public static string UniqueConflictText(AnnotationValues uniqueAnnotation)
+        {
+            if (uniqueAnnotation == null)
+                return string.Empty;
+
+            var uniqueText = Convert.ToString(uniqueAnnotation.NewValue, CultureInfo.InvariantCulture);
+            OnConflictAction action;
+
+            if (!uniqueText.StartsWith("OnConflict:", StringComparison.OrdinalIgnoreCase))
+                return string.Empty;
+
+            var actionText = uniqueText.Remove(0, "OnConflict:".Length).Trim();
+            if (!Enum.TryParse(actionText, out action))
+                return string.Empty;
+
+            if (action == OnConflictAction.None)
+                return string.Empty;
+
+            return " ON CONFLICT " + action.ToString().ToUpperInvariant();
+        }
+
+        public static string CollateFunctionText(AnnotationValues collateAnnotation)
+        {
+            if (collateAnnotation == null)
+                return string.Empty;
+
+            var collateAttributeText = Convert.ToString(collateAnnotation.NewValue, CultureInfo.InvariantCulture);
+            string collateFunction;
+            string collateCustomFunction;
+
+            if (collateAttributeText.IndexOf(':') > -1)
+            {
+                collateFunction = collateAttributeText.Substring(0, collateAttributeText.IndexOf(':'));
+                collateCustomFunction = collateAttributeText.Remove(0, collateAttributeText.IndexOf(':') + 1).Trim();
+            }
+            else
+            {
+                collateFunction = collateAttributeText;
+                collateCustomFunction = string.Empty;
+            }
+
+            CollationFunction colatteFunctionType;
+            if (!Enum.TryParse(collateFunction, out colatteFunctionType))
+                return string.Empty;
+
+            if (colatteFunctionType == CollationFunction.None)
+            {
+                return string.Empty;
+            }
+
+            return colatteFunctionType == CollationFunction.Custom
+                ? " COLLATE " + collateCustomFunction
+                : " COLLATE " + colatteFunctionType.ToString().ToUpperInvariant();
+        }
+
     }
 }

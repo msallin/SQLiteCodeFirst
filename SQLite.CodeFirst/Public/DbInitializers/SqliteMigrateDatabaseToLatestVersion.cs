@@ -82,7 +82,7 @@ namespace SQLite.CodeFirst
             modelBuilder.Conventions.Add(new IConvention[]
             {
                 new AttributeToColumnAnnotationConvention<AutoincrementAttribute, bool>("Autoincrement", (p, attributes) => true),
-                new AttributeToColumnAnnotationConvention<CollateAttribute, string>("Collation", (p, attributes) => FormatCollationValue(attributes.Single())),
+                new AttributeToColumnAnnotationConvention<CollateAttribute, string>("Collate", (p, attributes) => FormatCollationValue(attributes.Single())),
                 new AttributeToColumnAnnotationConvention<UniqueAttribute, string>("Unique", (p, attributes) => FormatUniqueValue(attributes.Single())),
                 new AttributeToColumnAnnotationConvention<SqlDefaultValueAttribute, string>("SqlDefaultValue", (p, attributes) => attributes.Single().DefaultValue),
             });
