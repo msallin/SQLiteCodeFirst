@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SQLite;
 using System.IO;
@@ -47,6 +47,19 @@ namespace SQLite.CodeFirst.MigrationConsole
             {
                 CreateOrUpdateDatabase(context);
                 DisplaySeededData(context);
+
+                var connectionBuilder = new SQLiteConnectionStringBuilder(context.Database.Connection.ConnectionString);
+                if (string.IsNullOrEmpty(Path.GetPathRoot(connectionBuilder.DataSource)))
+                {
+                    connectionBuilder.DataSource = Path.Combine(Directory.GetCurrentDirectory(), connectionBuilder.DataSource);
+                }
+
+                System.Console.WriteLine();
+                System.Console.WriteLine("After change CodeFirst database structure you need to create a new Migration file with the following command:");
+                System.Console.WriteLine("Add-Migration your_change_name -ConnectionString \"{0}\" -ConnectionProviderName \"System.Data.SQLite\"", connectionBuilder);
+                System.Console.WriteLine();
+                System.Console.WriteLine("But may you need to downgrade Entity Framework to version 6.1.3 to resolve this problem:");
+                System.Console.WriteLine("https://stackoverflow.com/questions/47329496/updating-to-ef-6-2-0-from-ef-6-1-3-causes-cannot-access-a-disposed-object-error");
             }
         }
 
