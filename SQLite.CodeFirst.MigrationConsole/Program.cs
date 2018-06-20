@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -56,7 +55,12 @@ namespace SQLite.CodeFirst.MigrationConsole
             var connectionInfo = new SQLiteConnectionStringBuilder(context.Database.Connection.ConnectionString);
 
             if (!File.Exists(connectionInfo.DataSource))
+            {
                 System.Console.WriteLine("Creating database...");
+                var databaseFolder = Path.GetDirectoryName(connectionInfo.DataSource);
+                if (!string.IsNullOrWhiteSpace(databaseFolder))
+                    Directory.CreateDirectory(databaseFolder);
+            }
             else
                 System.Console.WriteLine("Updating database...");
 
