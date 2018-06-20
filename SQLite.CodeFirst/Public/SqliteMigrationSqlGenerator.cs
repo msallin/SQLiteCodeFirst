@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Data.Entity.Migrations.Model;
 using System.Data.Entity.Migrations.Sql;
+using System.Diagnostics;
+using System.Text;
 
 namespace SQLite.CodeFirst
 {

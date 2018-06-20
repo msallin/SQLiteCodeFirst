@@ -27,9 +27,9 @@ namespace SQLite.CodeFirst.Builder
 
         #region Instances
 
-        DbProviderServices _providerServices;
-        DbProviderManifest _providerManifest;
-        List<MigrationStatement> _migrationStatements;
+        readonly DbProviderServices _providerServices;
+        readonly DbProviderManifest _providerManifest;
+        readonly List<MigrationStatement> _migrationStatements;
 
         #endregion
 
