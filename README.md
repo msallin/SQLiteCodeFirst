@@ -37,13 +37,16 @@ Depending on your need, you can choose from the following initializers:
 - SqliteCreateDatabaseIfNotExists 
 - SqliteDropCreateDatabaseAlways
 - SqliteDropCreateDatabaseWhenModelChanges
+- SqliteMigrateDatabaseToLatestVersion
 
 If you want to have more control, you can use the `SqliteDatabaseCreator` (implements `IDatabaseCreator`) which lets you control the creation of the SQLite database.
 Or for even more control, use the `SqliteSqlGenerator` (implements `ISqlGenerator`), which lets you generate the SQL code based on your `EdmModel`.
 
 When you want to let the Entity Framework create database if it does not exist, just set `SqliteDropCreateDatabaseAlways<>` or `SqliteCreateDatabaseIfNotExists<>` as your `IDbInitializer<>`.
 
-Of course when using Migrations feature you will always use `SqliteCreateDatabaseIfNotExists<>`.
+When using Migrations feature you will always use `SqliteMigrateDatabaseToLatestVersion<>`.
+**Know issue with Migrations:**
+Entity Framework 6.2.0 has a initialization bug with Sqlite and some other databases. It already [was fixed](https://github.com/aspnet/EntityFramework6/issues/398) to EF 6.3. When you need to create a new migration change using command `Add-Migration` you will need to downgrade EF to version 6.1.3 until EF 6.3 is not released.
 
 ### Initializer Sample
 ```csharp
@@ -144,6 +147,9 @@ If you try to reinstall the NuGet-Packages (e.g. if you want to downgrade to .NE
 In this case please check the following issue: https://github.com/msallin/SQLiteCodeFirst/issues/13.
 
 Pay attention when running Migrations routines because Sqlite does not support some SQL commands suggested by the Entity Framework. For example, to rename a column will be suggested to run `Rename("dbo.table_name", "old_column_name", "new_column_name")`. However Sqlite does not support column rename command!
+
+When creating a new Migrations change may you need to inform StringConnection property to Migration, like this:
+`Add-Migration MyChangeName -ConnectionString "Data Source='C:\SQLiteCodeFirst\SQLite.CodeFirst.MigrationConsole\bin\Debug\footballDb.sqlite';" -ConnectionProviderName "System.Data.SQLite"`
 
 ## Recognition
 This project is forked from [msallin](https://github.com/msallin/SQLiteCodeFirst) Sqlite Code First Projet and using [zaniants](https://github.com/zanyants/SQLiteCodeFirst) Sqlite Migrations code.
