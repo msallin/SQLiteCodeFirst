@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{1F6D4E
 		Shared\SQLite.CodeFirst.ruleset = Shared\SQLite.CodeFirst.ruleset
 		Shared\SQLite.CodeFirst.StrongNameKey.snk = Shared\SQLite.CodeFirst.StrongNameKey.snk
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLite.CodeFirst.MigrationConsole", "SQLite.CodeFirst.MigrationConsole\SQLite.CodeFirst.MigrationConsole.csproj", "{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +82,18 @@ Global
 		{E542F38D-852E-489D-81C2-BF333503E10F}.Release-40|Any CPU.Build.0 = Release|Any CPU
 		{E542F38D-852E-489D-81C2-BF333503E10F}.Release-45|Any CPU.ActiveCfg = Release|Any CPU
 		{E542F38D-852E-489D-81C2-BF333503E10F}.Release-45|Any CPU.Build.0 = Release|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Debug|Any CPU.ActiveCfg = Debug-45|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Debug|Any CPU.Build.0 = Debug-45|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Debug-40|Any CPU.ActiveCfg = Debug-40|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Debug-40|Any CPU.Build.0 = Debug-40|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Debug-45|Any CPU.ActiveCfg = Debug-45|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Debug-45|Any CPU.Build.0 = Debug-45|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Release|Any CPU.ActiveCfg = Release-45|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Release|Any CPU.Build.0 = Release-45|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Release-40|Any CPU.ActiveCfg = Release-40|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Release-40|Any CPU.Build.0 = Release-40|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Release-45|Any CPU.ActiveCfg = Release-45|Any CPU
+		{7583B70D-D73A-4F90-9CA7-7D2B5CF05D36}.Release-45|Any CPU.Build.0 = Release-45|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
