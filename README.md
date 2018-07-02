@@ -152,6 +152,6 @@ When creating a new Migrations change may you need to inform StringConnection pr
 `Add-Migration MyChangeName -ConnectionString "Data Source='C:\SQLiteCodeFirst\SQLite.CodeFirst.MigrationConsole\bin\Debug\footballDb.sqlite';" -ConnectionProviderName "System.Data.SQLite"`
 
 ## Recognition
-This project is forked from [msallin](https://github.com/msallin/SQLiteCodeFirst) Sqlite Code First Projet and using [zaniants](https://github.com/zanyants/SQLiteCodeFirst) Sqlite Migrations code.
+This project is forked from [msallin](https://github.com/msallin/SQLiteCodeFirst) and [zaniants](https://github.com/zanyants/SQLiteCodeFirst) using a Julio C. Borges Sqlite Migration code.
 
 And [msallin](https://github.com/msallin) started with the [code](https://gist.github.com/flaub/1968486e1b3f2b9fddaf) from [flaub](https://github.com/flaub). 
