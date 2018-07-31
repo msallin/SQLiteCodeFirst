@@ -183,3 +183,4 @@ FakesAssemblies/
 
 # Custom
 *.GhostDoc.xml
+/.vs/*
