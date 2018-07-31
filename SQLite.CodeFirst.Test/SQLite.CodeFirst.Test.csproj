@@ -86,10 +86,11 @@
     <Compile Include="..\Shared\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
+    <Compile Include="IntegrationTests\InMemoryDbCreationTest.cs" />
+    <Compile Include="IntegrationTests\InMemoryDbTest.cs" />
     <Compile Include="IntegrationTests\SqlGenerationTest.cs" />
     <Compile Include="UnitTests\Builder\NameCreators\IndexNameCreatorTest.cs" />
     <Compile Include="UnitTests\Builder\NameCreators\NameCreatorTest.cs" />
-    <Compile Include="IntegrationTests\MemoryDbTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\MaxLengthConstraint.cs" />
     <Compile Include="UnitTests\Statement\ColumnConstraint\PrimaryKeyConstraintTest.cs" />
