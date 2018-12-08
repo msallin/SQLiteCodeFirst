@@ -1,29 +1,30 @@
 version: 1.5.1.{build}
+image: Visual Studio 2017
 branches:
   only:
   - master
 skip_tags: true
 platform: Any CPU
-assembly_info:
+configuration: Release
+dotnet_csproj:
   patch: true
-  file: '**\AssemblyInfo.*'
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
   assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+before_build:
+- ps: dotnet --version
+- ps: dotnet restore
 build:
-  project: BuildAllConfigurations.proj
+  project: SQLite.CodeFirst.sln
+  parallel: true
   verbosity: normal
-after_build:
-- ps: >-
-    cd $env:APPVEYOR_BUILD_FOLDER
-
-    cd '.nuget'
-
-    ./nuget.exe pack '..\SQLite.CodeFirst\SQLite.CodeFirst.csproj' -Properties -Symbols -OutputDirectory '..\SQLite.CodeFirst\bin'
 artifacts:
 - path: SQLite.CodeFirst\bin
   name: Assemblies
-- path: SQLite.CodeFirst\bin\*.nupkg
+- path: SQLite.CodeFirst\bin\Release\*.nupkg
   name: NuPkg
 deploy:
 - provider: NuGet
