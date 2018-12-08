@@ -1,161 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug-45</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{50A32FE4-0E13-4213-A373-72523CDF34D9}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SQLite.CodeFirst</RootNamespace>
-    <AssemblyName>SQLite.CodeFirst</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <!-- <Debug Configuration> -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-40|AnyCPU' OR '$(Configuration)|$(Platform)' == 'Debug-45|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\Shared\SQLite.CodeFirst.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-40|AnyCPU'">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <OutputPath>bin\Debug\net40</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-45|AnyCPU' ">
-    <OutputPath>bin\Debug\net45</OutputPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-  </PropertyGroup>
-  <!-- </Debug Configuration> -->
-  <!-- <Release Configuration> -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-40|AnyCPU' OR '$(Configuration)|$(Platform)' == 'Release-45|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\Shared\SQLite.CodeFirst.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-40|AnyCPU'">
-    <OutputPath>bin\Release\net40</OutputPath>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-45|AnyCPU' ">
-    <OutputPath>bin\Release\net45</OutputPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-  </PropertyGroup>
-  <!-- </Release Configuration> -->
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFrameworks>net40;net45</TargetFrameworks>
+    <Authors>Marc Sallin</Authors>
+    <Company />
+    <Description>Creates a SQLite Database from Code, using Entity Framework CodeFirst.  This Project ships several IDbInitializer which creates a new SQLite Database, based on your model/code.</Description>
+    <PackageProjectUrl>https://github.com/msallin/SQLiteCodeFirst</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/msallin/SQLiteCodeFirst</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/msallin/SQLiteCodeFirst/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>Copyright (C) Marc Sallin</Copyright>
+    <PackageTags>SQLite EntityFramework EF CodeFirst</PackageTags>
+    <IncludeDebugSymbolsProjectOutputGroup>true</IncludeDebugSymbolsProjectOutputGroup>
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Shared\SQLite.CodeFirst.StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <!-- TargetFrameworkVersion depended references -->
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-40|AnyCPU' OR '$(Configuration)|$(Platform)' == 'Release-40|AnyCPU'">
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-45|AnyCPU' OR '$(Configuration)|$(Platform)' == 'Release-45|AnyCPU'">
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\Shared\AssemblySharedInfo.cs">
-      <Link>Properties\AssemblySharedInfo.cs</Link>
-    </Compile>
-    <Compile Include="Internal\Builder\NameCreators\NameCreator.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\DefaultValueConstraint.cs" />
-    <Compile Include="Internal\Utility\InMemoryAwareFile.cs" />
-    <Compile Include="Internal\Extensions\ListExtensions.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\PrimaryKeyConstraint.cs" />
-    <Compile Include="Public\Attributes\AutoincrementAttribute.cs" />
-    <Compile Include="Public\Attributes\CollateAttribute.cs" />
-    <Compile Include="Public\Attributes\CollationFunction.cs" />
-    <Compile Include="Public\Attributes\OnConflictAction.cs" />
-    <Compile Include="Public\Attributes\SqlDefaultValueAttribute.cs" />
-    <Compile Include="Public\Attributes\UniqueAttribute.cs" />
-    <Compile Include="Public\Entities\IHistory.cs" />
-    <Compile Include="Internal\Builder\NameCreators\IndexNameCreator.cs" />
-    <Compile Include="Internal\Builder\NameCreators\SpecialChars.cs" />
-    <Compile Include="Public\IDatabaseCreator.cs" />
-    <Compile Include="Internal\Extensions\DbModelBuilderExtensions.cs" />
-    <Compile Include="Internal\Extensions\EdmPropertyExtensions.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\CollateConstraint.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\UniqueConstraint.cs" />
-    <Compile Include="Internal\Utility\HashCreator.cs" />
-    <Compile Include="Internal\Utility\HistoryEntityTypeValidator.cs" />
-    <Compile Include="Internal\Utility\SqliteAssociationType.cs" />
-    <Compile Include="Public\ISqliteSqlGenerator.cs" />
-    <Compile Include="Public\DbInitializers\SqliteDropCreateDatabaseWhenModelChanges.cs" />
-    <Compile Include="Public\Entities\History.cs" />
-    <Compile Include="Public\SqliteSqlGenerator.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\IColumnConstraintCollection.cs" />
-    <Compile Include="Internal\Statement\IStatementCollection.cs" />
-    <Compile Include="Internal\Utility\AssociationTypeContainer.cs" />
-    <Compile Include="Internal\Builder\ColumnStatementCollectionBuilder.cs" />
-    <Compile Include="Internal\Builder\CreateIndexStatementBuilder.cs" />
-    <Compile Include="Internal\Builder\ForeignKeyStatementBuilder.cs" />
-    <Compile Include="Internal\Builder\CreateDatabaseStatementBuilder.cs" />
-    <Compile Include="Internal\Builder\CompositePrimaryKeyStatementBuilder.cs" />
-    <Compile Include="Internal\Convention\SqliteForeignKeyIndexConvention.cs" />
-    <Compile Include="Internal\Extensions\EntityTypeExtension.cs" />
-    <Compile Include="Public\DbInitializers\SqliteCreateDatabaseIfNotExists.cs" />
-    <Compile Include="Public\DbInitializers\SqliteDropCreateDatabaseAlways.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\MaxLengthConstraint.cs" />
-    <Compile Include="Internal\Statement\CreateIndexStatement.cs" />
-    <Compile Include="Internal\Statement\CreateIndexStatementCollection.cs" />
-    <Compile Include="Internal\Statement\CompositePrimaryKeyStatement.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Internal\Utility\ConnectionStringParser.cs" />
-    <Compile Include="Public\DbInitializers\SqliteInitializerBase.cs" />
-    <Compile Include="Internal\Builder\IStatementBuilder.cs" />
-    <Compile Include="Public\SqliteDatabaseCreator.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\ColumnConstraintCollection.cs" />
-    <Compile Include="Internal\Statement\ForeignKeyStatement.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\IColumnConstraint.cs" />
-    <Compile Include="Internal\Statement\ColumnConstraint\NotNullConstraint.cs" />
-    <Compile Include="Internal\Statement\ColumnStatementCollection.cs" />
-    <Compile Include="Internal\Statement\ColumnStatement.cs" />
-    <Compile Include="Internal\Statement\CreateDatabaseStatement.cs" />
-    <Compile Include="Internal\Statement\CreateTableStatement.cs" />
-    <Compile Include="Internal\Statement\IStatement.cs" />
-    <Compile Include="Internal\Builder\CreateTableStatementBuilder.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="SQLite.CodeFirst.csproj.nuspec" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+
 </Project>

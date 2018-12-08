@@ -1,0 +1,23 @@
+version: CI_{branch}_{build}
+image: Visual Studio 2017
+skip_tags: true
+configuration:
+- Release
+- Debug
+platform: Any CPU
+before_build:
+- ps: dotnet --version
+- ps: dotnet restore
+build:
+  project: SQLite.CodeFirst.sln
+  parallel: true
+  verbosity: normal
+artifacts:
+- path: SQLite.CodeFirst\bin\Debug\**\SQLite.CodeFirst.dll
+  name: Debug
+- path: SQLite.CodeFirst\bin\Release\**\SQLite.CodeFirst.dll
+  name: Release
+- path: SQLite.CodeFirst\bin\Release\*.nupkg
+  name: NuPkgDebug
+- path: SQLite.CodeFirst\bin\Debug\*.nupkg
+  name: NuPkgRelease
