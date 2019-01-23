@@ -24,6 +24,11 @@ namespace SQLite.CodeFirst
     public abstract class SqliteInitializerBase<TContext> : IDatabaseInitializer<TContext>
         where TContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets if initialization should be done without creating transactions.
+        /// </summary>
+        public bool WithoutTransaction { get; set; }
+
         protected SqliteInitializerBase(DbModelBuilder modelBuilder)
         {
             if (modelBuilder == null)
@@ -66,7 +71,8 @@ namespace SQLite.CodeFirst
         ///     Initialize the database for the given context.
         ///     Generates the SQLite-DDL from the model and executs it against the database.
         ///     After that the <see cref="Seed" /> method is executed.
-        ///     All actions are be executed in transactions.
+        ///     All actions are be executed in transactions by default.
+        ///     To initialize without creating transactions, set <see cref="WithoutTransaction"/> to true.
         /// </summary>
         /// <param name="context">The context. </param>
         public virtual void InitializeDatabase(TContext context)
@@ -76,33 +82,43 @@ namespace SQLite.CodeFirst
             string dbFile = GetDatabasePathFromContext(context);
             InMemoryAwareFile.CreateDirectory(dbFile);
 
-            using (DbContextTransaction transaction = context.Database.BeginTransaction())
+            if (WithoutTransaction)
             {
-                try
-                {
-                    var sqliteDatabaseCreator = new SqliteDatabaseCreator();
-                    sqliteDatabaseCreator.Create(context.Database, model);
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
+                var sqliteDatabaseCreator = new SqliteDatabaseCreator();
+                sqliteDatabaseCreator.Create(context.Database, model);
+                Seed(context);
+                context.SaveChanges();
             }
-
-            using (DbContextTransaction transaction = context.Database.BeginTransaction())
+            else
             {
-                try
+                using (DbContextTransaction transaction = context.Database.BeginTransaction())
                 {
-                    Seed(context);
-                    context.SaveChanges();
-                    transaction.Commit();
+                    try
+                    {
+                        var sqliteDatabaseCreator = new SqliteDatabaseCreator();
+                        sqliteDatabaseCreator.Create(context.Database, model);
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
                 }
-                catch (Exception)
+
+                using (DbContextTransaction transaction = context.Database.BeginTransaction())
                 {
-                    transaction.Rollback();
-                    throw;
+                    try
+                    {
+                        Seed(context);
+                        context.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
                 }
             }
         }

@@ -11,14 +11,14 @@ using System.Diagnostics.CodeAnalysis;
 namespace SQLite.CodeFirst
 {
     /// <summary>
-    /// An implementation of <see cref="IDatabaseInitializer{TContext}"/> that will always recreate and optionally re-seed the 
-    /// database the first time that a context is used in the app domain or if the model has changed. 
+    /// An implementation of <see cref="IDatabaseInitializer{TContext}"/> that will always recreate and optionally re-seed the
+    /// database the first time that a context is used in the app domain or if the model has changed.
     /// To seed the database, create a derived class and override the Seed method.
     /// <remarks>
     /// To detect model changes a new table (implementation of <see cref="IHistory"/>) is added to the database.
     /// There is one record in this table which holds the hash of the SQL-statement which was generated from the model
     /// executed to create the database. When initializing the database the initializer checks if the hash of the SQL-statement for the
-    /// model is still the same as the hash in the database.  If you use this initializer on a existing database, this initializer 
+    /// model is still the same as the hash in the database.  If you use this initializer on a existing database, this initializer
     /// will interpret this as model change because of the new <see cref="IHistory"/> table.
     /// Notice that a database can be used by more than one context. Therefore the name of the context is saved as a part of the history record.
     /// </remarks>
@@ -63,7 +63,8 @@ namespace SQLite.CodeFirst
         /// Initialize the database for the given context.
         /// Generates the SQLite-DDL from the model and executs it against the database.
         /// After that the <see cref="Seed" /> method is executed.
-        /// All actions are be executed in transactions.
+        /// All actions are be executed in transactions by default.
+        /// To initialize without creating transactions, set <see cref="WithoutTransaction"/> to true.
         /// </summary>
         /// <param name="context">The context.</param>
         public override void InitializeDatabase(TContext context)
