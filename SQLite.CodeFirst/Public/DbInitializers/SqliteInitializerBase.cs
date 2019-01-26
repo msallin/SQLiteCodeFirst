@@ -26,12 +26,7 @@ namespace SQLite.CodeFirst
     {
         protected SqliteInitializerBase(DbModelBuilder modelBuilder)
         {
-            if (modelBuilder == null)
-            {
-                throw new ArgumentNullException("modelBuilder");
-            }
-
-            ModelBuilder = modelBuilder;
+            ModelBuilder = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
 
             // This convention will crash the SQLite Provider before "InitializeDatabase" gets called.
             // See https://github.com/msallin/SQLiteCodeFirst/issues/7 for details.
@@ -76,35 +71,11 @@ namespace SQLite.CodeFirst
             string dbFile = GetDatabasePathFromContext(context);
             InMemoryAwareFile.CreateDirectory(dbFile);
 
-            using (DbContextTransaction transaction = context.Database.BeginTransaction())
-            {
-                try
-                {
-                    var sqliteDatabaseCreator = new SqliteDatabaseCreator();
-                    sqliteDatabaseCreator.Create(context.Database, model);
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
+            var sqliteDatabaseCreator = new SqliteDatabaseCreator();
+            sqliteDatabaseCreator.Create(context.Database, model);
 
-            using (DbContextTransaction transaction = context.Database.BeginTransaction())
-            {
-                try
-                {
-                    Seed(context);
-                    context.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
+            Seed(context);
+            context.SaveChanges();
         }
 
         /// <summary>
