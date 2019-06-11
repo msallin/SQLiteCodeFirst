@@ -42,6 +42,7 @@ You can use the SQLite CodeFirst in projects that target the following framework
 - .NET 4.7 (use net45)
 - .NET 4.7.1 (use net45)
 - .NET 4.7.2 (use net45)
+- .NET 4.8 (uses net45)
 
 ## How to use
 The functionality is exposed by using implementations of the `IDbInitializer<>` interface.
