@@ -78,12 +78,12 @@ public class MyDbContext : DbContext
 ```
 
 Notice that the `SqliteDropCreateDatabaseWhenModelChanges<>` initializer will create a additional table in your database.
-This table is used to store some information to detect model changes. If you want to use a own entity/table you can implement the
-`IHistory` interface and pass the type of your entity as parameter in the to the constructor from the initializer.
+This table is used to store some information to detect model changes. If you want to use an own entity/table you have to implement the
+`IHistory` interface and pass the type of your entity as parameter to the constructor of the initializer.
 
 In a more advanced scenario, you may want to populate some core- or test-data after the database was created.
 To do this, inherit from `SqliteDropCreateDatabaseAlways<>`, `SqliteCreateDatabaseIfNotExists<>` or `SqliteDropCreateDatabaseWhenModelChanges<>` and override the `Seed(MyDbContext context)` function.
-This function will be called in a transaction once the database was created.  This function is only executed if a new database was successfully created.
+This function will be called in a transaction, once the database was created.  This function is only executed if a new database was successfully created.
 
 ```csharp
 public class MyDbContextInitializer : SqliteDropCreateDatabaseAlways<MyDbContext>
