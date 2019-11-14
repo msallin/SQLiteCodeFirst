@@ -30,29 +30,22 @@ The following features are supported:
 - SQL default value (Decorate columns with the `SqlDefaultValueAttribute`, which is part of this library)
 
 ## Install
+
 Either get the assembly from the latest [GitHub Release Page](https://github.com/msallin/SQLiteCodeFirst/releases) or install the NuGet-Package [SQLite.CodeFirst](https://www.nuget.org/packages/SQLite.CodeFirst/) (`PM> Install-Package SQLite.CodeFirst`).
 
-The project is built to target .NET framework versions 4.0 and 4.5.
+The project is built to target .NET framework versions 4.0 and 4.5 and .NET Standard 2.1.
 You can use the SQLite CodeFirst in projects that target the following frameworks:
 
 - .NET 4.0 (uses net40)
-- .NET 4.5 (uses net45)
-- .NET 4.5.1 (uses net45)
-- .NET 4.5.2 (uses net45)
-- .NET 4.6 (uses net45)
-- .NET 4.6.1 (uses net45)
-- .NET 4.6.2 (uses net45)
-- .NET 4.7 (uses net45)
-- .NET 4.7.1 (uses net45)
-- .NET 4.7.2 (uses net45)
-- .NET 4.8 (uses net45)
+- .NET 4.5-4.8 (uses net45)
+- .NET Core 3.0-3.1 (uses netstandard2.1)
 
 ## How to use
 
 The functionality is exposed by using implementations of the `IDbInitializer<>` interface.
 Depending on your need, you can choose from the following initializers:
 
-- SqliteCreateDatabaseIfNotExists 
+- SqliteCreateDatabaseIfNotExists
 - SqliteDropCreateDatabaseAlways
 - SqliteDropCreateDatabaseWhenModelChanges
 
@@ -68,7 +61,7 @@ public class MyDbContext : DbContext
 {
     public MyDbContext()
         : base("ConnectionStringName") { }
-  
+
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
         var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<MyDbContext>(modelBuilder);
@@ -130,7 +123,7 @@ public class MyContext : DbContext
 
 The code is written in an extensible way.
 The logic is divided into two main parts, Builder and Statement.
-The Builder knows how to translate the EdmModel into statements where a statement class creates the SQLite-DDL-Code. 
+The Builder knows how to translate the EdmModel into statements where a statement class creates the SQLite-DDL-Code.
 The structure of the statements is influenced by the [SQLite Language Specification](https://www.sqlite.org/lang.html).
 You will find an extensive usage of the composite pattern.
 
