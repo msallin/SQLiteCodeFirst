@@ -68,9 +68,9 @@ namespace SQLite.CodeFirst
         /// <param name="context">The context.</param>
         public override void InitializeDatabase(TContext context)
         {
-            string databseFilePath = GetDatabasePathFromContext(context);
+            string databaseFilePath = GetDatabasePathFromContext(context);
 
-            bool dbExists = InMemoryAwareFile.Exists(databseFilePath);
+            bool dbExists = InMemoryAwareFile.Exists(databaseFilePath);
             if (dbExists)
             {
                 if (IsSameModel(context))
@@ -78,11 +78,11 @@ namespace SQLite.CodeFirst
                     return;
                 }
 
-                FileAttributes? attributes = InMemoryAwareFile.GetFileAttributes(databseFilePath);
-                CloseDatabase(context, databseFilePath);
-                DeleteDatabase(context, databseFilePath);
+                FileAttributes? attributes = InMemoryAwareFile.GetFileAttributes(databaseFilePath);
+                CloseDatabase(context, databaseFilePath);
+                DeleteDatabase(context, databaseFilePath);
                 base.InitializeDatabase(context);
-                InMemoryAwareFile.SetFileAttributes(databseFilePath, attributes);
+                InMemoryAwareFile.SetFileAttributes(databaseFilePath, attributes);
                 SaveHistory(context);
             }
             else
@@ -92,12 +92,18 @@ namespace SQLite.CodeFirst
             }
         }
 
-        protected virtual void DeleteDatabase(TContext context, string databseFilePath) {         
-            InMemoryAwareFile.Delete(databseFilePath);
+        /// <summary>
+        /// Called to drop/remove Database file from disk.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="databaseFilePath">Filename of Database to be removed.</param>
+        protected virtual void DeleteDatabase(TContext context, string databaseFilePath)
+        {
+            InMemoryAwareFile.Delete(databaseFilePath);
         }
 
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "Required.")]
-        private static void CloseDatabase(TContext context, string databseFilePath)
+        private static void CloseDatabase(TContext context, string databaseFilePath)
         {
             context.Database.Connection.Close();
             GC.Collect();
