@@ -61,7 +61,7 @@ namespace SQLite.CodeFirst
 
         /// <summary>
         /// Initialize the database for the given context.
-        /// Generates the SQLite-DDL from the model and executs it against the database.
+        /// Generates the SQLite-DDL from the model and executes it against the database.
         /// After that the <see cref="Seed" /> method is executed.
         /// All actions are be executed in transactions.
         /// </summary>
