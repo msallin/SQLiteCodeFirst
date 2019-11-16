@@ -79,7 +79,7 @@ namespace SQLite.CodeFirst
                 }
 
                 FileAttributes? attributes = InMemoryAwareFile.GetFileAttributes(databaseFilePath);
-                CloseDatabase(context, databaseFilePath);
+                CloseDatabase(context);
                 DeleteDatabase(context, databaseFilePath);
                 base.InitializeDatabase(context);
                 InMemoryAwareFile.SetFileAttributes(databaseFilePath, attributes);
@@ -103,7 +103,7 @@ namespace SQLite.CodeFirst
         }
 
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "Required.")]
-        private static void CloseDatabase(TContext context, string databaseFilePath)
+        private static void CloseDatabase(TContext context)
         {
             context.Database.Connection.Close();
             GC.Collect();
