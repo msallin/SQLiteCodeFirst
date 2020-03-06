@@ -27,9 +27,10 @@ artifacts:
 - path: SQLite.CodeFirst\bin\Release\*.nupkg
   name: NuPkg
 deploy:
+# Encrypt with https://ci.appveyor.com/tools/encrypt
 - provider: NuGet
   api_key:
-    secure: QmbFnerlfTAFUZpnaPgVDywMH4fF8rVakefmqvhu3qm9SpuDlLGB9S4HwtdE3Nep
+    secure: wKCSsG3JbuHyNmEL6JagQlGexspQI4W3QTXi0QIWVJKOr4Y0S7j/jUEOJoUCzORK
   on:
     branch: master
 - provider: GitHub
