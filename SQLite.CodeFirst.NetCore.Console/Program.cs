@@ -39,7 +39,7 @@ namespace SQLite.CodeFirst.Console
             System.Console.WriteLine("Starting Demo Application (File)");
             System.Console.WriteLine(string.Empty);
 
-            using (var context = new FootballDbContext("footballDb"))
+            using (var context = new FootballDbContext(@"data source=.\db\footballDb\footballDb.sqlite;foreign keys=true"))
             {
                 CreateAndSeedDatabase(context);
                 DisplaySeededData(context);
