@@ -119,6 +119,34 @@ public class MyContext : DbContext
 }
 ```
 
+### .NET Core example
+
+Add the following package references.
+```xml
+<PackageReference Include="System.Data.SQLite" Version="1.0.112.2" />
+<PackageReference Include="System.Data.SQLite.EF6" Version="1.0.112.2" />
+```
+
+Add the following class.
+```csharp
+public Configuration()
+{
+    SetProviderFactory("System.Data.SQLite", SQLiteFactory.Instance);
+    SetProviderFactory("System.Data.SQLite.EF6", SQLiteProviderFactory.Instance);
+
+    var providerServices = (DbProviderServices)SQLiteProviderFactory.Instance.GetService(typeof(DbProviderServices));
+
+    SetProviderServices("System.Data.SQLite", providerServices);
+    SetProviderServices("System.Data.SQLite.EF6", providerServices);
+
+    SetDefaultConnectionFactory(this);
+}
+
+public DbConnection CreateConnection(string connectionString)
+    => new SQLiteConnection(connectionString);
+}
+```
+
 ## Structure
 
 The code is written in an extensible way.
