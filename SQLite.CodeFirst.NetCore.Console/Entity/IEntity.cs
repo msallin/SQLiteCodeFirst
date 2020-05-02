@@ -1,6 +1,6 @@
 ﻿namespace SQLite.CodeFirst.NetCore.Console.Entity
 {
-    interface IEntity
+    public interface IEntity
     {
         int Id { get; set; }
     }
