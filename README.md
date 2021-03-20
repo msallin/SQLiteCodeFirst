@@ -39,6 +39,7 @@ You can use the SQLite CodeFirst in projects that target the following framework
 - .NET 4.0 (uses net40)
 - .NET 4.5-4.8 (uses net45)
 - .NET Core 3.0-3.1 (uses netstandard2.1)
+- .NET 5 (uses netstandard2.1)
 
 ## How to use
 
