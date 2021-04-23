@@ -19,7 +19,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             };
 
             string output = foreignKeyStatement.CreateStatement();
-            Assert.AreEqual(output, "FOREIGN KEY (dummyForeignKey1) REFERENCES dummyForeignTable(dummForeignPrimaryKey1)");
+            Assert.AreEqual(output, "FOREIGN KEY ([dummyForeignKey1]) REFERENCES dummyForeignTable([dummForeignPrimaryKey1])");
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             };
 
             string output = foreignKeyStatement.CreateStatement();
-            Assert.AreEqual(output, "FOREIGN KEY (dummyForeignKey1) REFERENCES dummyForeignTable(dummForeignPrimaryKey1) ON DELETE CASCADE");
+            Assert.AreEqual(output, "FOREIGN KEY ([dummyForeignKey1]) REFERENCES dummyForeignTable([dummForeignPrimaryKey1]) ON DELETE CASCADE");
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             };
 
             string output = foreignKeyStatement.CreateStatement();
-            Assert.AreEqual(output, "FOREIGN KEY (dummyForeignKey1, dummyForeignKey2) REFERENCES dummyForeignTable(dummForeignPrimaryKey1)");
+            Assert.AreEqual(output, "FOREIGN KEY ([dummyForeignKey1], [dummyForeignKey2]) REFERENCES dummyForeignTable([dummForeignPrimaryKey1])");
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             };
 
             string output = foreignKeyStatement.CreateStatement();
-            Assert.AreEqual(output, "FOREIGN KEY (dummyForeignKey1, dummyForeignKey2) REFERENCES dummyForeignTable(dummForeignPrimaryKey1, dummForeignPrimaryKey2)");
+            Assert.AreEqual(output, "FOREIGN KEY ([dummyForeignKey1], [dummyForeignKey2]) REFERENCES dummyForeignTable([dummForeignPrimaryKey1], [dummForeignPrimaryKey2])");
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             };
 
             string output = foreignKeyStatement.CreateStatement();
-            Assert.AreEqual(output, "FOREIGN KEY (dummyForeignKey1) REFERENCES dummyForeignTable(dummForeignPrimaryKey1, dummForeignPrimaryKey2)");
+            Assert.AreEqual(output, "FOREIGN KEY ([dummyForeignKey1]) REFERENCES dummyForeignTable([dummForeignPrimaryKey1], [dummForeignPrimaryKey2])");
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SQLite.CodeFirst.Builder.NameCreators;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SQLite.CodeFirst.Statement
@@ -16,11 +18,9 @@ namespace SQLite.CodeFirst.Statement
         public string CreateStatement()
         {
             var sb = new StringBuilder(Template);
-
-            sb.Replace("{foreign-key}", string.Join(", ", ForeignKey));
+            sb.Replace("{foreign-key}", string.Join(", ", ForeignKey.Select(c => ColumnNameCreator.EscapeName(c))));
             sb.Replace("{referenced-table}", ForeignTable);
-            sb.Replace("{referenced-id}", string.Join(", ", ForeignPrimaryKey));
-
+            sb.Replace("{referenced-id}", string.Join(", ", ForeignPrimaryKey.Select(c => ColumnNameCreator.EscapeName(c))));
             if (CascadeDelete)
             {
                 sb.Append(" " + CascadeDeleteStatement);
