@@ -1,11 +1,11 @@
-﻿using System.Text;
-using SQLite.CodeFirst.Statement.ColumnConstraint;
+﻿using SQLite.CodeFirst.Statement.ColumnConstraint;
+using System.Text;
 
 namespace SQLite.CodeFirst.Statement
 {
     internal class ColumnStatement : IStatement
     {
-        private const string Template = "[{column-name}] {type-name} {column-constraint}";
+        private const string Template = "`{column-name}` {type-name} {column-constraint}";
 
         public string ColumnName { get; set; }
         public string TypeName { get; set; }

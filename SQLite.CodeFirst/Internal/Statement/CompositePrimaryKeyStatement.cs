@@ -6,6 +6,7 @@ namespace SQLite.CodeFirst.Statement
 {
     internal class CompositePrimaryKeyStatement : Collection<string>, IStatement
     {
+        private const string Key_Template = "`{key}`";
         private const string Template = "PRIMARY KEY({primary-keys})";
         private const string PrimaryKeyColumnNameSeperator = ", ";
 
@@ -13,7 +14,7 @@ namespace SQLite.CodeFirst.Statement
         {
             foreach (var keyMember in keyMembers)
             {
-                Add(keyMember);
+                Add(Key_Template.Replace("{key}", keyMember));
             }
         }
 
