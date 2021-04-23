@@ -16,9 +16,9 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
 
             var columnStatement = new ColumnStatement
             {
-                ColumnConstraints = columnConstraintsMock.Object,
                 ColumnName = "dummyColumnName",
-                TypeName = "dummyType"
+                TypeName = "dummyType",
+                ColumnConstraints = columnConstraintsMock.Object,
             };
             string output = columnStatement.CreateStatement();
             Assert.AreEqual(output, "[dummyColumnName] dummyType dummyColumnConstraint");
