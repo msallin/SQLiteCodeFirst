@@ -24,9 +24,10 @@ namespace SQLite.CodeFirst
     public abstract class SqliteInitializerBase<TContext> : IDatabaseInitializer<TContext>
         where TContext : DbContext
     {
-        protected SqliteInitializerBase(DbModelBuilder modelBuilder)
+        protected SqliteInitializerBase(DbModelBuilder modelBuilder, Collation defaultCollation = null)
         {
             ModelBuilder = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
+            DefaultCollation = defaultCollation;
 
             // This convention will crash the SQLite Provider before "InitializeDatabase" gets called.
             // See https://github.com/msallin/SQLiteCodeFirst/issues/7 for details.
@@ -55,6 +56,8 @@ namespace SQLite.CodeFirst
             }
         }
 
+        public Collation DefaultCollation { get; }
+
         protected DbModelBuilder ModelBuilder { get; }
 
         /// <summary>
@@ -71,7 +74,7 @@ namespace SQLite.CodeFirst
             string dbFile = GetDatabasePathFromContext(context);
             InMemoryAwareFile.CreateDirectory(dbFile);
 
-            var sqliteDatabaseCreator = new SqliteDatabaseCreator();
+            var sqliteDatabaseCreator = new SqliteDatabaseCreator(DefaultCollation);
             sqliteDatabaseCreator.Create(context.Database, model);
 
             Seed(context);

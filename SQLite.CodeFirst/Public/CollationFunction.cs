@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// The collation function to use for this column.
-    /// Is used together with the <see cref="CollateAttribute" />.
+    /// Is used together with the <see cref="CollateAttribute" />, and when setting a default collation for the database.
     /// </summary>
     public enum CollationFunction
     {

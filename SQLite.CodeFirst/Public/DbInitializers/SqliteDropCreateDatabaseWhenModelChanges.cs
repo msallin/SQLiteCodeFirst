@@ -172,7 +172,7 @@ namespace SQLite.CodeFirst
         private string GetSqlFromModel(DbConnection connection)
         {
             var model = ModelBuilder.Build(connection);
-            var sqliteSqlGenerator = new SqliteSqlGenerator();
+            var sqliteSqlGenerator = new SqliteSqlGenerator(DefaultCollation);
             return sqliteSqlGenerator.Generate(model.StoreModel);
         }
     }

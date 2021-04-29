@@ -9,10 +9,12 @@ namespace SQLite.CodeFirst.Builder
     internal class CreateDatabaseStatementBuilder : IStatementBuilder<CreateDatabaseStatement>
     {
         private readonly EdmModel edmModel;
+        private readonly Collation defaultCollation;
 
-        public CreateDatabaseStatementBuilder(EdmModel edmModel)
+        public CreateDatabaseStatementBuilder(EdmModel edmModel, Collation defaultCollation)
         {
             this.edmModel = edmModel;
+            this.defaultCollation = defaultCollation;
         }
 
         public CreateDatabaseStatement BuildStatement()
@@ -30,7 +32,7 @@ namespace SQLite.CodeFirst.Builder
 
             foreach (var entitySet in edmModel.Container.EntitySets)
             {
-                var tableStatementBuilder = new CreateTableStatementBuilder(entitySet, associationTypeContainer);
+                var tableStatementBuilder = new CreateTableStatementBuilder(entitySet, associationTypeContainer, defaultCollation);
                 yield return tableStatementBuilder.BuildStatement();
             }
         }
