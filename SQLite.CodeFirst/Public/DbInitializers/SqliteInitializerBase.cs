@@ -55,6 +55,8 @@ namespace SQLite.CodeFirst
             }
         }
 
+        public ICollationData DefaultCollation { get; set; }
+
         protected DbModelBuilder ModelBuilder { get; }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace SQLite.CodeFirst
             string dbFile = GetDatabasePathFromContext(context);
             InMemoryAwareFile.CreateDirectory(dbFile);
 
-            var sqliteDatabaseCreator = new SqliteDatabaseCreator();
+            var sqliteDatabaseCreator = new SqliteDatabaseCreator(DefaultCollation);
             sqliteDatabaseCreator.Create(context.Database, model);
 
             Seed(context);

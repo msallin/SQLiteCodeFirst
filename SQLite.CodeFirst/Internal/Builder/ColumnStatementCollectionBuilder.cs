@@ -11,11 +11,13 @@ namespace SQLite.CodeFirst.Builder
     {
         private readonly IEnumerable<EdmProperty> properties;
         private readonly IEnumerable<EdmProperty> keyMembers;
+        private readonly ICollationData defaultCollation;
 
-        public ColumnStatementCollectionBuilder(IEnumerable<EdmProperty> properties, IEnumerable<EdmProperty> keyMembers)
+        public ColumnStatementCollectionBuilder(IEnumerable<EdmProperty> properties, IEnumerable<EdmProperty> keyMembers, ICollationData defaultCollation)
         {
             this.properties = properties;
             this.keyMembers = keyMembers;
+            this.defaultCollation = defaultCollation;
         }
 
         public ColumnStatementCollection BuildStatement()
@@ -39,7 +41,7 @@ namespace SQLite.CodeFirst.Builder
                 AdjustDatatypeForAutogenerationIfNecessary(property, columnStatement);
                 AddNullConstraintIfNecessary(property, columnStatement);
                 AddUniqueConstraintIfNecessary(property, columnStatement);
-                AddCollationConstraintIfNecessary(property, columnStatement);
+                AddCollationConstraintIfNecessary(property, columnStatement, defaultCollation);
                 AddPrimaryKeyConstraintAndAdjustTypeIfNecessary(property, columnStatement);
                 AddDefaultValueConstraintIfNecessary(property, columnStatement);
 
@@ -73,9 +75,15 @@ namespace SQLite.CodeFirst.Builder
             }
         }
 
-        private static void AddCollationConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement)
+        private static void AddCollationConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement, ICollationData defaultCollation)
         {
-            var value = property.GetCustomAnnotation<CollateAttribute>();
+            ICollationData value = property.GetCustomAnnotation<CollateAttribute>();
+            if (value == null && defaultCollation != null && property.PrimitiveType.PrimitiveTypeKind == PrimitiveTypeKind.String)
+            {
+                // Use default collation if one is given and the property is a string.
+                value = defaultCollation;
+            }
+
             if (value != null)
             {
                 columnStatement.ColumnConstraints.Add(new CollateConstraint { CollationFunction = value.Collation, CustomCollationFunction = value.Function });

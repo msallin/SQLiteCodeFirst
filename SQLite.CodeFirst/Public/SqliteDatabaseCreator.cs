@@ -16,6 +16,13 @@ namespace SQLite.CodeFirst
     /// </summary>
     public class SqliteDatabaseCreator : IDatabaseCreator
     {
+        public SqliteDatabaseCreator(ICollationData defaultCollation = null)
+        {
+            DefaultCollation = defaultCollation;
+        }
+
+        public ICollationData DefaultCollation { get; }
+
         /// <summary>
         /// Creates the SQLite-Database.
         /// </summary>
@@ -24,7 +31,7 @@ namespace SQLite.CodeFirst
             if (db == null) throw new ArgumentNullException("db");
             if (model == null) throw new ArgumentNullException("model");
 
-            var sqliteSqlGenerator = new SqliteSqlGenerator();
+            var sqliteSqlGenerator = new SqliteSqlGenerator(DefaultCollation);
             string sql = sqliteSqlGenerator.Generate(model.StoreModel);
             Debug.Write(sql);
             db.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, sql);

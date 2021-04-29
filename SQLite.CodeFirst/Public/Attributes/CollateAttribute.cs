@@ -8,7 +8,7 @@ namespace SQLite.CodeFirst
     /// It is possible to specify a custom collating function. Set  <see cref="CollationFunction"/> to <see cref="CollationFunction.Custom"/> and specify the name using the function parameter.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public sealed class CollateAttribute : Attribute
+    public sealed class CollateAttribute : Attribute, ICollationData
     {
         public CollateAttribute()
         {
