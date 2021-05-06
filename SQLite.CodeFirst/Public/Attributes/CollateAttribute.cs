@@ -8,22 +8,18 @@ namespace SQLite.CodeFirst
     /// It is possible to specify a custom collating function. Set  <see cref="CollationFunction"/> to <see cref="CollationFunction.Custom"/> and specify the name using the function parameter.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public sealed class CollateAttribute : Attribute, ICollationData
+    public sealed class CollateAttribute : Attribute
     {
         public CollateAttribute()
+            : this(CollationFunction.None)
         {
-            Collation = CollationFunction.None;
         }
 
         public CollateAttribute(CollationFunction collation)
+            : this(collation, null)
         {
-            if (collation == CollationFunction.Custom)
-            {
-                throw new ArgumentException("If the collation is set to CollationFunction.Custom a function must be specified.", nameof(collation));
-            }
-
-            Collation = collation;
         }
+
         public CollateAttribute(CollationFunction collation, string function)
         {
             if (collation != CollationFunction.Custom && !string.IsNullOrEmpty(function))
@@ -38,6 +34,7 @@ namespace SQLite.CodeFirst
 
             Collation = collation;
             Function = function;
+            CollationData = new Collation() { CollationFunction = collation, Function = function };
         }
 
         public CollationFunction Collation { get; }
@@ -46,5 +43,7 @@ namespace SQLite.CodeFirst
         /// The name of the custom collating function to use (CollationFunction.Custom).
         /// </summary>
         public string Function { get; }
+
+        public Collation CollationData { get; }
     }
 }

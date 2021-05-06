@@ -9,9 +9,9 @@ namespace SQLite.CodeFirst.Builder
     internal class CreateDatabaseStatementBuilder : IStatementBuilder<CreateDatabaseStatement>
     {
         private readonly EdmModel edmModel;
-        private readonly ICollationData defaultCollation;
+        private readonly Collation defaultCollation;
 
-        public CreateDatabaseStatementBuilder(EdmModel edmModel, ICollationData defaultCollation)
+        public CreateDatabaseStatementBuilder(EdmModel edmModel, Collation defaultCollation)
         {
             this.edmModel = edmModel;
             this.defaultCollation = defaultCollation;

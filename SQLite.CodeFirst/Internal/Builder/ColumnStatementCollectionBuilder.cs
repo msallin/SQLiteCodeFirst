@@ -11,9 +11,9 @@ namespace SQLite.CodeFirst.Builder
     {
         private readonly IEnumerable<EdmProperty> properties;
         private readonly IEnumerable<EdmProperty> keyMembers;
-        private readonly ICollationData defaultCollation;
+        private readonly Collation defaultCollation;
 
-        public ColumnStatementCollectionBuilder(IEnumerable<EdmProperty> properties, IEnumerable<EdmProperty> keyMembers, ICollationData defaultCollation)
+        public ColumnStatementCollectionBuilder(IEnumerable<EdmProperty> properties, IEnumerable<EdmProperty> keyMembers, Collation defaultCollation)
         {
             this.properties = properties;
             this.keyMembers = keyMembers;
@@ -75,18 +75,19 @@ namespace SQLite.CodeFirst.Builder
             }
         }
 
-        private static void AddCollationConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement, ICollationData defaultCollation)
+        private static void AddCollationConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement, Collation defaultCollation)
         {
-            ICollationData value = property.GetCustomAnnotation<CollateAttribute>();
-            if (value == null && defaultCollation != null && property.PrimitiveType.PrimitiveTypeKind == PrimitiveTypeKind.String)
+            if (property.PrimitiveType.PrimitiveTypeKind != PrimitiveTypeKind.String)
             {
-                // Use default collation if one is given and the property is a string.
-                value = defaultCollation;
+                return;
             }
+
+            var collateAttribute = property.GetCustomAnnotation<CollateAttribute>();
+            var value = collateAttribute == null ? defaultCollation : collateAttribute.CollationData;
 
             if (value != null)
             {
-                columnStatement.ColumnConstraints.Add(new CollateConstraint { CollationFunction = value.Collation, CustomCollationFunction = value.Function });
+                columnStatement.ColumnConstraints.Add(new CollateConstraint { CollationFunction = value.CollationFunction, CustomCollationFunction = value.Function });
             }
         }
 

@@ -9,12 +9,12 @@ namespace SQLite.CodeFirst
     /// </summary>
     public class SqliteSqlGenerator : ISqlGenerator
     {
-        public SqliteSqlGenerator(ICollationData defaultCollation = null)
+        public SqliteSqlGenerator(Collation defaultCollation = null)
         {
             DefaultCollation = defaultCollation;
         }
 
-        public ICollationData DefaultCollation { get; }
+        public Collation DefaultCollation { get; }
 
         /// <summary>
         /// Generates the SQL statement, based on the <see cref="EdmModel"/>.

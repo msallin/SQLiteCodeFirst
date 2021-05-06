@@ -12,9 +12,9 @@ namespace SQLite.CodeFirst.Builder
     {
         private readonly EntitySet entitySet;
         private readonly AssociationTypeContainer associationTypeContainer;
-        private readonly ICollationData defaultCollation;
+        private readonly Collation defaultCollation;
 
-        public CreateTableStatementBuilder(EntitySet entitySet, AssociationTypeContainer associationTypeContainer, ICollationData defaultCollation)
+        public CreateTableStatementBuilder(EntitySet entitySet, AssociationTypeContainer associationTypeContainer, Collation defaultCollation)
         {
             this.entitySet = entitySet;
             this.associationTypeContainer = associationTypeContainer;

@@ -16,12 +16,12 @@ namespace SQLite.CodeFirst
     /// </summary>
     public class SqliteDatabaseCreator : IDatabaseCreator
     {
-        public SqliteDatabaseCreator(ICollationData defaultCollation = null)
+        public SqliteDatabaseCreator(Collation defaultCollation = null)
         {
             DefaultCollation = defaultCollation;
         }
 
-        public ICollationData DefaultCollation { get; }
+        public Collation DefaultCollation { get; }
 
         /// <summary>
         /// Creates the SQLite-Database.
