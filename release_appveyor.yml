@@ -30,7 +30,7 @@ deploy:
 # Encrypt with https://ci.appveyor.com/tools/encrypt
 - provider: NuGet
   api_key:
-    secure: wKCSsG3JbuHyNmEL6JagQlGexspQI4W3QTXi0QIWVJKOr4Y0S7j/jUEOJoUCzORK
+    secure: /mFKbp4C8bazwSgH5C6JakY8dZEffGRekipyvAUCkYJ+sfQhtsLDrKGek1oTrbAx
   on:
     branch: master
 - provider: GitHub
