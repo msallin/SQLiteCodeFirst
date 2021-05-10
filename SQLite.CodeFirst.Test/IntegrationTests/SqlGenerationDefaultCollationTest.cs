@@ -57,7 +57,7 @@ CREATE  INDEX ""IX_FooRelationshipBFooCompositeKey_FooCompositeKey_Id_FooComposi
                 // This is important! Else the in memory database will not work.
                 connection.Open();
 
-                var defaultCollation = new Collation() { CollationFunction = CollationFunction.Custom, Function = "custom_collate" };
+                var defaultCollation = new Collation() { Function = CollationFunction.Custom, CustomFunction  = "custom_collate" };
                 using (var context = new DummyDbContext(connection, defaultCollation))
                 {
                     // ReSharper disable once UnusedVariable

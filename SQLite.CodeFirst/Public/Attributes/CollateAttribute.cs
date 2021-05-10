@@ -11,39 +11,20 @@ namespace SQLite.CodeFirst
     public sealed class CollateAttribute : Attribute
     {
         public CollateAttribute()
-            : this(CollationFunction.None)
         {
+            Collation = new Collation();
         }
 
-        public CollateAttribute(CollationFunction collation)
-            : this(collation, null)
+        public CollateAttribute(CollationFunction function)
         {
+            Collation = new Collation(function);
         }
 
-        public CollateAttribute(CollationFunction collation, string function)
+        public CollateAttribute(CollationFunction function, string customFunction)
         {
-            if (collation != CollationFunction.Custom && !string.IsNullOrEmpty(function))
-            {
-                throw new ArgumentException("If the collation is not set to CollationFunction.Custom a function must not be specified.", nameof(function));
-            }
-
-            if (collation == CollationFunction.Custom && string.IsNullOrEmpty(function))
-            {
-                throw new ArgumentException("If the collation is set to CollationFunction.Custom a function must be specified.", nameof(function));
-            }
-
-            Collation = collation;
-            Function = function;
-            CollationData = new Collation() { CollationFunction = collation, Function = function };
+            Collation = new Collation(function, customFunction);
         }
 
-        public CollationFunction Collation { get; }
-
-        /// <summary>
-        /// The name of the custom collating function to use (CollationFunction.Custom).
-        /// </summary>
-        public string Function { get; }
-
-        public Collation CollationData { get; }
+        public Collation Collation { get; }
     }
 }

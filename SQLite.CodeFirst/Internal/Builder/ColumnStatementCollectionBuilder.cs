@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using SQLite.CodeFirst.Extensions;
@@ -77,17 +78,23 @@ namespace SQLite.CodeFirst.Builder
 
         private static void AddCollationConstraintIfNecessary(EdmProperty property, ColumnStatement columnStatement, Collation defaultCollation)
         {
-            if (property.PrimitiveType.PrimitiveTypeKind != PrimitiveTypeKind.String)
-            {
-                return;
-            }
-
             var collateAttribute = property.GetCustomAnnotation<CollateAttribute>();
-            var value = collateAttribute == null ? defaultCollation : collateAttribute.CollationData;
-
-            if (value != null)
+            if (property.PrimitiveType.PrimitiveTypeKind == PrimitiveTypeKind.String)
             {
-                columnStatement.ColumnConstraints.Add(new CollateConstraint { CollationFunction = value.CollationFunction, CustomCollationFunction = value.Function });
+                // The column is a string type. Check if we have an explicit or default collation.
+                // If we have both, the explicitly chosen collation takes precedence.
+                var value = collateAttribute == null ? defaultCollation : collateAttribute.Collation;
+                if (value != null)
+                {
+                    columnStatement.ColumnConstraints.Add(new CollateConstraint { CollationFunction = value.Function, CustomCollationFunction = value.CustomFunction });
+                }
+            }
+            else if (collateAttribute != null)
+            {
+                // Only string columns can be explicitly decorated with CollateAttribute.
+                var name = $"{property.DeclaringType.Name}.{property.Name}";
+                var errorMessage = $"CollateAttribute cannot be used on non-string property: {name} (underlying type is {property.PrimitiveType.PrimitiveTypeKind})";
+                throw new InvalidOperationException(errorMessage);
             }
         }
 
