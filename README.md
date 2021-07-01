@@ -131,24 +131,34 @@ Add the following package references.
 
 Add the following class.
 ```csharp
-public Configuration()
-{
-    SetProviderFactory("System.Data.SQLite", SQLiteFactory.Instance);
-    SetProviderFactory("System.Data.SQLite.EF6", SQLiteProviderFactory.Instance);
+public class MyConfiguration : DbConfiguration, IDbConnectionFactory {
+    public MyConfiguration()
+    {
+        SetProviderFactory("System.Data.SQLite", SQLiteFactory.Instance);
+        SetProviderFactory("System.Data.SQLite.EF6", SQLiteProviderFactory.Instance);
 
-    var providerServices = (DbProviderServices)SQLiteProviderFactory.Instance.GetService(typeof(DbProviderServices));
+        var providerServices = (DbProviderServices)SQLiteProviderFactory.Instance.GetService(typeof(DbProviderServices));
 
-    SetProviderServices("System.Data.SQLite", providerServices);
-    SetProviderServices("System.Data.SQLite.EF6", providerServices);
+        SetProviderServices("System.Data.SQLite", providerServices);
+        SetProviderServices("System.Data.SQLite.EF6", providerServices);
 
-    SetDefaultConnectionFactory(this);
-}
+        SetDefaultConnectionFactory(this);
+    }
 
-public DbConnection CreateConnection(string connectionString)
-    => new SQLiteConnection(connectionString);
+    public DbConnection CreateConnection(string connectionString)
+        => new SQLiteConnection(connectionString);
+    }
 }
 ```
 
+Also, make sure you specify the DbConfigurationType on the DBContext class as well
+
+```csharp
+[DbConfigurationType(typeof(MyConfiguration))]
+public class Context: DbContext {
+    //... DBContext things
+}
+```
 ## Structure
 
 The code is written in an extensible way.
