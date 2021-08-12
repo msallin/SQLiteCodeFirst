@@ -12,6 +12,13 @@ To support this project you can: *star the repository*, report bugs/request feat
 Especially if you use it for a commercial project, a donation is welcome.
 If you need a specific feature for a commercial project, I am glad to offer a paid implementation.
 
+## Project Status
+
+This project was started when there was .NET Full Framework and EF 6. EF 6 does not offer code first for SQLite and this library fills this gab.
+Nowadays there is .NET Core (or now just called .NET) and EF Core. EF Core supports code first and migrations for SQLite.
+If you use .NET Core 3 or above together with EF Core, there is no need for this library.
+If you use EF 6 (either with .NET Full Framework or with .NET Core 3 or above), this library is an option for you to get code first for SQLite.
+
 ## Features
 
 This project ships several `IDbInitializer` classes. These create new SQLite Databases based on your model/code.
