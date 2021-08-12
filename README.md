@@ -18,6 +18,7 @@ This project was started when there was .NET Full Framework and EF 6. EF 6 does 
 Nowadays there is .NET Core (or now just called .NET) and EF Core. EF Core supports code first and migrations for SQLite.
 If you use .NET Core 3 or above together with EF Core, there is no need for this library.
 If you use EF 6 (either with .NET Full Framework or with .NET Core 3 or above), this library is an option for you to get code first for SQLite.
+I'm going to maintain this library as long as it is useful for some people (see #157).
 
 ## Features
 
