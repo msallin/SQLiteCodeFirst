@@ -10,11 +10,6 @@ namespace SQLite.CodeFirst.Utility
     {
         public static string CreateHash(string data)
         {
-            while (!Debugger.IsAttached)
-            {
-                Thread.Sleep(100);
-            }
-
             byte[] dataBytes = Encoding.ASCII.GetBytes(data);
             using (SHA512 sha512 = SHA512.Create())
             {
