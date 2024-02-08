@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace SQLite.CodeFirst.Utility
 {
@@ -8,8 +10,13 @@ namespace SQLite.CodeFirst.Utility
     {
         public static string CreateHash(string data)
         {
+            while (!Debugger.IsAttached)
+            {
+                Thread.Sleep(100);
+            }
+
             byte[] dataBytes = Encoding.ASCII.GetBytes(data);
-            using (SHA512 sha512 = new SHA512CryptoServiceProvider())
+            using (SHA512 sha512 = SHA512.Create())
             {
                 byte[] hashBytes = sha512.ComputeHash(dataBytes);
                 string hash = Convert.ToBase64String(hashBytes);
