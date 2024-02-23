@@ -14,10 +14,10 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.16.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.5" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.5" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.2.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.2.2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.DataAnnotations" />
