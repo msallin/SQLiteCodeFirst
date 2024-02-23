@@ -1,5 +1,5 @@
 version: 1.7.0.{build}
-image: Visual Studio 2019
+image: Visual Studio 2022
 branches:
   only:
   - master
@@ -30,7 +30,7 @@ deploy:
 # Encrypt with https://ci.appveyor.com/tools/encrypt
 - provider: NuGet
   api_key:
-    secure: /mFKbp4C8bazwSgH5C6JakY8dZEffGRekipyvAUCkYJ+sfQhtsLDrKGek1oTrbAx
+    secure: fdOvSLLttfWbXxkmrgNG+jfczNAqx0HOIqYeVhToHGvezVwts758wz+sbGkv2RhZ
   on:
     branch: master
 - provider: GitHub
