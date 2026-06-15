@@ -9,7 +9,7 @@ before_build:
 - ps: dotnet --version
 - ps: dotnet restore
 build:
-  project: SQLite.CodeFirst.sln
+  project: SQLite.CodeFirst.slnx
   parallel: true
   verbosity: normal
 artifacts:

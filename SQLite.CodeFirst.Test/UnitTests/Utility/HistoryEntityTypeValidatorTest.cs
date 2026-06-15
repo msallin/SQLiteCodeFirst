@@ -8,17 +8,17 @@ namespace SQLite.CodeFirst.Test.UnitTests.Utility
     public class HistoryEntityTypeValidatorTest
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void EnsureValidTypeNotIHistory()
         {
-            HistoryEntityTypeValidator.EnsureValidType(typeof(InvalidFakeHistoryType1));
+            Assert.ThrowsExactly<InvalidOperationException>(
+                () => HistoryEntityTypeValidator.EnsureValidType(typeof(InvalidFakeHistoryType1)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void EnsureValidTypeNoParamLessCtorTest()
         {
-            HistoryEntityTypeValidator.EnsureValidType(typeof(InvalidFakeHistoryType2));
+            Assert.ThrowsExactly<InvalidOperationException>(
+                () => HistoryEntityTypeValidator.EnsureValidType(typeof(InvalidFakeHistoryType2)));
         }
 
         [TestMethod]

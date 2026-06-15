@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SQLite.CodeFirst.Console;
-using SQLite.CodeFirst.Console.Entity;
+using SQLite.CodeFirst.NetCore.Console;
+using SQLite.CodeFirst.NetCore.Console.Entity;
 
 namespace SQLite.CodeFirst.Test.IntegrationTests
 {

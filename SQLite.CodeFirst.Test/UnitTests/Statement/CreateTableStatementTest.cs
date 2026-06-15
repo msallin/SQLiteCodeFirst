@@ -16,7 +16,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             };
 
             string output = createTableStatement.CreateStatement();
-            Assert.AreEqual(output, "CREATE TABLE dummyTable (dummyColumnDefinition);");
+            Assert.AreEqual("CREATE TABLE dummyTable (dummyColumnDefinition);", output);
         }
     }
 }

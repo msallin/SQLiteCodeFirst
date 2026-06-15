@@ -12,7 +12,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
             var collationConstraint = new CollateConstraint();
             collationConstraint.CollationFunction = CollationFunction.None;
             string output = collationConstraint.CreateStatement();
-            Assert.AreEqual(output, "");
+            Assert.AreEqual("", output);
         }
 
         [TestMethod]
@@ -21,7 +21,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
             var collationConstraint = new CollateConstraint();
             collationConstraint.CollationFunction = CollationFunction.NoCase;
             string output = collationConstraint.CreateStatement();
-            Assert.AreEqual(output, "COLLATE NOCASE");
+            Assert.AreEqual("COLLATE NOCASE", output);
         }
     }
 }

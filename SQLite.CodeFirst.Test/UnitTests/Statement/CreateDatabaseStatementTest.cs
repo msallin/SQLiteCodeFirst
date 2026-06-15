@@ -16,8 +16,8 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             };
 
             var createDatabaseStatement = new CreateDatabaseStatement(statements);
-            Assert.AreEqual(createDatabaseStatement.Count, 1);
-            Assert.AreEqual(createDatabaseStatement.CreateStatement(), "dummy1");
+            Assert.AreEqual(1, createDatabaseStatement.Count);
+            Assert.AreEqual("dummy1", createDatabaseStatement.CreateStatement());
         }
 
         [TestMethod]
@@ -30,8 +30,8 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             };
 
             var createDatabaseStatement = new CreateDatabaseStatement(statements);
-            Assert.AreEqual(createDatabaseStatement.Count, 2);
-            Assert.AreEqual(createDatabaseStatement.CreateStatement(), "dummy1\r\ndummy2");
+            Assert.AreEqual(2, createDatabaseStatement.Count);
+            Assert.AreEqual("dummy1\r\ndummy2", createDatabaseStatement.CreateStatement());
         }
     }
 }

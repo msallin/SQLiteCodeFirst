@@ -12,15 +12,14 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
         {
             var maxLengthConstraint = new MaxLengthConstraint(12);
             string output = maxLengthConstraint.CreateStatement();
-            Assert.AreEqual(output, "(12)");
+            Assert.AreEqual("(12)", output);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void CreateStatementInvalidParameterTest()
         {
             var maxLengthConstraint = new MaxLengthConstraint();
-            maxLengthConstraint.CreateStatement();
+            Assert.ThrowsExactly<InvalidOperationException>(() => maxLengthConstraint.CreateStatement());
         }
     }
 }

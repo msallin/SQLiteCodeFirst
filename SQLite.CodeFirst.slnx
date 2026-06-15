@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/Build/">
+    <File Path="ci_appveyor.yml" />
+    <File Path="release_appveyor.yml" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <File Path="README.md" />
+    <File Path="Shared/SQLite.CodeFirst.ruleset" />
+    <File Path="Shared/SQLite.CodeFirst.StrongNameKey.snk" />
+  </Folder>
+  <Project Path="SQLite.CodeFirst.Console/SQLite.CodeFirst.Console.csproj" />
+  <Project Path="SQLite.CodeFirst.NetCore.Console/SQLite.CodeFirst.NetCore.Console.csproj" />
+  <Project Path="SQLite.CodeFirst.Test/SQLite.CodeFirst.Test.csproj" />
+  <Project Path="SQLite.CodeFirst/SQLite.CodeFirst.csproj" />
+</Solution>

@@ -11,7 +11,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
         {
             var primaryKeyConstraint = new PrimaryKeyConstraint { Autoincrement = true };
             string output = primaryKeyConstraint.CreateStatement();
-            Assert.AreEqual(output, "PRIMARY KEY AUTOINCREMENT");
+            Assert.AreEqual("PRIMARY KEY AUTOINCREMENT", output);
         }
 
         [TestMethod]
@@ -19,7 +19,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
         {
             var primaryKeyConstraint = new PrimaryKeyConstraint();
             string output = primaryKeyConstraint.CreateStatement();
-            Assert.AreEqual(output, "PRIMARY KEY");
+            Assert.AreEqual("PRIMARY KEY", output);
         }
     }
 }

@@ -12,8 +12,8 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             var columnStatementCollection = new ColumnStatementCollection(new[] { CreateStatementMock("dummy1").Object });
 
             string output = columnStatementCollection.CreateStatement();
-            Assert.AreEqual(columnStatementCollection.Count, 1);
-            Assert.AreEqual(output, "dummy1");
+            Assert.AreEqual(1, columnStatementCollection.Count);
+            Assert.AreEqual("dummy1", output);
         }
 
         [TestMethod]
@@ -26,8 +26,8 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             });
 
             string output = createIndexStatementCollection.CreateStatement();
-            Assert.AreEqual(createIndexStatementCollection.Count, 2);
-            Assert.AreEqual(output, "dummy1, dummy2");
+            Assert.AreEqual(2, createIndexStatementCollection.Count);
+            Assert.AreEqual("dummy1, dummy2", output);
         }
     }
 }

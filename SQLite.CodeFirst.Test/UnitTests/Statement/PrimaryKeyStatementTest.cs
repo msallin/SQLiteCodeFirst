@@ -13,8 +13,8 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             const string keyMember1 = "keyMember1";
 
             var primaryKeyStatement = new CompositePrimaryKeyStatement(new List<string> { keyMember1 });
-            Assert.AreEqual(primaryKeyStatement.Count, 1);
-            Assert.AreEqual(primaryKeyStatement.CreateStatement(), "PRIMARY KEY([keyMember1])");
+            Assert.AreEqual(1, primaryKeyStatement.Count);
+            Assert.AreEqual("PRIMARY KEY([keyMember1])", primaryKeyStatement.CreateStatement());
         }
 
         [TestMethod]
@@ -24,8 +24,8 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             const string keyMember2 = "keyMember2";
 
             var primaryKeyStatement = new CompositePrimaryKeyStatement(new List<string> { keyMember1, keyMember2 });
-            Assert.AreEqual(primaryKeyStatement.Count, 2);
-            Assert.AreEqual(primaryKeyStatement.CreateStatement(), "PRIMARY KEY([keyMember1], [keyMember2])");
+            Assert.AreEqual(2, primaryKeyStatement.Count);
+            Assert.AreEqual("PRIMARY KEY([keyMember1], [keyMember2])", primaryKeyStatement.CreateStatement());
         }
     }
 }

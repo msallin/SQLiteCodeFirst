@@ -12,7 +12,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
             var uniqueConstraint = new UniqueConstraint();
             uniqueConstraint.OnConflict = OnConflictAction.None;
             string output = uniqueConstraint.CreateStatement();
-            Assert.AreEqual(output, "UNIQUE");
+            Assert.AreEqual("UNIQUE", output);
         }
 
         [TestMethod]
@@ -21,7 +21,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
             var uniqueConstraint = new UniqueConstraint();
             uniqueConstraint.OnConflict = OnConflictAction.Rollback;
             string output = uniqueConstraint.CreateStatement();
-            Assert.AreEqual(output, "UNIQUE ON CONFLICT ROLLBACK");
+            Assert.AreEqual("UNIQUE ON CONFLICT ROLLBACK", output);
         }
     }
 }

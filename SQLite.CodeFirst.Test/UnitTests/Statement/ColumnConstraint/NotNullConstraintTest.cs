@@ -11,7 +11,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
         {
             var notNullConstraint = new NotNullConstraint();
             string output = notNullConstraint.CreateStatement();
-            Assert.AreEqual(output, "NOT NULL");
+            Assert.AreEqual("NOT NULL", output);
         }
     }
 }

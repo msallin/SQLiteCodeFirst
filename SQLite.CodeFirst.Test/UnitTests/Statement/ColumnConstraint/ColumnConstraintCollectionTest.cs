@@ -18,7 +18,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
                 columnConstraintMock.Object
             });
             string output = columnConstraintCollection.CreateStatement();
-            Assert.AreEqual(output, "dummy1");
+            Assert.AreEqual("dummy1", output);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement.ColumnConstraint
                 columnConstraintMock2.Object
             });
             string output = columnConstraintCollection.CreateStatement();
-            Assert.AreEqual(output, "dummy1 dummy2");
+            Assert.AreEqual("dummy1 dummy2", output);
         }
     }
 }

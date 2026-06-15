@@ -15,8 +15,8 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             });
 
             string output = createIndexStatementCollection.CreateStatement();
-            Assert.AreEqual(createIndexStatementCollection.Count, 1);
-            Assert.AreEqual(output, "dummy1");
+            Assert.AreEqual(1, createIndexStatementCollection.Count);
+            Assert.AreEqual("dummy1", output);
         }
 
         [TestMethod]
@@ -29,8 +29,8 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
             });
 
             string output = createIndexStatementCollection.CreateStatement();
-            Assert.AreEqual(createIndexStatementCollection.Count, 2);
-            Assert.AreEqual(output, "dummy1\r\ndummy2");
+            Assert.AreEqual(2, createIndexStatementCollection.Count);
+            Assert.AreEqual("dummy1\r\ndummy2", output);
         }
     }
 }

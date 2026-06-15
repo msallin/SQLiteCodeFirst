@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/msallin/SQLiteCodeFirst</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseUrl>https://github.com/msallin/SQLiteCodeFirst/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>Copyright (C) Marc Sallin</Copyright>
     <PackageTags>SQLite EntityFramework EF CodeFirst</PackageTags>
@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="EntityFramework" Version="6.5.2" />
   </ItemGroup>
 
 </Project>
