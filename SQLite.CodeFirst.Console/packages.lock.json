@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETFramework,Version=v4.8": {
+      "System.Data.SQLite": {
+        "type": "Direct",
+        "requested": "[1.0.119, )",
+        "resolved": "1.0.119",
+        "contentHash": "JSOJpnBf9goMnxGTJFGCmm6AffxgtpuXNXV5YvWO8UNC2zwd12qkUe5lAbnY+2ohIkIukgIjbvR1RA/sWILv3w==",
+        "dependencies": {
+          "System.Data.SQLite.Core": "[1.0.119]",
+          "System.Data.SQLite.EF6": "[1.0.119]",
+          "System.Data.SQLite.Linq": "[1.0.119]"
+        }
+      },
+      "EntityFramework": {
+        "type": "Transitive",
+        "resolved": "6.5.2",
+        "contentHash": "8iOcnaKcgkWh35s8EhknnENNwwqvrBJ7jeNbQITbGo1mIeIOhGPfVdNOXZ3Y496T6e6wfXvz0WeXlgMdcgVYSA=="
+      },
+      "Stub.System.Data.SQLite.Core.NetFramework": {
+        "type": "Transitive",
+        "resolved": "1.0.119",
+        "contentHash": "8b4SbSXAxXJ8tfn6bnBu0m+HXMZvkE+BfogUKITRFm+snxfT5BTK7fLZaAsNoFX8DkBBjtCEDd+ajWkcyu55QA=="
+      },
+      "System.Data.SQLite.Core": {
+        "type": "Transitive",
+        "resolved": "1.0.119",
+        "contentHash": "bhQB8HVtRA+OOYw8UTD1F1kU+nGJ0/OZvH1JmlVUI4bGvgVEWeX1NcHjA765NvUoRVuCPlt8PrEpZ1thSsk1jg==",
+        "dependencies": {
+          "Stub.System.Data.SQLite.Core.NetFramework": "[1.0.119]"
+        }
+      },
+      "System.Data.SQLite.EF6": {
+        "type": "Transitive",
+        "resolved": "1.0.119",
+        "contentHash": "BwwgCSeA80gsxdXtU7IQEBrN9kQXWQrD11hNYOJZbXBBI1C4r7hA4QhBAalO1nzijXikthGRUADIEMI3nlucLA==",
+        "dependencies": {
+          "EntityFramework": "6.4.4"
+        }
+      },
+      "System.Data.SQLite.Linq": {
+        "type": "Transitive",
+        "resolved": "1.0.119",
+        "contentHash": "tkzb9aKEiQd18UW8VS6+vGtrkhcp4mjHg/AAKwNN8u7aWoBswquOnU07016MfTXyBUAR67mepWUhFC8zqNdPnA=="
+      },
+      "sqlite.codefirst": {
+        "type": "Project",
+        "dependencies": {
+          "EntityFramework": "[6.5.2, )"
+        }
+      }
+    }
+  }
+}

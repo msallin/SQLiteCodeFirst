@@ -1,0 +1,11 @@
+<Project>
+
+  <!-- Restore writes a packages.lock.json next to every project so the full transitive package graph
+       is pinned. CI restores in locked mode, which fails if a lock file is missing or out of date,
+       making builds reproducible. After changing a PackageReference, run a plain `dotnet restore` and
+       commit the updated lock files. -->
+  <PropertyGroup>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+</Project>
