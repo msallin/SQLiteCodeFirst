@@ -42,10 +42,13 @@ namespace SQLite.CodeFirst.Utility
             IDictionary<string, string> keyValuePairDictionary = new Dictionary<string, string>();
             foreach (var keyValuePair in keyValuePairs)
             {
-                string[] keyValue = keyValuePair.Split(KeyValueSeperator);
+                // Split on the first '=' only so a value that itself contains '=' is preserved.
+                // Input:  "data source=C:\a=b.sqlite"  ->  key="data source", value="C:\a=b.sqlite"
+                string[] keyValue = keyValuePair.Split(new[] { KeyValueSeperator }, 2, StringSplitOptions.None);
                 if (keyValue.Length >= 2)
                 {
-                    keyValuePairDictionary.Add(keyValue[KeyPosition].Trim().ToLower(CultureInfo.InvariantCulture), keyValue[ValuePosition]);
+                    // Indexer assignment (last value wins) so a repeated key does not throw.
+                    keyValuePairDictionary[keyValue[KeyPosition].Trim().ToLower(CultureInfo.InvariantCulture)] = keyValue[ValuePosition];
                 }
             }
 
