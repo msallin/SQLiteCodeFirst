@@ -4,13 +4,9 @@
     "net10.0": {
       "System.Data.SQLite": {
         "type": "Direct",
-        "requested": "[1.0.119, )",
-        "resolved": "1.0.119",
-        "contentHash": "JSOJpnBf9goMnxGTJFGCmm6AffxgtpuXNXV5YvWO8UNC2zwd12qkUe5lAbnY+2ohIkIukgIjbvR1RA/sWILv3w==",
-        "dependencies": {
-          "System.Data.SQLite.Core": "[1.0.119]",
-          "System.Data.SQLite.EF6": "[1.0.119]"
-        }
+        "requested": "[2.0.3, )",
+        "resolved": "2.0.3",
+        "contentHash": "5I9dVqmHp1v0dhco21btIRkUE47zHSy4t6bRLwIO6nGZ1mxGIL1f1yp1zWI/AAZFfdUz7n6RrH1hyi/6EhlIeQ=="
       },
       "System.Data.SQLite.EF6": {
         "type": "Direct",
@@ -62,11 +58,6 @@
         "resolved": "4.4.0",
         "contentHash": "YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA=="
       },
-      "Stub.System.Data.SQLite.Core.NetStandard": {
-        "type": "Transitive",
-        "resolved": "1.0.119",
-        "contentHash": "dI7ngiCNgdm+n00nQvFTa+LbHvE9MIQXwMSLRzJI/KAJ7G1WmCachsvfE1CD6xvb3OXJvYYEfv3+S/LHyhN0Rg=="
-      },
       "System.CodeDom": {
         "type": "Transitive",
         "resolved": "6.0.0",
@@ -92,14 +83,6 @@
         "contentHash": "2Ij/LCaTQRyAi5lAv7UUTV9R2FobC8xN9mE0fXBZohum/xLl8IZVmE98Rq5ugQHjCgTBRKqpXRb4ORulRdA6Ig==",
         "dependencies": {
           "runtime.native.System.Data.SqlClient.sni": "4.7.0"
-        }
-      },
-      "System.Data.SQLite.Core": {
-        "type": "Transitive",
-        "resolved": "1.0.119",
-        "contentHash": "bhQB8HVtRA+OOYw8UTD1F1kU+nGJ0/OZvH1JmlVUI4bGvgVEWeX1NcHjA765NvUoRVuCPlt8PrEpZ1thSsk1jg==",
-        "dependencies": {
-          "Stub.System.Data.SQLite.Core.NetStandard": "[1.0.119]"
         }
       },
       "System.Drawing.Common": {
