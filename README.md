@@ -28,7 +28,7 @@ The following features are supported:
 - Tables from classes (supported annotations: `Table`)
 - Columns from properties (supported annotations: `Column`, `Key`, `MaxLength`, `Required`, `NotMapped`, `DatabaseGenerated`, `Index`)
 - PrimaryKey constraint (`Key` annotation, key composites are supported)
-- ForeignKey constraint (1-n relationships, support for 'Cascade on delete')
+- ForeignKey constraint (1-n relationships, support for 'Cascade on delete' and 'Cascade on update')
 - Not Null constraint
 - Auto increment (An int PrimaryKey will automatically be incremented and you can explicitly set the "AUTOINCREMENT" constraint to a PrimaryKey using the Autoincrement-Attribute)
 - Index (Decorate columns with the `Index` attribute. Indices are automatically created for foreign keys by default. To prevent this you can remove the convention `ForeignKeyIndexConvention`)
@@ -36,6 +36,7 @@ The following features are supported:
 - Collate constraint (Decorate columns with the `CollateAttribute`, which is part of this library. Use `CollationFunction.Custom` to specify your own collation function.)
 - Default collation (pass an instance of Collation as constructor parameter for an initializer to specify a default collation).
 - SQL default value (Decorate columns with the `SqlDefaultValueAttribute`, which is part of this library)
+- Cascade on update (Decorate the foreign key property with the `CascadeOnUpdateAttribute`, which is part of this library. Entity Framework cannot express `ON UPDATE CASCADE`, so this opt-in attribute must be placed on the dependent foreign key property, e.g. `TeamId`, not on the navigation property. It requires an explicit foreign key property.)
 
 ## Install
 

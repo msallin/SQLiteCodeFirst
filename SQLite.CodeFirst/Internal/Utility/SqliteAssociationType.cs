@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using SQLite.CodeFirst.Builder.NameCreators;
+using SQLite.CodeFirst.Extensions;
 
 namespace SQLite.CodeFirst.Utility
 {
@@ -30,6 +31,13 @@ namespace SQLite.CodeFirst.Utility
             ForeignKey = associationType.Constraint.ToProperties.Select(x => x.Name);
             ForeignPrimaryKey = associationType.Constraint.FromProperties.Select(x => x.Name);
             CascadeDelete = associationType.Constraint.FromRole.DeleteBehavior == OperationAction.Cascade;
+
+            // EF has no notion of update-cascade, so it is opt-in via the CascadeOnUpdateAttribute placed on the
+            // dependent foreign key property. The attribute is registered as a column annotation and therefore
+            // available on the store model foreign key columns (the constraint's ToProperties).
+            CascadeUpdate = associationType.Constraint.ToProperties
+                .Select(property => property.GetCustomAnnotation<CascadeOnUpdateAttribute>())
+                .Any(attribute => attribute != null && attribute.CanCascade);
         }
 
         private static bool IsSelfReferencing(AssociationType associationType)
@@ -47,5 +55,6 @@ namespace SQLite.CodeFirst.Utility
         public string ToTableName { get; }
         public IEnumerable<string> ForeignPrimaryKey { get; }
         public bool CascadeDelete { get; }
+        public bool CascadeUpdate { get; }
     }
 }

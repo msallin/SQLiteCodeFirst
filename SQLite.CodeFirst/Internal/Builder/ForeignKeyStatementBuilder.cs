@@ -29,7 +29,8 @@ namespace SQLite.CodeFirst.Builder
                     ForeignKey = associationType.ForeignKey,
                     ForeignTable = associationType.FromTableName,
                     ForeignPrimaryKey = associationType.ForeignPrimaryKey,
-                    CascadeDelete = associationType.CascadeDelete
+                    CascadeDelete = associationType.CascadeDelete,
+                    CascadeUpdate = associationType.CascadeUpdate
                 };
             }
         }
