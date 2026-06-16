@@ -38,6 +38,37 @@ namespace SQLite.CodeFirst.Test.UnitTests.Statement
         }
 
         [TestMethod]
+        public void CreateStatementOneForeignKeyCascadeUpdateTest()
+        {
+            var foreignKeyStatement = new ForeignKeyStatement
+            {
+                CascadeUpdate = true,
+                ForeignKey = new List<string> { "dummyForeignKey1" },
+                ForeignPrimaryKey = new List<string> { "dummForeignPrimaryKey1" },
+                ForeignTable = "dummyForeignTable"
+            };
+
+            string output = foreignKeyStatement.CreateStatement();
+            Assert.AreEqual("FOREIGN KEY ([dummyForeignKey1]) REFERENCES dummyForeignTable([dummForeignPrimaryKey1]) ON UPDATE CASCADE", output);
+        }
+
+        [TestMethod]
+        public void CreateStatementOneForeignKeyCascadeDeleteAndUpdateTest()
+        {
+            var foreignKeyStatement = new ForeignKeyStatement
+            {
+                CascadeDelete = true,
+                CascadeUpdate = true,
+                ForeignKey = new List<string> { "dummyForeignKey1" },
+                ForeignPrimaryKey = new List<string> { "dummForeignPrimaryKey1" },
+                ForeignTable = "dummyForeignTable"
+            };
+
+            string output = foreignKeyStatement.CreateStatement();
+            Assert.AreEqual("FOREIGN KEY ([dummyForeignKey1]) REFERENCES dummyForeignTable([dummForeignPrimaryKey1]) ON DELETE CASCADE ON UPDATE CASCADE", output);
+        }
+
+        [TestMethod]
         public void CreateStatementTwoForeignKeyTest()
         {
             var foreignKeyStatement = new ForeignKeyStatement

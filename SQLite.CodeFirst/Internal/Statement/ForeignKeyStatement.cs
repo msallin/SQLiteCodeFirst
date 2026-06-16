@@ -9,11 +9,13 @@ namespace SQLite.CodeFirst.Statement
     {
         private const string Template = "FOREIGN KEY ({foreign-key}) REFERENCES {referenced-table}({referenced-id})";
         private const string CascadeDeleteStatement = "ON DELETE CASCADE";
+        private const string CascadeUpdateStatement = "ON UPDATE CASCADE";
 
         public IEnumerable<string> ForeignKey { get; set; }
         public string ForeignTable { get; set; }
         public IEnumerable<string> ForeignPrimaryKey { get; set; }
         public bool CascadeDelete { get; set; }
+        public bool CascadeUpdate { get; set; }
 
         public string CreateStatement()
         {
@@ -24,6 +26,10 @@ namespace SQLite.CodeFirst.Statement
             if (CascadeDelete)
             {
                 sb.Append(" " + CascadeDeleteStatement);
+            }
+            if (CascadeUpdate)
+            {
+                sb.Append(" " + CascadeUpdateStatement);
             }
 
             return sb.ToString();
