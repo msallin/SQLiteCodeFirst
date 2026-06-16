@@ -101,11 +101,16 @@ jobs:
 
       - name: Publish to NuGet
         if: startsWith(github.ref, 'refs/tags/v')
-        run: >
-          dotnet nuget push "${{ github.workspace }}/artifacts/*.nupkg"
-          --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}"
-          --source https://api.nuget.org/v3/index.json
-          --skip-duplicate
+        shell: pwsh
+        # Resolve the package explicitly: on the Windows runner the default PowerShell shell does not
+        # expand a "*.nupkg" wildcard for dotnet, so a literal glob path is passed through and not found.
+        # Pushing the .nupkg also pushes the sibling .snupkg symbol package to nuget.org automatically.
+        run: |
+          $package = Get-ChildItem -Path "${{ github.workspace }}/artifacts/*.nupkg" | Select-Object -First 1
+          dotnet nuget push $package.FullName `
+            --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" `
+            --source https://api.nuget.org/v3/index.json `
+            --skip-duplicate
 
       # --- GitHub Release. ---
       # Created only on tag pushes, after a successful NuGet publish, so the Release reflects what was
@@ -115,20 +120,17 @@ jobs:
       # the package is downloadable straight from the Release page, not just the workflow run.
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
-        shell: bash
+        shell: pwsh
         # The tag is passed through an env var rather than interpolated into the script, matching the
-        # version step above.
+        # version step above. Assets are resolved with Get-ChildItem so the wildcards expand on the
+        # Windows runner (bash would mangle the backslashes in the workspace path).
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
+          $assets = Get-ChildItem -Path "${{ github.workspace }}/artifacts/*.nupkg", "${{ github.workspace }}/artifacts/*.snupkg" | ForEach-Object { $_.FullName }
           # SemVer pre-release tags carry a hyphen (e.g. v1.2.3-rc.1); mark those as GitHub pre-releases.
-          prerelease=""
-          if [[ "${TAG}" == *-* ]]; then prerelease="--prerelease"; fi
-          gh release create "${TAG}" \
-            --title "${TAG}" \
-            --generate-notes \
-            --verify-tag \
-            ${prerelease} \
-            "${GITHUB_WORKSPACE}/artifacts/"*.nupkg \
-            "${GITHUB_WORKSPACE}/artifacts/"*.snupkg
+          $ghArgs = @($env:TAG, '--title', $env:TAG, '--generate-notes', '--verify-tag')
+          if ($env:TAG -like '*-*') { $ghArgs += '--prerelease' }
+          $ghArgs += $assets
+          gh release create $ghArgs
