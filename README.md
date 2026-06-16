@@ -13,7 +13,7 @@ If you need a specific feature for a commercial project, I am glad to offer a pa
 
 ## Project Status
 
-This project was started when there was .NET Full Framework and EF 6. EF 6 does not offer code first for SQLite and this library fills this gab.
+This project was started when there was .NET Full Framework and EF 6. EF 6 does not offer code first for SQLite and this library fills this gap.
 Nowadays there is .NET Core (or now just called .NET) and EF Core. EF Core supports code first and migrations for SQLite.
 If you use .NET Core 3 or above together with EF Core, there is no need for this library.
 If you use EF 6 (either with .NET Full Framework or with .NET Core 3 or above), this library is an option for you to get code first for SQLite.
@@ -30,10 +30,10 @@ The following features are supported:
 - PrimaryKey constraint (`Key` annotation, key composites are supported)
 - ForeignKey constraint (1-n relationships, support for 'Cascade on delete')
 - Not Null constraint
-- Auto increment (An int PrimaryKey will automatically be incremented and you can explicit set the "AUTOINCREMENT" constraint to a PrimaryKey using the Autoincrement-Attribute)
+- Auto increment (An int PrimaryKey will automatically be incremented and you can explicitly set the "AUTOINCREMENT" constraint to a PrimaryKey using the Autoincrement-Attribute)
 - Index (Decorate columns with the `Index` attribute. Indices are automatically created for foreign keys by default. To prevent this you can remove the convention `ForeignKeyIndexConvention`)
 - Unique constraint (Decorate columns with the `UniqueAttribute`, which is part of this library)
-- Collate constraint (Decorate columns with the `CollateAttribute`, which is part of this library. Use `CollationFunction.Custom` to specify a own collation function.)
+- Collate constraint (Decorate columns with the `CollateAttribute`, which is part of this library. Use `CollationFunction.Custom` to specify your own collation function.)
 - Default collation (pass an instance of Collation as constructor parameter for an initializer to specify a default collation).
 - SQL default value (Decorate columns with the `SqlDefaultValueAttribute`, which is part of this library)
 
@@ -79,7 +79,7 @@ public class MyDbContext : DbContext
 }
 ```
 
-Notice that the `SqliteDropCreateDatabaseWhenModelChanges<>` initializer will create a additional table in your database.
+Notice that the `SqliteDropCreateDatabaseWhenModelChanges<>` initializer will create an additional table in your database.
 This table is used to store some information to detect model changes. If you want to use an own entity/table you have to implement the
 `IHistory` interface and pass the type of your entity as parameter to the constructor of the initializer.
 
@@ -176,7 +176,7 @@ You will find an extensive usage of the composite pattern.
 
 ## Hints
 
-If you try to reinstall the NuGet-Packages (e.g. if you want to downgrade to .NET 4.0), the app.config will be overwritten and you may getting an exception when you try to run the console project.
+If you try to reinstall the NuGet-Packages (e.g. if you want to downgrade to .NET 4.0), the app.config will be overwritten and you may get an exception when you try to run the console project.
 In this case please check the following issue: <https://github.com/msallin/SQLiteCodeFirst/issues/13.>
 
 ## Recognition
