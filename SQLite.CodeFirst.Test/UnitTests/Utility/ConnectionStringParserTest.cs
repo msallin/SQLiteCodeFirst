@@ -106,5 +106,33 @@ namespace SQLite.CodeFirst.Test.UnitTests.Utility
             // Assert
             Assert.AreEqual(@".\db\footballDb\footballDb.sqlite", result);
         }
+
+        [TestMethod]
+        public void GetDataSource_ReturnsCorrectDataSource_WhenValueContainsEqualsSign()
+        {
+            // Arrange
+            string connectionString = @"data source=.\db\foo=bar\footballDb.sqlite;foreign keys=true";
+
+
+            // Act
+            string result = ConnectionStringParser.GetDataSource(connectionString);
+
+            // Assert
+            Assert.AreEqual(@".\db\foo=bar\footballDb.sqlite", result);
+        }
+
+        [TestMethod]
+        public void GetDataSource_ReturnsLastValue_WhenKeyIsRepeated()
+        {
+            // Arrange
+            string connectionString = @"data source=first.sqlite;data source=second.sqlite";
+
+
+            // Act
+            string result = ConnectionStringParser.GetDataSource(connectionString);
+
+            // Assert
+            Assert.AreEqual(@"second.sqlite", result);
+        }
     }
 }
