@@ -10,7 +10,9 @@ namespace SQLite.CodeFirst.Utility
 
         public AssociationTypeContainer(IEnumerable<AssociationType> associationTypes, EntityContainer container)
         {
-            sqliteAssociationTypes = associationTypes.Select(associationType => new SqliteAssociationType(associationType, container));
+            // Materialize once. GetAssociationTypes is called per entity set, so a deferred query
+            // would rebuild every SqliteAssociationType (and its entity-set lookups) on each call.
+            sqliteAssociationTypes = associationTypes.Select(associationType => new SqliteAssociationType(associationType, container)).ToList();
         }
 
         public IEnumerable<SqliteAssociationType> GetAssociationTypes(string entitySetName)

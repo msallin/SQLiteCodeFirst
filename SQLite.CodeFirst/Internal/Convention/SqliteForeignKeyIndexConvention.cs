@@ -74,16 +74,16 @@ namespace SQLite.CodeFirst.Convention
 
         private static IndexAnnotation CreateIndexAnnotation(string tableName, string propertyName, int count)
         {
-            var indexName = IndexNameCreator.CreateName(tableName, propertyName);
+            // If there are two indices on the same property, the count is appended.
+            // In SQLite an index name must be globally unique.
+            // To be honest, it should never happen. But because it is possible via the API, it is covered.
+            // The suffix is folded in before escaping so it stays inside the quoted identifier;
+            // IndexNameCreator.CreateName returns an already-escaped name.
+            string uniquePropertyName = count > 0
+                ? String.Format(CultureInfo.InvariantCulture, "{0}_{1}", propertyName, count)
+                : propertyName;
 
-            // If there are two Indicies on the same property, the count is added.
-            // In SQLite an Index name must be global unique.
-            // To be honest, it should never happen. But because its possible by using the API, it should be covered.
-            if (count > 0)
-            {
-                indexName = String.Format(CultureInfo.InvariantCulture, "{0}_{1}", indexName, count);
-            }
-
+            var indexName = IndexNameCreator.CreateName(tableName, uniquePropertyName);
             var indexAttribute = new IndexAttribute(indexName);
             return new IndexAnnotation(indexAttribute);
         }
