@@ -21,7 +21,7 @@ namespace SQLite.CodeFirst.Utility
             IDictionary<string, string> strings = ParseConnectionString(connectionString);
             if (strings.ContainsKey(DataSourceToken))
             {
-                var path = ExpandDataDirectory(ParseConnectionString(connectionString)[DataSourceToken]);
+                var path = ExpandDataDirectory(strings[DataSourceToken]);
                 return path.Trim('"');
             }
 
