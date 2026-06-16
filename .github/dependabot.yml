@@ -1,0 +1,36 @@
+# Dependabot keeps the .NET SDK (global.json), NuGet packages and GitHub Actions versions up to date.
+#
+# Minor and patch updates are grouped into a single PR per ecosystem to cut noise; major updates open
+# their own PR so the breaking-change surface stays visible. Updates are proposed as PRs and merged
+# manually after the CI "Build & Test" check passes.
+version: 2
+updates:
+  # Bumps the SDK version pinned in global.json, which setup-dotnet installs in CI. The dotnet-sdk
+  # ecosystem only does version updates (no security updates) and targets global.json files.
+  - package-ecosystem: dotnet-sdk
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      nuget-minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      actions-minor-and-patch:
+        update-types:
+          - minor
+          - patch
