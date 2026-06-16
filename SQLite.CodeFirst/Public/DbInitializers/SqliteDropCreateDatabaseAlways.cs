@@ -17,7 +17,16 @@ namespace SQLite.CodeFirst
         /// </summary>
         /// <param name="modelBuilder">The model builder.</param>
         public SqliteDropCreateDatabaseAlways(DbModelBuilder modelBuilder)
-            : base(modelBuilder)
+            : this(modelBuilder, null)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqliteDropCreateDatabaseAlways{TContext}"/> class.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
+        /// <param name="defaultCollation">The default collation applied to all string columns. Explicit <see cref="CollateAttribute"/>s take precedence.</param>
+        public SqliteDropCreateDatabaseAlways(DbModelBuilder modelBuilder, Collation defaultCollation)
+            : base(modelBuilder, defaultCollation)
         { }
 
         /// <summary>

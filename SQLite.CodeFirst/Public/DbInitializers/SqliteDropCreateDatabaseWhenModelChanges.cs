@@ -34,11 +34,17 @@ namespace SQLite.CodeFirst
         /// </summary>
         /// <param name="modelBuilder">The model builder.</param>
         public SqliteDropCreateDatabaseWhenModelChanges(DbModelBuilder modelBuilder)
-            : base(modelBuilder)
-        {
-            historyEntityType = typeof(History);
-            ConfigureHistoryEntity();
-        }
+            : this(modelBuilder, typeof(History), null)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqliteDropCreateDatabaseWhenModelChanges{TContext}"/> class.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
+        /// <param name="defaultCollation">The default collation applied to all string columns. Explicit <see cref="CollateAttribute"/>s take precedence.</param>
+        public SqliteDropCreateDatabaseWhenModelChanges(DbModelBuilder modelBuilder, Collation defaultCollation)
+            : this(modelBuilder, typeof(History), defaultCollation)
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqliteDropCreateDatabaseWhenModelChanges{TContext}"/> class.
@@ -46,7 +52,17 @@ namespace SQLite.CodeFirst
         /// <param name="modelBuilder">The model builder.</param>
         /// <param name="historyEntityType">Type of the history entity (must implement <see cref="IHistory"/> and provide an parameterless constructor).</param>
         public SqliteDropCreateDatabaseWhenModelChanges(DbModelBuilder modelBuilder, Type historyEntityType)
-            : base(modelBuilder)
+            : this(modelBuilder, historyEntityType, null)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqliteDropCreateDatabaseWhenModelChanges{TContext}"/> class.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
+        /// <param name="historyEntityType">Type of the history entity (must implement <see cref="IHistory"/> and provide an parameterless constructor).</param>
+        /// <param name="defaultCollation">The default collation applied to all string columns. Explicit <see cref="CollateAttribute"/>s take precedence.</param>
+        public SqliteDropCreateDatabaseWhenModelChanges(DbModelBuilder modelBuilder, Type historyEntityType, Collation defaultCollation)
+            : base(modelBuilder, defaultCollation)
         {
             this.historyEntityType = historyEntityType;
             ConfigureHistoryEntity();

@@ -19,7 +19,16 @@ namespace SQLite.CodeFirst
         /// </summary>
         /// <param name="modelBuilder">The model builder.</param>
         public SqliteCreateDatabaseIfNotExists(DbModelBuilder modelBuilder)
-            : this(modelBuilder, false)
+            : this(modelBuilder, false, null)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqliteCreateDatabaseIfNotExists{TContext}"/> class.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
+        /// <param name="defaultCollation">The default collation applied to all string columns. Explicit <see cref="CollateAttribute"/>s take precedence.</param>
+        public SqliteCreateDatabaseIfNotExists(DbModelBuilder modelBuilder, Collation defaultCollation)
+            : this(modelBuilder, false, defaultCollation)
         { }
 
         /// <summary>
@@ -28,7 +37,17 @@ namespace SQLite.CodeFirst
         /// <param name="modelBuilder">The model builder.</param>
         /// <param name="nullByteFileMeansNotExisting">if set to <c>true</c> a null byte database file is treated like the database does not exist.</param>
         public SqliteCreateDatabaseIfNotExists(DbModelBuilder modelBuilder, bool nullByteFileMeansNotExisting)
-            : base(modelBuilder)
+            : this(modelBuilder, nullByteFileMeansNotExisting, null)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqliteCreateDatabaseIfNotExists{TContext}"/> class.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
+        /// <param name="nullByteFileMeansNotExisting">if set to <c>true</c> a null byte database file is treated like the database does not exist.</param>
+        /// <param name="defaultCollation">The default collation applied to all string columns. Explicit <see cref="CollateAttribute"/>s take precedence.</param>
+        public SqliteCreateDatabaseIfNotExists(DbModelBuilder modelBuilder, bool nullByteFileMeansNotExisting, Collation defaultCollation)
+            : base(modelBuilder, defaultCollation)
         {
             this.nullByteFileMeansNotExisting = nullByteFileMeansNotExisting;
         }
