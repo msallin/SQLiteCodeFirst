@@ -175,7 +175,11 @@ namespace SQLite.CodeFirst
             // in order to be supported by .NET 4.0.
             DbQuery dbQuery = context.Set(historyEntityType).AsNoTracking();
             IEnumerable<IHistory> records = Enumerable.Cast<IHistory>(dbQuery);
-            return records.SingleOrDefault();
+
+            // A database can be shared by several contexts, so the record must be looked up by the
+            // context key that SaveHistory writes. An unscoped lookup would match every context's
+            // record and throw on a shared history table.
+            return HistoryRecordSelector.SelectForContext(records, context.GetType().FullName);
         }
 
         private string GetHashFromModel(DbConnection connection)
