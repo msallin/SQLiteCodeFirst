@@ -1,7 +1,7 @@
 <Solution>
   <Folder Name="/Build/">
-    <File Path="ci_appveyor.yml" />
-    <File Path="release_appveyor.yml" />
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/cd.yml" />
   </Folder>
   <Folder Name="/Shared/">
     <File Path="README.md" />

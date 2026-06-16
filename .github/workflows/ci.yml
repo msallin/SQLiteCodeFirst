@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-test:
+    name: Build & Test
+    # Windows is required: the library multi-targets net40/net45 and the demo targets net48, which
+    # need the .NET Framework reference assemblies / targeting packs available on the Windows runners.
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          # Install the exact SDK pinned in global.json; Dependabot's dotnet-sdk updater keeps it current.
+          global-json-file: global.json
+          # Cache the restored NuGet packages, keyed on the committed lock files.
+          cache: true
+          cache-dependency-path: '**/packages.lock.json'
+
+      - name: Restore
+        # Locked-mode restore fails the build if any packages.lock.json is missing or out of date, so the
+        # restore is reproducible and a forgotten lock-file update cannot slip through.
+        run: dotnet restore SQLite.CodeFirst.slnx --locked-mode
+
+      - name: Build
+        run: dotnet build SQLite.CodeFirst.slnx -c Release --no-restore
+
+      - name: Test
+        # The test project runs on Microsoft.Testing.Platform (opted in via global.json), so this uses the
+        # native MTP dotnet test syntax: --solution, and the TRX report flags instead of --logger trx.
+        run: >
+          dotnet test --solution SQLite.CodeFirst.slnx -c Release --no-build
+          --report-trx --report-trx-filename test-results.trx
+          --results-directory ${{ github.workspace }}/TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results
+          path: ${{ github.workspace }}/TestResults/*.trx
+          if-no-files-found: ignore

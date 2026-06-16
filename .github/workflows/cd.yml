@@ -1,0 +1,134 @@
+name: CD
+
+# Builds, tests and packs the NuGet package on a version tag (v1.2.3) or manual run.
+# Publishing to NuGet uses Trusted Publishing (OIDC) and runs only on a v*.*.* tag push; a manual
+# run packs and uploads the artifact as a dry run without publishing (see the step comments below).
+
+on:
+  push:
+    tags: [ 'v*.*.*' ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version, e.g. 1.2.3. Defaults to a dev version when omitted.'
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  pack-publish:
+    name: Pack & Publish
+    # Windows is required: the library multi-targets net40/net45 and the demo targets net48, which
+    # need the .NET Framework reference assemblies / targeting packs available on the Windows runners.
+    runs-on: windows-latest
+    timeout-minutes: 15
+    permissions:
+      id-token: write     # Required for NuGet Trusted Publishing; without it NuGet/login fails with 403.
+      contents: write     # Required to create the GitHub Release; a job-level block drops inherited defaults.
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          # Install the exact SDK pinned in global.json; Dependabot's dotnet-sdk updater keeps it current.
+          global-json-file: global.json
+          # Cache the restored NuGet packages, keyed on the committed lock files.
+          cache: true
+          cache-dependency-path: '**/packages.lock.json'
+
+      - name: Resolve version
+        id: version
+        shell: bash
+        # The manual input is read through an env var, not interpolated into the script, so a crafted
+        # value cannot inject shell. It is then validated as SemVer before anything downstream uses it.
+        env:
+          VERSION_INPUT: ${{ github.event.inputs.version }}
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          elif [[ -n "${VERSION_INPUT}" ]]; then
+            VERSION="${VERSION_INPUT}"
+            if ! [[ "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.-]+)?$ ]]; then
+              echo "Invalid version '${VERSION}'; expected SemVer such as 1.2.3 or 1.2.3-rc.1." >&2
+              exit 1
+            fi
+          else
+            VERSION="0.0.0-dev.${GITHUB_RUN_NUMBER}"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Resolved package version: ${VERSION}"
+
+      - name: Restore
+        # Locked-mode restore fails the build if any packages.lock.json is missing or out of date, so the
+        # restore is reproducible and a forgotten lock-file update cannot slip through.
+        run: dotnet restore SQLite.CodeFirst.slnx --locked-mode
+
+      - name: Build
+        run: dotnet build SQLite.CodeFirst.slnx -c Release --no-restore -p:Version=${{ steps.version.outputs.version }}
+
+      - name: Test
+        # The test project runs on Microsoft.Testing.Platform (opted in via global.json), so target the
+        # solution with the native MTP dotnet test syntax.
+        run: dotnet test --solution SQLite.CodeFirst.slnx -c Release --no-build
+
+      - name: Pack
+        run: >
+          dotnet pack SQLite.CodeFirst/SQLite.CodeFirst.csproj -c Release --no-build
+          -p:Version=${{ steps.version.outputs.version }}
+          -o ${{ github.workspace }}/artifacts
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: nuget-package
+          path: |
+            ${{ github.workspace }}/artifacts/*.nupkg
+            ${{ github.workspace }}/artifacts/*.snupkg
+
+      # --- NuGet publishing via Trusted Publishing (OIDC). ---
+      # No long-lived API key: NuGet/login swaps the GitHub OIDC token for a short-lived key, authorized
+      # by the trusted publishing policy on nuget.org (the policy must name this workflow file, cd.yml).
+      # Gated to tag pushes so a manual run stays a dry run and never pushes the 0.0.0-dev.* version.
+      # https://learn.microsoft.com/nuget/nuget-org/trusted-publishing
+      - name: NuGet login (OIDC)
+        id: nuget-login
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: NuGet/login@v1
+        with:
+          user: ${{ secrets.NUGET_USER }}   # nuget.org account/profile name, NOT the email address.
+
+      - name: Publish to NuGet
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: >
+          dotnet nuget push "${{ github.workspace }}/artifacts/*.nupkg"
+          --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}"
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+
+      # --- GitHub Release. ---
+      # Created only on tag pushes, after a successful NuGet publish, so the Release reflects what was
+      # actually shipped. Uses the gh CLI (preinstalled on the runner) rather than a third-party action.
+      # --generate-notes builds the notes from commits/PRs since the previous tag; --verify-tag guards
+      # against creating a release for a tag the runner cannot see. The .nupkg/.snupkg are attached so
+      # the package is downloadable straight from the Release page, not just the workflow run.
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        # The tag is passed through an env var rather than interpolated into the script, matching the
+        # version step above.
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          # SemVer pre-release tags carry a hyphen (e.g. v1.2.3-rc.1); mark those as GitHub pre-releases.
+          prerelease=""
+          if [[ "${TAG}" == *-* ]]; then prerelease="--prerelease"; fi
+          gh release create "${TAG}" \
+            --title "${TAG}" \
+            --generate-notes \
+            --verify-tag \
+            ${prerelease} \
+            "${GITHUB_WORKSPACE}/artifacts/"*.nupkg \
+            "${GITHUB_WORKSPACE}/artifacts/"*.snupkg
