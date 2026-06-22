@@ -27,7 +27,7 @@ jobs:
       id-token: write     # Required for NuGet Trusted Publishing; without it NuGet/login fails with 403.
       contents: write     # Required to create the GitHub Release; a job-level block drops inherited defaults.
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
