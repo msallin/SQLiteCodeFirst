@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           # Install the exact SDK pinned in global.json; Dependabot's dotnet-sdk updater keeps it current.
           global-json-file: global.json
